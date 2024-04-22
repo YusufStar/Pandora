@@ -33,7 +33,7 @@ const Navbar = () => {
 
         {/* Search Bar */}
         <div className="w-full flex relative items-center h-9">
-          <input className="w-full text-base focus:shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out font-medium px-4 pl-12 h-full rounded outline-none border border-black/20" />
+          <input type="text" placeholder="Hayalinizde ki urunu Arayin..." className="w-full text-base focus:shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out font-medium px-4 pl-12 h-full rounded outline-none border border-black/20" />
 
           <span className="absolute left-4">
             <SearchIcon />
