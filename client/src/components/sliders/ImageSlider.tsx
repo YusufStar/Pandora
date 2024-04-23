@@ -59,7 +59,9 @@ const ImageSlider = ({ slides, height, animate, timeout }: Props) => {
   };
 
   return (
-    <div className={`w-full relative h-[${height}px] group`}>
+    <div style={{
+      height: height
+    }} className={`w-full relative group`}>
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className="w-full h-full bg-cover duration-500"
