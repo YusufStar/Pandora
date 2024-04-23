@@ -34,7 +34,7 @@ const Page = () => {
           url: "https://cdn.myikas.com/images/theme-images/2eb52b3d-c875-4f1e-b360-ee628abfd418/image_540.webp",
         },
         {
-          url: "https://cdn.myikas.com/images/theme-images/2eb52b3d-c875-4f1e-b360-ee628abfd418/image_720.webp",
+          url: "https://cdn.myikas.com/images/theme-images/0f8fe305-7115-4ae0-b987-76ab77e3e9fb/image_720.webp",
         },
       ];
 
@@ -78,6 +78,8 @@ const Page = () => {
     dots: true,
     infinite: true,
     speed: 500,
+    autoplaySpeed: 500,
+    autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
