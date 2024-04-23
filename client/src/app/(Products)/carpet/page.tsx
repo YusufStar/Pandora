@@ -78,7 +78,7 @@ const Page = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    autoplaySpeed: 500,
+    autoplaySpeed: 5000,
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
