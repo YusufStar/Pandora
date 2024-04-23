@@ -31,7 +31,7 @@ const Page = () => {
           url: "https://cdn.myikas.com/images/theme-images/b4201063-5c8b-43d4-98eb-05cdcdf8a8aa/image_720.webp",
         },
         {
-          url: "https://cdn.myikas.com/images/theme-images/7751a4ee-9e7f-4d8f-a7a7-b8d2f4eba70f/image_2560.webp",
+          url: "https://cdn.myikas.com/images/theme-images/2eb52b3d-c875-4f1e-b360-ee628abfd418/image_540.webp",
         },
         {
           url: "https://cdn.myikas.com/images/theme-images/2eb52b3d-c875-4f1e-b360-ee628abfd418/image_720.webp",
