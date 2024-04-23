@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
 type Props = {
@@ -6,6 +7,7 @@ type Props = {
   fiyat: number;
   indirim: number;
   description: string;
+  className?: string;
 };
 
 const BasicCard = ({
@@ -14,6 +16,7 @@ const BasicCard = ({
   indirim,
   marka,
   description,
+  className,
 }: Props) => {
   function formatCurrency(number: number) {
     const formattedNumber = new Intl.NumberFormat("tr-TR", {
@@ -35,39 +38,99 @@ const BasicCard = ({
   }
 
   return (
-    <div className="w-[350px] h-[538px] flex flex-col items-center justify-center cursor-pointer">
-      <img src={bannerImage} alt="" className="h-[430px] object-contain" />
+    <div className="p-3 relative overflow-hidden h-auto flex flex-col">
+      <img
+        src={bannerImage}
+        alt="Modern Desenli Halı Alvin AL08C"
+        decoding="async"
+        className="products-slider-image products-slider-image-119"
+        style={{
+          inset: "0px",
+          boxSizing: "border-box",
+          padding: "0px",
+          border: "none",
+          margin: "auto",
+          display: "block",
+          height: "430px",
+          objectFit: "contain",
+        }}
+      />
 
-      <span className="font-bold text-base uppercase w-full pt-2 text-[#0a0a0a]">
-        {marka}
-      </span>
+      <div className="uppercase products-slider-info-main product-list-item-info relative">
+        <h2
+          className="brand"
+          style={{
+            color: "rgb(10, 10, 10)",
+            textAlign: "unset",
+            fontWeight: 700,
+          }}
+        >
+          MAJOLİKA
+        </h2>
+        <h3
+          className="product-name mb-2"
+          style={{
+            color: "#0a0a0a",
+            textAlign: "unset",
+            fontSize: "14px",
+            fontWeight: 400,
+          }}
+        >
+          {description}
+        </h3>
+        <div>
+          {indirim > 0 && (
+            <div
+              className="price-main"
+              style={{
+                justifyContent: "unset",
+                fontWeight: 500,
+                marginTop: "10px",
+                height: "40px",
+              }}
+            >
+              <div className="discount-price-main flex flex-row">
+                <div
+                  className="discount-percent"
+                  style={{
+                    backgroundColor: "rgb(0, 0, 0)",
+                    color: "rgb(255, 255, 255)",
+                    fontWeight: 500,
+                    borderRadius: "0px",
+                  }}
+                >
+                  %{indirim}
+                </div>
+                <div className="flex discount-price flex-col">
+                  <span>{formatCurrency(fiyat)}</span>
+                  <span className="" style={{ color: "rgb(8, 8, 8)" }}>
+                    {formatCurrency(indirimUygula(fiyat, indirim) as number)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
 
-      <span className=" text-sm w-full text-[#676767]">{description}</span>
-
-      {indirim > 0 ? (
-        <>
-          <div className="flex items-center gap-2 w-full pt-1">
-            <span className="w-10 h-10 text-[12px] font-medium bg-black text-white flex items-center justify-center">
-              %{indirim}
-            </span>
-
-            <div className="flex flex-col">
-              <span className="w-full text-base line-through font-medium text-[#676767]">
-                {formatCurrency(fiyat)}
-              </span>
-              <span className="w-full text-lg font-medium text-[#080808]">
-                {formatCurrency(indirimUygula(fiyat, indirim) as number)}
-              </span>
+          {indirim === 0 && (
+            <div
+            className="price-main !items-start"
+            style={{
+              justifyContent: "unset",
+              fontWeight: 500,
+            }}
+          >
+            <div className="discount-price-main flex flex-row">
+              <div className="flex discount-price flex-col">
+                <span></span>
+                <span className="" style={{ color: "rgb(8, 8, 8)" }}>
+                  {formatCurrency(indirimUygula(fiyat, indirim) as number)}
+                </span>
+              </div>
             </div>
           </div>
-        </>
-      ) : (
-        <>
-          <span className="pt-1 w-full text-lg font-medium text-[#080808]">
-            {formatCurrency(fiyat)}
-          </span>
-        </>
-      )}
+          )}
+        </div>
+      </div>
     </div>
   );
 };

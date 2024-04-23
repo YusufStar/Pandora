@@ -28,12 +28,16 @@ const Navbar = () => {
           alt="logo"
           decoding="async"
           draggable="false"
-          className="mr-6"
+          className="mr-6 hidden md:flex"
         />
 
         {/* Search Bar */}
-        <div className="w-full flex relative items-center h-9">
-          <input type="text" placeholder="Hayalinizde ki urunu Arayin..." className="w-full text-base focus:shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out font-medium px-4 pl-12 h-full rounded outline-none border border-black/20" />
+        <div className="w-full ml-4 flex relative items-center h-9">
+          <input
+            type="text"
+            placeholder="Hayalinizde ki urunu Arayin..."
+            className="w-full placeholder:text-black/70 text-base focus:shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out font-medium px-4 pl-12 h-full rounded outline-none border border-black/20"
+          />
 
           <span className="absolute left-4">
             <SearchIcon />
@@ -41,13 +45,20 @@ const Navbar = () => {
         </div>
 
         {/* Buttons */}
-        <div className="ml-12 h-full w-auto flex items-center gap-4">
-          <ProfileIcon />
+        <div className="ml-4 md:ml-12 h-full w-auto flex items-center gap-4">
+          <button className="hidden md:flex">
+            <ProfileIcon />
+          </button>
 
-          <div className="h-6 w-[1px] bg-black/20" />
+          <div className="h-6 w-[1px] bg-black/20 hidden md:flex" />
 
-          <span className="text-sm font-semibold w-[86px]">Sepet / ₺0,00</span>
-          <BasketIcon count={0} />
+          <span className="text-sm font-semibold w-[86px] hidden md:flex">
+            Sepet / ₺0,00
+          </span>
+
+          <button className="mr-4 md:mr-0">
+            <BasketIcon count={0} />
+          </button>
         </div>
       </div>
     </div>
@@ -55,4 +66,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
-7
+7;

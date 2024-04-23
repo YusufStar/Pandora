@@ -1,14 +1,10 @@
 import "@/styles/globals.css";
-import { Inter as FontSans } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import { ReactNode } from "react";
-
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,11 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased"
-        )}
-      >
+      <body className={cn("min-h-screen w-full font-sans antialiased")}>
         {children}
       </body>
     </html>

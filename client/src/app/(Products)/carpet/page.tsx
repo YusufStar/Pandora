@@ -1,6 +1,7 @@
-import BasicCard from "@/components/cards/BasicCard";
-import ImageSlider from "@/components/sliders/ImageSlider";
+"use client";
 import React from "react";
+import BasicCard from "@/components/cards/BasicCard";
+import HorizontalList from "@/components/sliders/HorizontalList";
 
 const Page = () => {
   const slides = [
@@ -18,51 +19,152 @@ const Page = () => {
     },
   ];
 
+  const settings = {
+    infinite: false,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024, // Ekran genişliği 1024px'den küçük olduğunda
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768, // Ekran genişliği 768px'den küçük olduğunda
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480, // Ekran genişliği 480px'den küçük olduğunda
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const image_settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
     <div className="h-full w-full flex flex-col">
-      <ImageSlider animate timeout={5000} height={775} slides={slides} />
-
-      {/* Cok Satanalr */}
-      <div className="flex flex-col w-full py-8">
-        <span className="uppercase mx-auto text-[33px] font-medium">
-          ÇOK SATANLAR
-        </span>
-
-        <div className="flex gap-4 container mx-auto relative py-8">
-          <BasicCard
-            bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
-            fiyat={3304}
-            indirim={17}
-            marka="MAJOLİKA"
-            description="Modern Desenli Hali Alvin AL08C"
-            key={1}
-          />
-          <BasicCard
-            bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
-            fiyat={3304}
-            indirim={10}
-            marka="MAJOLİKA"
-            description="Modern Desenli Hali Alvin AL48C"
-            key={2}
-          />
-          <BasicCard
-            bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
-            fiyat={3304}
-            indirim={0}
-            marka="MAJOLİKA"
-            description="Modern Desenli Hali Alvin AL07C"
-            key={3}
-          />
-          <BasicCard
-            bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
-            fiyat={3304}
-            indirim={0}
-            marka="MAJOLİKA"
-            description="Modern Desenli Hali Alvin AL06C"
-            key={4}
-          />
-        </div>
+      <div className="home-slider-main">
+        <HorizontalList settings={image_settings}>
+          {slides.map((slide, idx) => (
+            <img src={slide.url} key={idx} className="w-full object-contain" />
+          ))}
+        </HorizontalList>
       </div>
+
+      {/* Cok Satanalar */}
+      <HorizontalList settings={settings} header="ÇOK SATANLAR">
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={17}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL08C"
+          key={1}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={10}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL48C"
+          key={2}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={17}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL08C"
+          key={1}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={10}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL48C"
+          key={2}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={17}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL08C"
+          key={1}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={10}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL48C"
+          key={2}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={17}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL08C"
+          key={1}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={10}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL48C"
+          key={2}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={17}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL08C"
+          key={1}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={10}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL48C"
+          key={2}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={17}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL08C"
+          key={1}
+        />
+        <BasicCard
+          bannerImage="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/540/dsc00822-cmr.webp"
+          fiyat={3304}
+          indirim={10}
+          marka="MAJOLİKA"
+          description="Modern Desenli Hali Alvin AL48C"
+          key={2}
+        />
+      </HorizontalList>
     </div>
   );
 };
