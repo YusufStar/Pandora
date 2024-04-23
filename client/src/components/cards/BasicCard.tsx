@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 type Props = {
-  bannerImage: string;
+  src: string;
   marka: string;
   fiyat: number;
   indirim: number;
@@ -11,12 +11,11 @@ type Props = {
 };
 
 const BasicCard = ({
-  bannerImage,
+  src,
   fiyat,
   indirim,
   marka,
   description,
-  className,
 }: Props) => {
   function formatCurrency(number: number) {
     const formattedNumber = new Intl.NumberFormat("tr-TR", {
@@ -40,10 +39,10 @@ const BasicCard = ({
   return (
     <div className="p-3 relative overflow-hidden h-auto flex product-container flex-col">
       <img
-        src={bannerImage}
+        src={src}
         alt={description}
         decoding="async"
-        className="products-slider-image products-slider-image-119 w-[210px] sm:w-[350px]"
+        className="products-slider-image products-slider-image-119 w-[210px] sm:w-[300px] md:w-[325px] lg:w-[350px]"
         style={{
           inset: "0px",
           boxSizing: "border-box",
@@ -64,7 +63,7 @@ const BasicCard = ({
             fontWeight: 700,
           }}
         >
-          MAJOLİKA
+          {marka}
         </h2>
         <h3
           className="product-name mb-2 !text-xs sm:text-sm"
