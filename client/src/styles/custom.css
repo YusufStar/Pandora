@@ -2486,27 +2486,6 @@ header.header
   padding: 0 !important;
 }
 
-.overlay-hover {
-  width: 90% !important;
-  left: 5%;
-  visibility: hidden;
-  opacity: 0;
-  bottom: 0.5rem !important;
-  transition: all 0.3s !important;
-}
-
-.product-container:not(.mobile):hover .overlay-hover {
-  bottom: 1rem !important;
-  visibility: visible;
-  opacity: 1;
-}
-
-.product-container:not(.mobile):hover .overlay-hover.hide {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
 .product-slider-video-container video {
   height: 100%;
   -o-object-fit: contain;

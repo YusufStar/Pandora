@@ -38,12 +38,12 @@ const BasicCard = ({
   }
 
   return (
-    <div className="p-3 relative overflow-hidden h-auto flex flex-col">
+    <div className="p-3 relative overflow-hidden h-auto flex product-container flex-col">
       <img
         src={bannerImage}
-        alt="Modern Desenli Halı Alvin AL08C"
+        alt={description}
         decoding="async"
-        className="products-slider-image products-slider-image-119"
+        className="products-slider-image products-slider-image-119 w-[210px] sm:w-[350px]"
         style={{
           inset: "0px",
           boxSizing: "border-box",
@@ -51,14 +51,13 @@ const BasicCard = ({
           border: "none",
           margin: "auto",
           display: "block",
-          height: "430px",
           objectFit: "contain",
         }}
       />
 
       <div className="uppercase products-slider-info-main product-list-item-info relative">
         <h2
-          className="brand"
+          className="brand !text-sm sm:text-base"
           style={{
             color: "rgb(10, 10, 10)",
             textAlign: "unset",
@@ -68,7 +67,7 @@ const BasicCard = ({
           MAJOLİKA
         </h2>
         <h3
-          className="product-name mb-2"
+          className="product-name mb-2 !text-xs sm:text-sm"
           style={{
             color: "#0a0a0a",
             textAlign: "unset",
@@ -113,21 +112,21 @@ const BasicCard = ({
 
           {indirim === 0 && (
             <div
-            className="price-main !items-start"
-            style={{
-              justifyContent: "unset",
-              fontWeight: 500,
-            }}
-          >
-            <div className="discount-price-main flex flex-row">
-              <div className="flex discount-price flex-col">
-                <span></span>
-                <span className="" style={{ color: "rgb(8, 8, 8)" }}>
-                  {formatCurrency(indirimUygula(fiyat, indirim) as number)}
-                </span>
+              className="price-main !items-start"
+              style={{
+                justifyContent: "unset",
+                fontWeight: 500,
+              }}
+            >
+              <div className="discount-price-main flex flex-row">
+                <div className="flex discount-price flex-col">
+                  <span></span>
+                  <span className="" style={{ color: "rgb(8, 8, 8)" }}>
+                    {formatCurrency(indirimUygula(fiyat, indirim) as number)}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
           )}
         </div>
       </div>
