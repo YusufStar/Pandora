@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { Input } from "./ui/input";
-import ProfileIcon from "./icons/Profile";
-import BasketIcon from "./icons/Basket";
-import SearchIcon from "./icons/Search";
+import ProfileIcon from "@/components/icons/Profile";
+import BasketIcon from "@/components/icons/Basket";
+import SearchIcon from "@/components/icons/Search";
 
 const Navbar = () => {
   return (
