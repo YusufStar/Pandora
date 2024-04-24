@@ -4,6 +4,7 @@ import BasicCard from "@/components/cards/BasicCard";
 import HorizontalList from "@/components/sliders/HorizontalList";
 import useDeviceType from "@/hooks/DeviceType";
 import Footer from "../_components/Footer";
+import CarpetInfos from "./_components/CarpetInfos";
 
 const CarpetContainer = () => {
   const { isMobile } = useDeviceType();
@@ -40,27 +41,20 @@ const CarpetContainer = () => {
 
   const settings = {
     infinite: false,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 3440, // Ekran genişliği 1024px'den küçük olduğunda
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 1024, // Ekran genişliği 1024px'den küçük olduğunda
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 550, // Ekran genişliği 768px'den küçük olduğunda
+        breakpoint: 1024, // Ekran genişliği 1024px'den küçük olduğunda
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
@@ -84,6 +78,44 @@ const CarpetContainer = () => {
     slidesToScroll: 1,
   };
 
+  const mock_products = [
+    {
+      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp",
+      price: 3384,
+      discount: 17,
+      brand: "Majolika",
+      description: "Modern Desenli Halı Alvin AL08C"
+    },
+    {
+      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/b898d63c-4474-43c4-9a4c-f16cca53ca47/540/dsc00819-cmr.webp",
+      price: 3384,
+      discount: 17,
+      brand: "Majolika",
+      description: "Modern Desenli Halı Alvin AL00A"
+    },
+    {
+      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/c9a9f378-5d60-4f16-8976-4322de0f0a35/3840/dsc00823-cmr.webp",
+      price: 3384,
+      discount: 17,
+      brand: "Majolika",
+      description: "Modern Desenli Halı Alvin AL01A"
+    },
+    {
+      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/e2b9a808-35eb-4efa-b908-c4ab67f95a54/3840/dsc00824-cmr.webp",
+      price: 3384,
+      discount: 17,
+      brand: "Majolika",
+      description: "Modern Desenli Halı Alvin AL05A"
+    },
+    {
+      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/3e0af4d2-6181-4a87-8e5d-7ae245b99bbd/3840/alvin---al04a---krem-a.webp",
+      price: 3384,
+      discount: 17,
+      brand: "Majolika",
+      description: "Modern Desenli Halı Alvin AL04A"
+    },
+  ];
+
   return (
     <div className="h-full w-full flex flex-col">
       <div className={`home-slider-main`}>
@@ -96,137 +128,129 @@ const CarpetContainer = () => {
 
       {/* Cok Satanalar */}
       <HorizontalList settings={settings} header="ÇOK SATANLAR">
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={17}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL08C"
-          key={1}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={10}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL48C"
-          key={2}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={17}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL08C"
-          key={1}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={10}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL48C"
-          key={2}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={17}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL08C"
-          key={1}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={10}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL48C"
-          key={2}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={17}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL08C"
-          key={1}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={10}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL48C"
-          key={2}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={17}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL08C"
-          key={1}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={10}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL48C"
-          key={2}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={17}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL08C"
-          key={1}
-        />
-        <BasicCard
-          src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp"
-          fiyat={3304}
-          indirim={10}
-          marka="MAJOLİKA"
-          description="Modern Desenli Hali Alvin AL48C"
-          key={2}
-        />
+        {mock_products.map((product, product_index) => (
+          <BasicCard
+            src={product.banner}
+            fiyat={product.price}
+            indirim={product.discount}
+            marka={product.brand}
+            description={product.description}
+            key={product_index}
+          />
+        ))}
       </HorizontalList>
+
+      {/* Olcunuze gore hlai sec kismi */}
+      <div className="container mx-auto relative pb-8 pt-8">
+        <h2 className="uppercase flex justify-center text-[33px] text-center text-black font-medium pb-4">
+          Ölçüye Göre Halını Seç
+        </h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
+            <img
+              draggable={false}
+              className="!w-[165px] object-contain"
+              src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/80x150-cm-95534650.webp"
+              alt=""
+            />
+
+            <span className="text-black text-base w-full text-center font-medium pt-4">
+              80x150 cm
+            </span>
+          </div>
+          <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
+            <img
+              draggable={false}
+              className="!w-[165px] object-contain"
+              src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/120x180-cm-55158321.webp"
+              alt=""
+            />
+
+            <span className="text-black text-base w-full text-center font-medium pt-4">
+              120x180 cm
+            </span>
+          </div>
+          <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
+            <img
+              draggable={false}
+              className="!w-[165px] object-contain"
+              src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/160x230-cm-82702929.webp"
+              alt=""
+            />
+
+            <span className="text-black text-base w-full text-center font-medium pt-4">
+              160x230 cm
+            </span>
+          </div>
+          <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
+            <img
+              draggable={false}
+              className="!w-[165px] object-contain"
+              src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/200x200-cm-16434192.webp"
+              alt=""
+            />
+
+            <span className="text-black text-base w-full text-center font-medium pt-4">
+              200x200 cm
+            </span>
+          </div>
+          <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
+            <img
+              draggable={false}
+              className="!w-[165px] object-contain"
+              src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/200x290-cm-4311029.webp"
+              alt=""
+            />
+
+            <span className="text-black text-base w-full text-center font-medium pt-4">
+              200x290 cm
+            </span>
+          </div>
+          <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
+            <img
+              draggable={false}
+              className="!w-[165px] object-contain"
+              src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/240x340-cm-26775125.webp"
+              alt=""
+            />
+
+            <span className="text-black text-base w-full text-center font-medium pt-4">
+              240x340 cm
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <CarpetInfos />
 
       <div className="container mx-auto  mt-8 mb-8 px-4 py-4">
         <div className="grid grid-cols-3 features mx-auto w-full sm:w-3/4">
-          <div className="feature">
-            <div className="features-image relative overflow-hidden">
+          <div className="flex flex-col gap-4 !items-center !justify-center">
               <img
                 alt="features"
                 src="https://cdn.myikas.com/images/theme-images/03310641-9822-4fc3-927d-983f85d1baea/image_3840.webp"
-                className="absolute top-0 left-0 bottom-0 right-0 object-cover w-full h-full"
+                className="object-cover w-12 h-12 mx-auto"
                 loading="lazy"
               />
-            </div>
             <span className="text-black">Kredi kartına 12 ay taksit</span>
           </div>
-          <div className="feature">
-            <div className="features-image relative overflow-hidden">
+          <div className="flex flex-col gap-4 !items-center !justify-center">
               <img
                 alt="features"
                 src="https://cdn.myikas.com/images/theme-images/95b7493f-c23b-4f3a-9082-a5eff8d27b18/image_180.webp"
-                className="absolute top-0 left-0 bottom-0 right-0 object-cover w-full h-full"
+                className="object-cover w-12 h-12 mx-auto"
                 loading="lazy"
               />
-            </div>
             <span className="text-black">Ücretsiz Kargo</span>
           </div>
-          <div className="feature">
-            <div className="features-image relative overflow-hidden">
+          <div className="flex flex-col gap-4 !items-center !justify-center">
               <img
                 alt="features"
                 src="https://cdn.myikas.com/images/theme-images/9a98ee6b-dd5a-48a3-8f0e-654dd1bfa07f/image_180.webp"
-                className="absolute top-0 left-0 bottom-0 right-0 object-cover w-full h-full"
+                className="object-cover w-12 h-12 mx-auto"
                 loading="lazy"
               />
-            </div>
             <span className="text-black">14 gün içinde iade ve değişim</span>
           </div>
         </div>

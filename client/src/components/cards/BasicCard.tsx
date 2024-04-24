@@ -10,13 +10,7 @@ type Props = {
   className?: string;
 };
 
-const BasicCard = ({
-  src,
-  fiyat,
-  indirim,
-  marka,
-  description,
-}: Props) => {
+const BasicCard = ({ src, fiyat, indirim, marka, description }: Props) => {
   function formatCurrency(number: number) {
     const formattedNumber = new Intl.NumberFormat("tr-TR", {
       style: "currency",
@@ -38,25 +32,27 @@ const BasicCard = ({
 
   return (
     <div className="p-3 relative overflow-hidden h-auto flex product-container flex-col">
-      <img
-        src={src}
-        alt={description}
-        decoding="async"
-        className="products-slider-image products-slider-image-119 w-[210px] sm:w-[300px] md:w-[325px] lg:w-[350px]"
-        style={{
-          inset: "0px",
-          boxSizing: "border-box",
-          padding: "0px",
-          border: "none",
-          margin: "auto",
-          display: "block",
-          objectFit: "contain",
-        }}
-      />
+      <div className="!px-4">
+        <img
+          src={src}
+          alt={description}
+          decoding="async"
+          className="w-[210px] sm:w-[300px] md:w-[325px] lg:w-[350px]"
+          style={{
+            inset: "0px",
+            boxSizing: "border-box",
+            padding: "0px",
+            border: "none",
+            margin: "auto",
+            display: "block",
+            objectFit: "contain",
+          }}
+        />
+      </div>
 
       <div className="uppercase products-slider-info-main product-list-item-info relative">
         <h2
-          className="brand !text-sm sm:text-base"
+          className="brand"
           style={{
             color: "rgb(10, 10, 10)",
             textAlign: "unset",
@@ -65,8 +61,9 @@ const BasicCard = ({
         >
           {marka}
         </h2>
+
         <h3
-          className="product-name mb-2 !text-xs sm:text-sm"
+          className="product-name mb-2"
           style={{
             color: "#0a0a0a",
             textAlign: "unset",
@@ -79,7 +76,7 @@ const BasicCard = ({
         <div>
           {indirim > 0 && (
             <div
-              className="price-main"
+              className="flex items-center price-main"
               style={{
                 justifyContent: "unset",
                 fontWeight: 500,
@@ -101,7 +98,7 @@ const BasicCard = ({
                 </div>
                 <div className="flex discount-price flex-col">
                   <span>{formatCurrency(fiyat)}</span>
-                  <span className="" style={{ color: "rgb(8, 8, 8)" }}>
+                  <span style={{ color: "rgb(8, 8, 8)" }}>
                     {formatCurrency(indirimUygula(fiyat, indirim) as number)}
                   </span>
                 </div>
@@ -111,16 +108,19 @@ const BasicCard = ({
 
           {indirim === 0 && (
             <div
-              className="price-main !items-start"
+              className="price-main"
               style={{
                 justifyContent: "unset",
                 fontWeight: 500,
               }}
             >
               <div className="discount-price-main flex flex-row">
-                <div className="flex discount-price flex-col">
+                <div className="flex flex-col">
                   <span></span>
-                  <span className="" style={{ color: "rgb(8, 8, 8)" }}>
+                  <span
+                    className="text-base lg:text-lg font-medium"
+                    style={{ color: "rgb(8, 8, 8)" }}
+                  >
                     {formatCurrency(indirimUygula(fiyat, indirim) as number)}
                   </span>
                 </div>

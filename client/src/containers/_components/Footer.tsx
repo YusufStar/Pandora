@@ -4,8 +4,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-black dark">
-      <div className="container flex flex-col justify-between mx-auto mb-8 px-12 py-2 w-full min-h-[300px]">
+    <footer className="bg-black">
+      <div className="container flex flex-col justify-between mx-auto my-8 px-4 w-full h-fit">
         <div className="h-fit"></div>
         <div className="flex w-full items-center justify-between">
           <h3>

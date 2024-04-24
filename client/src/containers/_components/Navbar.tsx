@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div className="w-full flex flex-col relative">
       <div className="py-1 w-full bg-black">
-        <div className="max-w-4xl mx-auto w-full flex h-full items-center gap-4">
+        <div className="container px-4 mx-auto w-full flex h-full items-center gap-4">
           <span className="text-gray-200 text-xs">08:00 - 19:00</span>
 
           <div className="h-4 w-[0.5px] bg-white/50" />
@@ -18,7 +18,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto py-5 w-full flex items-center border-b border-b-black/20">
+      <div className="container px-4 mx-auto py-5 w-full flex items-center border-b border-b-black/20">
         <Image
           src="/images/logo.png"
           width={150}
