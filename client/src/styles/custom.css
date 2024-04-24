@@ -8323,3 +8323,34 @@ video {
   max-width: 100%;
   height: auto;
 }
+
+.payment-icons .payment-icon {
+  display: inline-block;
+  opacity: .6;
+  -webkit-transition: opacity .3s;
+  -o-transition: opacity .3s;
+  transition: opacity .3s;
+  border-radius: 5px;
+  background-color: rgba(0,0,0,.1);
+  padding-bottom: 0;
+  padding: 3px 5px 5px;
+  margin: 3px 3px 0
+}
+
+.payment-icons .payment-icon svg {
+  vertical-align: middle;
+  height: 20px;
+  width: auto !important
+}
+
+.payment-icons .payment-icon:hover {
+  opacity: 1
+}
+
+.payment-icons .payment-icon {
+  background-color: rgba(255,255,255,.1)
+}
+
+.payment-icons .payment-icon svg {
+  fill: #fff
+}
