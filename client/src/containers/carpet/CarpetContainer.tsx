@@ -80,39 +80,44 @@ const CarpetContainer = () => {
 
   const mock_products = [
     {
-      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp",
+      banner:
+        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp",
       price: 3384,
       discount: 17,
       brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL08C"
+      description: "Modern Desenli Halı Alvin AL08C",
     },
     {
-      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/b898d63c-4474-43c4-9a4c-f16cca53ca47/540/dsc00819-cmr.webp",
+      banner:
+        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/b898d63c-4474-43c4-9a4c-f16cca53ca47/540/dsc00819-cmr.webp",
       price: 3384,
       discount: 17,
       brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL00A"
+      description: "Modern Desenli Halı Alvin AL00A",
     },
     {
-      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/c9a9f378-5d60-4f16-8976-4322de0f0a35/3840/dsc00823-cmr.webp",
+      banner:
+        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/c9a9f378-5d60-4f16-8976-4322de0f0a35/3840/dsc00823-cmr.webp",
       price: 3384,
       discount: 17,
       brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL01A"
+      description: "Modern Desenli Halı Alvin AL01A",
     },
     {
-      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/e2b9a808-35eb-4efa-b908-c4ab67f95a54/3840/dsc00824-cmr.webp",
+      banner:
+        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/e2b9a808-35eb-4efa-b908-c4ab67f95a54/3840/dsc00824-cmr.webp",
       price: 3384,
       discount: 17,
       brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL05A"
+      description: "Modern Desenli Halı Alvin AL05A",
     },
     {
-      banner: "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/3e0af4d2-6181-4a87-8e5d-7ae245b99bbd/3840/alvin---al04a---krem-a.webp",
+      banner:
+        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/3e0af4d2-6181-4a87-8e5d-7ae245b99bbd/3840/alvin---al04a---krem-a.webp",
       price: 3384,
       discount: 17,
       brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL04A"
+      description: "Modern Desenli Halı Alvin AL04A",
     },
   ];
 
@@ -121,7 +126,12 @@ const CarpetContainer = () => {
       <div className={`home-slider-main`}>
         <HorizontalList settings={image_settings}>
           {slides.map((slide, idx) => (
-            <img src={slide.url} key={idx} className={`object-contain`} />
+            <img
+              alt=""
+              src={slide.url}
+              key={idx}
+              className={`object-contain`}
+            />
           ))}
         </HorizontalList>
       </div>
@@ -130,6 +140,22 @@ const CarpetContainer = () => {
       <HorizontalList settings={settings} header="ÇOK SATANLAR">
         {mock_products.map((product, product_index) => (
           <BasicCard
+            id={product_index}
+            src={product.banner}
+            fiyat={product.price}
+            indirim={product.discount}
+            marka={product.brand}
+            description={product.description}
+            key={product_index}
+          />
+        ))}
+      </HorizontalList>
+
+      <HorizontalList settings={settings} header="YENİ ÇIKANLAR">
+        {/* Yeni Cikanlar */}
+        {mock_products.reverse().map((product, product_index) => (
+          <BasicCard
+            id={product_index}
             src={product.banner}
             fiyat={product.price}
             indirim={product.discount}
@@ -227,30 +253,30 @@ const CarpetContainer = () => {
       <div className="container mx-auto  mt-8 mb-8 px-4 py-4">
         <div className="grid grid-cols-3 features mx-auto w-full sm:w-3/4">
           <div className="flex flex-col gap-4 !items-center !justify-center">
-              <img
-                alt="features"
-                src="https://cdn.myikas.com/images/theme-images/03310641-9822-4fc3-927d-983f85d1baea/image_3840.webp"
-                className="object-cover w-12 h-12 mx-auto"
-                loading="lazy"
-              />
+            <img
+              alt="features"
+              src="https://cdn.myikas.com/images/theme-images/03310641-9822-4fc3-927d-983f85d1baea/image_3840.webp"
+              className="object-cover w-12 h-12 mx-auto"
+              loading="lazy"
+            />
             <span className="text-black">Kredi kartına 12 ay taksit</span>
           </div>
           <div className="flex flex-col gap-4 !items-center !justify-center">
-              <img
-                alt="features"
-                src="https://cdn.myikas.com/images/theme-images/95b7493f-c23b-4f3a-9082-a5eff8d27b18/image_180.webp"
-                className="object-cover w-12 h-12 mx-auto"
-                loading="lazy"
-              />
+            <img
+              alt="features"
+              src="https://cdn.myikas.com/images/theme-images/95b7493f-c23b-4f3a-9082-a5eff8d27b18/image_180.webp"
+              className="object-cover w-12 h-12 mx-auto"
+              loading="lazy"
+            />
             <span className="text-black">Ücretsiz Kargo</span>
           </div>
           <div className="flex flex-col gap-4 !items-center !justify-center">
-              <img
-                alt="features"
-                src="https://cdn.myikas.com/images/theme-images/9a98ee6b-dd5a-48a3-8f0e-654dd1bfa07f/image_180.webp"
-                className="object-cover w-12 h-12 mx-auto"
-                loading="lazy"
-              />
+            <img
+              alt="features"
+              src="https://cdn.myikas.com/images/theme-images/9a98ee6b-dd5a-48a3-8f0e-654dd1bfa07f/image_180.webp"
+              className="object-cover w-12 h-12 mx-auto"
+              loading="lazy"
+            />
             <span className="text-black">14 gün içinde iade ve değişim</span>
           </div>
         </div>
