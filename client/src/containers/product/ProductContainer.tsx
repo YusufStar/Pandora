@@ -21,22 +21,22 @@ const ProductContainer = ({ product_id }: Props) => {
             <div className="image-slider product-detail-page-slider relative">
               <HorizontalList settings={settings}>
                 <img
-                  className="h-[948px] object-contain"
+                  className="h-[600px] object-contain"
                   alt=""
                   src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/87a86d1c-5643-4a94-9d95-7afd5b13f1aa/3840/10.webp"
                 />
                 <img
-                  className="h-[948px] object-contain"
+                  className="h-[600px] object-contain"
                   alt=""
                   src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/c9a9f378-5d60-4f16-8976-4322de0f0a35/3840/dsc00823-cmr.webp"
                 />
                 <img
-                  className="h-[948px] object-contain"
+                  className="h-[600px] object-contain"
                   alt=""
                   src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/639ce7b0-468f-4e45-b573-b960200e4733/3840/dsc00834-cmr.webp"
                 />
                 <img
-                  className="h-[948px] object-contain"
+                  className="h-[600px] object-contain"
                   alt=""
                   src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/d1b7306c-ea7a-49d0-acda-78ecf910843d/3840/dsc00837-cmr.webp"
                 />
