@@ -281,8 +281,6 @@ const CarpetContainer = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

@@ -1,9 +1,10 @@
+import Footer from "@/containers/_components/Footer";
 import Navbar from "@/containers/_components/Navbar";
 import React, { ReactNode } from "react";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full min-h-screen flex flex-col">
       <a
         className="w-[60px] h-[60px] rounded-full flex items-center justify-center bg-[#25d366] fixed bottom-4 right-4 whatshapp"
         href="https://api.whatsapp.com/send?phone=905524483327&text=Merhaba!"
@@ -30,6 +31,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
       <Navbar />
       {children}
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 };

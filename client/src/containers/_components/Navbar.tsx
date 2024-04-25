@@ -7,7 +7,7 @@ import SearchIcon from "@/components/icons/Search";
 
 const Navbar = () => {
   return (
-    <div className="w-full flex flex-col relative">
+    <div className="w-full flex flex-col relative shadow-navbar">
       <div className="py-1 w-full bg-black">
         <div className="container px-4 mx-auto w-full flex h-full items-center gap-4">
           <span className="text-gray-200 text-xs">08:00 - 19:00</span>
@@ -18,7 +18,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="container px-4 mx-auto py-5 w-full flex items-center border-b border-b-black/20">
+      <div className="container px-4 mx-auto py-5 w-full flex items-center">
         <Image
           src="/images/logo.png"
           width={150}
@@ -65,4 +65,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-7;

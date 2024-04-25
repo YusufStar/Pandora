@@ -36,11 +36,11 @@
 
     --radius: 0.5rem;
 
-    --primary-color: #00268a;
+    --primary-color: #000;
     --primary-textColor: #000;
     --primary-linkColor: #9da5af;
     --prefix-color: #6c757d;
-    --primary-hoverColor: #001f6e;
+    --primary-hoverColor: #1f1f1f;
     --primary-textHoverColor: #00268a;
     --border-color: #ececec;
     --line-throughColor: #aaa;
@@ -95,7 +95,7 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .whatshapp {
