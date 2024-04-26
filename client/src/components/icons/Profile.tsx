@@ -8,8 +8,8 @@ const ProfileIcon = () => {
       stroke-width="0"
       viewBox="0 0 24 24"
       color="#0a0809ff"
-      height="25"
-      width="25"
+      height="24"
+      width="24"
       className="shrink-0"
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -7,6 +7,7 @@ import {AnimatePresence, motion} from "framer-motion";
 import Link from "next/link";
 import {ChevronDown, ChevronLeft, ChevronRight, MenuIcon, X} from "lucide-react";
 import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
+import SearchIcon from "@/components/icons/Search";
 
 const Navbar = () => {
   const nav_links = [
@@ -258,19 +259,22 @@ const Navbar = () => {
         </div>
 
           {/* Buttons */}
-          <div className="ml-4 md:ml-12 h-full w-auto flex items-center gap-4">
-              <button className="hidden md:flex">
-                  <ProfileIcon/>
+        <div className="h-full w-auto flex items-center gap-4">
+          <button>
+            <SearchIcon/>
+          </button>
+          <button>
+            <ProfileIcon/>
           </button>
 
-          <div className="h-6 w-[1px] bg-black/20 hidden md:flex" />
+          <div className="h-6 w-[1px] bg-black/20 hidden md:flex"/>
 
           <span className="text-sm font-semibold w-[100px] hidden md:flex">
             Sepet / ₺0,00
           </span>
 
           <button className="mr-4 md:mr-0">
-            <BasketIcon count={0} />
+            <BasketIcon count={0}/>
           </button>
         </div>
       </motion.div>
