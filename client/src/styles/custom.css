@@ -507,6 +507,34 @@ input::-webkit-inner-spin-button {
   background-color: #fff;
 }
 
+.product-detail-page-slider .slick-dots > li {
+  margin: 0 0.5rem !important;
+  width: unset !important;
+  height: unset !important;
+}
+
+.product-detail-page-slider .slick-dots > li > button {
+  width: 8px;
+  height: 8px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  text-indent: -9999px;
+  border-radius: 50%;
+  background-color: #9da5af;
+  padding: 0;
+  display: block;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.product-detail-page-slider .slick-dots > li.slick-active > button {
+  background-color: black !important;
+  width: 2rem;
+  border-radius: 10rem;
+  background-color: #fff;
+}
+
 .home-slider-main .slick-arrow.slick-prev {
   left: 3% !important;
   z-index: 2;

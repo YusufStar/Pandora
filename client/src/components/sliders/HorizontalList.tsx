@@ -15,10 +15,10 @@ const HorizontalList = ({
   if (!header)
     return (
       <Slider
-        {...settings}
-        arrows
-        nextArrow={<ChevronRight color="#000" size={20} />}
-        prevArrow={<ChevronLeft color="#000" size={20} />}
+          arrows
+          nextArrow={<ChevronRight color="#000" size={20} />}
+          prevArrow={<ChevronLeft color="#000" size={20} />}
+          {...settings}
       >
         {children}
       </Slider>
@@ -31,10 +31,10 @@ const HorizontalList = ({
       </h2>
 
       <Slider
+          arrows
+          nextArrow={<ChevronRight color="#000" size={20} />}
+          prevArrow={<ChevronLeft color="#000" size={20} />}
         {...settings}
-        arrows
-        nextArrow={<ChevronRight color="#000" size={20} />}
-        prevArrow={<ChevronLeft color="#000" size={20} />}
       >
         {children}
       </Slider>
