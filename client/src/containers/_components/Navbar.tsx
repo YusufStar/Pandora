@@ -273,7 +273,7 @@ const Navbar = () => {
             Sepet / ₺0,00
           </span>
 
-          <button className="mr-4 md:mr-0">
+          <button>
             <BasketIcon count={0}/>
           </button>
         </div>
