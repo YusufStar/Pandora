@@ -21,25 +21,25 @@ const ProductContainer = ({ product_id }: Props) => {
       <div className="container mx-auto mt-12">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           <div className="product-detail-page-slider-main col-span-2 px-0 sm:px-4 md:px-4 lg:px-4">
-            <div className="!max-h-[430px] lg:!max-h-[950px] image-slider product-detail-page-slider relative">
+            <div className="!max-h-[400px] lg:!max-h-[800px] image-slider product-detail-page-slider relative">
               <HorizontalList settings={settings}>
                 <img
-                  className="h-[350px] lg:h-[950px] object-contain"
+                  className="h-[350px] lg:h-[800px] object-contain"
                   alt=""
                   src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/87a86d1c-5643-4a94-9d95-7afd5b13f1aa/3840/10.webp"
                 />
                 <img
-                  className="h-[350px] lg:h-[950px] object-contain"
+                  className="h-[350px] lg:h-[800px] object-contain"
                   alt=""
                   src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/c9a9f378-5d60-4f16-8976-4322de0f0a35/3840/dsc00823-cmr.webp"
                 />
                 <img
-                  className="h-[350px] lg:h-[950px] object-contain"
+                  className="h-[350px] lg:h-[800px] object-contain"
                   alt=""
                   src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/639ce7b0-468f-4e45-b573-b960200e4733/3840/dsc00834-cmr.webp"
                 />
                 <img
-                  className="h-[350px] lg:h-[950px] object-contain"
+                  className="h-[350px] lg:h-[800px] object-contain"
                   alt=""
                   src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/d1b7306c-ea7a-49d0-acda-78ecf910843d/3840/dsc00837-cmr.webp"
                 />
@@ -204,6 +204,10 @@ const ProductContainer = ({ product_id }: Props) => {
 
             <div className="w-full h-8"></div>
           </div>
+        </div>
+        
+        <div className="w-full h-24 flex items-center justify-center">
+          Buraya yeni kisimlar gelecek...
         </div>
       </div>
   );
