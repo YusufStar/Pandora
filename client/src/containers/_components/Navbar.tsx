@@ -6,124 +6,19 @@ import BasketIcon from "@/components/icons/Basket";
 import {AnimatePresence, motion} from "framer-motion";
 import Link from "next/link";
 import {ChevronDown, ChevronLeft, ChevronRight, MenuIcon, X} from "lucide-react";
-import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
 import SearchIcon from "@/components/icons/Search";
+import useBasket, {calculateTotalPrice, getProduct} from "@/zustand/useBasket";
+import {nav_links} from "@/zustand/mock-products";
 
 const Navbar = () => {
-  const nav_links = [
-    {
-      title: "Koleksiyonlar",
-      subtitles: [
-        {
-          title: "laila"
-        },
-        {
-          title: "bohem"
-        },
-        {
-          title: "modernho"
-        },
-        {
-          title: "maison"
-        },
-        {
-          title: "trends"
-        },
-        {
-          title: "novel"
-        },
-        {
-          title: "viva"
-        },
-        {
-          title: "orion"
-        },
-        {
-          title: "merci"
-        },
-        {
-          title: "ikon"
-        },
-        {
-          title: "milda"
-        },
-      ]
-    },
-    {
-      title: "Özellik",
-      subtitles: [
-        {
-          title: "Sıfır Tozuma Halı"
-        },
-        {
-          title: "Tozuma Azaltıcı Halı"
-        },
-        {
-          title: "Leke Tutmaz Halı"
-        },
-        {
-          title: "Pamuk Tabanlı Halı"
-        },
-        {
-          title: "Sürdürülebilir Üretim Halı"
-        }
-      ]
-    },
-    {
-      title: "Kullanım Alanı",
-      subtitles: [
-        {
-          title: "Mutfak Halısı"
-        },
-        {
-          title: "Oturma Odası Halısı"
-        },
-        {
-          title: "Salon Halısı"
-        },
-        {
-          title: "Yolluk Halısı"
-        },
-        {
-          title: "Çocuk Odası & Genç Odası Halısı"
-        }
-      ]
-    },
-    {
-      title: "Ölçü",
-      subtitles: [
-        {
-          title: "80 x 150"
-        },
-        {
-          title: "80 x 300"
-        },
-        {
-          title: "100 x 180"
-        },
-        {
-          title: "100 x 200"
-        },
-        {
-          title: "100 x 300"
-        },
-        {
-          title: "120 x 180"
-        },
-        {
-          title: "160 x 230"
-        },
-        {
-          title: "200 x 290"
-        },
-        {
-          title: "240x340"
-        }
-      ]
-    }
-  ]
     const [activeLink, setActiveLink] = useState<string>("");
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const basket = useBasket();
+  const data = getProduct(basket.products)
+  const price = calculateTotalPrice(basket.products)
+
+  console.log(data)
 
   useEffect(() => {
     if (isExpanded) {
@@ -269,13 +164,13 @@ const Navbar = () => {
 
           <div className="h-6 w-[1px] bg-black/20 hidden md:flex"/>
 
-          <span className="text-sm font-semibold w-[100px] hidden md:flex">
-            Sepet / ₺0,00
+          <span className="text-sm font-semibold w-auto text-nowrap hidden md:flex">
+            Sepet / {price}
           </span>
 
-          <button>
-            <BasketIcon count={0}/>
-          </button>
+          <Link href={"/basket"}>
+            <BasketIcon/>
+          </Link>
         </div>
       </motion.div>
     </div>

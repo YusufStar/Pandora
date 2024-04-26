@@ -3,8 +3,8 @@ import React from "react";
 import BasicCard from "@/components/cards/BasicCard";
 import HorizontalList from "@/components/sliders/HorizontalList";
 import useDeviceType from "@/hooks/DeviceType";
-import Footer from "../_components/Footer";
 import CarpetInfos from "./_components/CarpetInfos";
+import {products} from "@/zustand/mock-products";
 
 const CarpetContainer = () => {
   const { isMobile } = useDeviceType();
@@ -78,49 +78,6 @@ const CarpetContainer = () => {
     slidesToScroll: 1,
   };
 
-  const mock_products = [
-    {
-      banner:
-        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/8a8ebb55-995b-4b5e-a73d-f06ffed94061/3840/dsc00822-cmr.webp",
-      price: 3384,
-      discount: 17,
-      brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL08C",
-    },
-    {
-      banner:
-        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/b898d63c-4474-43c4-9a4c-f16cca53ca47/540/dsc00819-cmr.webp",
-      price: 3384,
-      discount: 17,
-      brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL00A",
-    },
-    {
-      banner:
-        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/c9a9f378-5d60-4f16-8976-4322de0f0a35/3840/dsc00823-cmr.webp",
-      price: 3384,
-      discount: 17,
-      brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL01A",
-    },
-    {
-      banner:
-        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/e2b9a808-35eb-4efa-b908-c4ab67f95a54/3840/dsc00824-cmr.webp",
-      price: 3384,
-      discount: 17,
-      brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL05A",
-    },
-    {
-      banner:
-        "https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/3e0af4d2-6181-4a87-8e5d-7ae245b99bbd/3840/alvin---al04a---krem-a.webp",
-      price: 3384,
-      discount: 17,
-      brand: "Majolika",
-      description: "Modern Desenli Halı Alvin AL04A",
-    },
-  ];
-
   return (
     <div className="h-full w-full flex flex-col">
       <div className={`home-slider-main`}>
@@ -138,7 +95,7 @@ const CarpetContainer = () => {
 
       {/* Cok Satanalar */}
       <HorizontalList settings={settings} header="ÇOK SATANLAR">
-        {mock_products.map((product, product_index) => (
+        {products.map((product, product_index) => (
           <BasicCard
             id={product_index}
             src={product.banner}
@@ -146,6 +103,7 @@ const CarpetContainer = () => {
             indirim={product.discount}
             marka={product.brand}
             description={product.description}
+            defaultSize={product.defaultSize}
             key={product_index}
           />
         ))}
@@ -153,7 +111,7 @@ const CarpetContainer = () => {
 
       <HorizontalList settings={settings} header="YENİ ÇIKANLAR">
         {/* Yeni Cikanlar */}
-        {mock_products.reverse().map((product, product_index) => (
+        {products.reverse().map((product, product_index) => (
           <BasicCard
             id={product_index}
             src={product.banner}
@@ -161,6 +119,7 @@ const CarpetContainer = () => {
             indirim={product.discount}
             marka={product.brand}
             description={product.description}
+            defaultSize={product.defaultSize}
             key={product_index}
           />
         ))}

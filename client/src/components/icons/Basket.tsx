@@ -1,12 +1,17 @@
-import React from "react";
+"use client"
+import React, {useEffect} from "react";
+import useBasket, {getProduct} from "@/zustand/useBasket";
 
-const BasketIcon = ({ count }: { count: number }) => {
+const BasketIcon = () => {
+    const basket = useBasket();
+    const products = getProduct(basket.products)
+
   return (
     <div className="relative">
       <svg
         stroke="#0a0809ff"
         fill="#0a0809ff"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         color="#0a0809ff"
         height="24"
@@ -18,7 +23,9 @@ const BasketIcon = ({ count }: { count: number }) => {
       </svg>
 
       <span className="bg-black absolute flex w-[18px] h-[18px] items-center justify-center text-white top-[-5px] right-[-5px] rounded-full font-bold text-xs">
-        {count}
+        {products.length > 0 ? products?.reduce((accumulator, currentProduct) => {
+            return accumulator + currentProduct.quantity;
+        }, 0) : 0}
       </span>
     </div>
   );

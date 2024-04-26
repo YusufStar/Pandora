@@ -30,9 +30,11 @@
     "react-tree": "^0.0.4",
     "remark-gfm": "^4.0.0",
     "slick-carousel": "^1.8.1",
+    "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.163.0"
+    "three": "^0.163.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/flickity": "^2.2.11",

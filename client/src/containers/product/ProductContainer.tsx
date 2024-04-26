@@ -3,15 +3,31 @@ import HorizontalList from "@/components/sliders/HorizontalList";
 import React, {useState} from "react";
 import useDeviceType from "@/hooks/DeviceType";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import {products, sizes} from "@/zustand/mock-products";
+import {toast} from "sonner";
+import useBasket, {cmToSquareMeter, formatCurrency, getProduct, useDiscount} from "@/zustand/useBasket";
+import {Loader2} from "lucide-react";
 
 type Props = {
   product_id: any;
 };
 
 const ProductContainer = ({ product_id }: Props) => {
-  const sizes = ["80 x 150", "100 x 200", "120 x 180", "80 x 300", "100 x 300", "160 x 230", "200 x 290"];
+  const {addToBasket} = useBasket()
+  const [loading, setLoading] = useState<boolean>(false);
+  const product_data = products[product_id]
 
-  const [selectedSize, setSelectedSize] = useState<string>(sizes[0]);
+  const [data, setData] = useState<{
+    product: any;
+    quantity: number;
+  }>({
+    product: {
+      product_id: product_id,
+      size_id: product_data.defaultSize,
+    },
+    quantity: 1,
+  })
+
   const {isMobile} = useDeviceType();
   const settings = {
     dots: isMobile,
@@ -21,37 +37,44 @@ const ProductContainer = ({ product_id }: Props) => {
     slidesToScroll: 1,
   };
 
+  const addQuantity = () => {
+      setData((prev) => ({ ...prev, quantity: prev.quantity + 1 }))
+  }
+
+  const removeQuantity  = () => {
+    if (data.quantity > 1) {
+      setData((prev) => ({ ...prev, quantity: prev.quantity - 1 }))
+    } else {
+      toast.warning("1 den daha az ürün alamazsınız.")
+    }
+  }
+
+  const handleAddBasket = () => {
+    setLoading(true);
+    addToBasket(data)
+    setLoading(false)
+  }
+
   return (
       <div className="container mx-auto mt-12">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           <div className="product-detail-page-slider-main col-span-2 px-0 sm:px-4 md:px-4 lg:px-4">
             <div className="!max-h-[400px] lg:!max-h-[800px] image-slider product-detail-page-slider relative">
               <HorizontalList settings={settings}>
-                <img
-                  className="h-[350px] lg:h-[800px] object-contain"
-                  alt=""
-                  src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/87a86d1c-5643-4a94-9d95-7afd5b13f1aa/3840/10.webp"
-                />
-                <img
-                  className="h-[350px] lg:h-[800px] object-contain"
-                  alt=""
-                  src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/c9a9f378-5d60-4f16-8976-4322de0f0a35/3840/dsc00823-cmr.webp"
-                />
-                <img
-                  className="h-[350px] lg:h-[800px] object-contain"
-                  alt=""
-                  src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/639ce7b0-468f-4e45-b573-b960200e4733/3840/dsc00834-cmr.webp"
-                />
-                <img
-                  className="h-[350px] lg:h-[800px] object-contain"
-                  alt=""
-                  src="https://cdn.myikas.com/images/07703dd0-5fb6-4ac4-b95d-c17f586baf2c/d1b7306c-ea7a-49d0-acda-78ecf910843d/3840/dsc00837-cmr.webp"
-                />
+                {product_data.images.map(({url}, index) => {
+                  return <img
+                      key={index + "product-detail-image"}
+                      className="h-[350px] lg:h-[800px] object-contain"
+                      alt=""
+                      src={url}
+                  />
+                })}
               </HorizontalList>
             </div>
           </div>
 
-          <div className="product-detail-page-detail-box relative col-span-2 sm:col-span-2 md:col-span-2 px-4 lg:col-span-1 xl:col-span-1">
+          <div
+              className="product-detail-page-detail-box relative col-span-2 sm:col-span-2 md:col-span-2 px-4 lg:col-span-1 xl:col-span-1">
             <div className="flex justify-between items-center">
               <div className="product-name-main w-11/12">
                 <a
@@ -77,12 +100,12 @@ const ProductContainer = ({ product_id }: Props) => {
                       borderRadius: "0px",
                     }}
                   >
-                    %17
+                    %{product_data.discount}
                   </div>
 
                   <div className="flex discount-price flex-col">
-                    <span className="text-base text-[#aaaaaa]">₺ 3,384.00</span>
-                    <span className="text-[#232323]">₺ 2,820.00</span>
+                    <span className="text-base text-[#aaaaaa]">{formatCurrency(cmToSquareMeter(sizes[data.product.size_id]) * product_data.price)}</span>
+                    <span className="text-[#232323]">{formatCurrency(useDiscount(cmToSquareMeter(sizes[data.product.size_id]) * product_data.price, product_data.discount) as number)}</span>
                   </div>
                 </div>
               </div>
@@ -91,21 +114,21 @@ const ProductContainer = ({ product_id }: Props) => {
               <div className="mb-4">
                 <div className="mb-2 variant-type">ebat</div>
                 <div className="items-center product-detail-page-variants flex flex-wrap">
-                  {sizes.map((size, index) => (
+                  {product_data.sizes.map((_, id) => sizes[id]).map((size, index) => (
                       <div
                           key={size}
-                          onClick={() => setSelectedSize(size)}
-                          className={`py-1 px-4 mr-2 mb-2 transition-all duration-200 ease-in-out variant-types relative border-transparent border-2 cursor-pointer rounded-full ${selectedSize === size ? "selected-circle" : ""}`}>
-                        <span className="variant-name">80 x 150</span>
+                          onClick={() => setData((prev) => ({...prev, product: {...prev.product, size_id: index}}))}
+                          className={`py-1 px-4 mr-2 mb-2 transition-all duration-200 ease-in-out variant-types relative border-transparent border-2 cursor-pointer rounded-full ${data.product.size_id === index ? "selected-circle" : ""}`}>
+                        <span className="variant-name">{size}</span>
                       </div>
                   ))}
                 </div>
               </div>
             </div>
-            <div className="flex flex-1 product-detail-page-buy-box mt-12 mb-2 flex-col">
+            <div className="flex flex-1 product-detail-page-buy-box my-6 flex-col">
               <div className="flex">
                 <div className="flex mr-2 product-detail-quantity-boxes">
-                <div className="product-detail-quantity-box ">
+                <div onClick={removeQuantity} className="product-detail-quantity-box">
                     <svg
                       stroke="#000"
                       fill="#000"
@@ -122,12 +145,13 @@ const ProductContainer = ({ product_id }: Props) => {
                   <div className="product-detail-quantity">
                     <input
                       type="number"
-                      value={1}
+                      value={data.quantity}
+                      min={1}
                       className="quantity-input bg-white text-black"
                     />
                   </div>
 
-                  <div className="product-detail-quantity-box ">
+                  <div onClick={addQuantity} className="product-detail-quantity-box">
                     <svg
                       stroke="#000"
                       fill="#000"
@@ -142,13 +166,10 @@ const ProductContainer = ({ product_id }: Props) => {
                   </div>
                 </div>
 
-                <button className="add-to-cart flex-1 stock rounded-none">
-                  SEPETE EKLE
+                <button onClick={handleAddBasket} disabled={loading} className="add-to-cart flex-1 stock rounded-none select-none disabled:opacity-50">
+                  {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "SEPETE EKLE"}
                 </button>
               </div>
-            </div>
-            <div className="text-[#000000ff] bg-[#ffe8e8ff] rounded-none buy-now-button mb-2">
-              Hemen Al
             </div>
             <div className="p-0 bg-white product-detail-page-easy-refund">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 w-full gap-4 sm:gap-0 md:gap-0 lg:gap-0">

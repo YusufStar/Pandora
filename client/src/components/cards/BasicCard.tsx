@@ -1,5 +1,7 @@
 import Link from "next/link";
 import React, { useCallback } from "react";
+import {cmToSquareMeter, formatCurrency, useDiscount} from "@/zustand/useBasket";
+import {sizes} from "@/zustand/mock-products";
 
 type Props = {
   src: string;
@@ -7,29 +9,11 @@ type Props = {
   fiyat: number;
   indirim: number;
   description: string;
+  defaultSize: number;
   id: any;
 };
 
-const BasicCard = ({ src, fiyat, indirim, marka, description, id }: Props) => {
-  function formatCurrency(number: number) {
-    const formattedNumber = new Intl.NumberFormat("tr-TR", {
-      style: "currency",
-      currency: "TRY",
-    }).format(number);
-    return formattedNumber;
-  }
-
-  function indirimUygula(sayi: number, yuzde: number) {
-    if (sayi < 0 || yuzde < 0 || yuzde > 100) {
-      return "Geçersiz giriş. Sayı ve yüzde pozitif olmalıdır, ve yüzde 100'den küçük veya eşit olmalıdır.";
-    }
-
-    var indirimMiktari = sayi * (yuzde / 100);
-    var indirimliFiyat = sayi - indirimMiktari;
-
-    return indirimliFiyat;
-  }
-
+const BasicCard = ({ src, fiyat, indirim, marka, description, id, defaultSize }: Props) => {
   return (
     <Link draggable={false} href={`/product/${id}`}>
       <div className="p-3 relative overflow-hidden h-auto flex product-container flex-col">
@@ -73,7 +57,7 @@ const BasicCard = ({ src, fiyat, indirim, marka, description, id }: Props) => {
               fontWeight: 400,
             }}
           >
-            {description}
+            {description} {sizes[defaultSize]}
           </h3>
           <div>
             {indirim > 0 && (
@@ -99,9 +83,9 @@ const BasicCard = ({ src, fiyat, indirim, marka, description, id }: Props) => {
                     %{indirim}
                   </div>
                   <div className="flex discount-price flex-col">
-                    <span>{formatCurrency(fiyat)}</span>
+                    <span>{formatCurrency(cmToSquareMeter(sizes[defaultSize]) * fiyat)}</span>
                     <span style={{ color: "rgb(8, 8, 8)" }}>
-                      {formatCurrency(indirimUygula(fiyat, indirim) as number)}
+                      {formatCurrency(useDiscount(cmToSquareMeter(sizes[defaultSize]) * fiyat, indirim) as number)}
                     </span>
                   </div>
                 </div>
@@ -123,7 +107,7 @@ const BasicCard = ({ src, fiyat, indirim, marka, description, id }: Props) => {
                       className="text-base lg:text-lg font-medium"
                       style={{ color: "rgb(8, 8, 8)" }}
                     >
-                      {formatCurrency(indirimUygula(fiyat, indirim) as number)}
+                      {formatCurrency(useDiscount(cmToSquareMeter(sizes[defaultSize]) * fiyat, indirim) as number)}
                     </span>
                   </div>
                 </div>
