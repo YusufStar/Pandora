@@ -14,7 +14,6 @@ const ProductContainer = ({ product_id }: Props) => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between">
       <div className="container mx-auto mt-12">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 !max-h-[950px]">
           <div className="!max-h-[950px] product-detail-page-slider-main col-span-2 px-0 sm:px-4 md:px-4 lg:px-4">
@@ -42,8 +41,6 @@ const ProductContainer = ({ product_id }: Props) => {
                 />
               </HorizontalList>
             </div>
-
-            <div className="flex overflow-hidden pt-4 h-[137px]"></div>
           </div>
 
           <div className="!max-h-[950px] product-detail-page-detail-box relative col-span-2 sm:col-span-2 md:col-span-2 px-4 lg:col-span-1 xl:col-span-1">
@@ -203,7 +200,6 @@ const ProductContainer = ({ product_id }: Props) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

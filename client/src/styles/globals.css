@@ -92,7 +92,7 @@
   }
 }
 
-body {
+body, html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Poppins", sans-serif !important;
