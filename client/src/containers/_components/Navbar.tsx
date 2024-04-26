@@ -179,7 +179,7 @@ const Navbar = () => {
                               <div onClick={() => setActiveLink(nav_link.title)}
                                    className={"flex hover:bg-black/10 transition-all duration-200 px-4 py-2.5 gap-2 items-center relative cursor-pointer"}
                                    key={nav_link.title}>
-                                <span className="text-sm text-[#080707ff] select-none">{nav_link.title}</span>
+                                <span className="text-sm text-[#080707] select-none">{nav_link.title}</span>
                               </div>
                             </>
                         ))}
@@ -238,7 +238,7 @@ const Navbar = () => {
         {/* Nav Links */}
         <div onMouseLeave={() => setActiveLink("")} className="gap-6 hidden lg:flex items-center flex-1">
           {nav_links.map((nav_link) => (
-              <div onMouseEnter={() => setActiveLink(nav_link.title)} className={"flex gap-2 items-center relative cursor-pointer"} key={nav_link.title}>
+              <div onMouseEnter={() => setActiveLink(nav_link.title)} className={"flex hover-interstellar gap-2 items-center relative cursor-pointer"} key={nav_link.title}>
                 <span className="text-sm text-[#080707ff] select-none">{nav_link.title}</span>
                 <ChevronDown className={activeLink === nav_link.title ? "rotate-180 transition-all duration-150 ease-in-out" : "rotate-0 transition-all duration-150 ease-in-out"} color={"#080707ff"} size={16}/>
 
@@ -251,7 +251,7 @@ const Navbar = () => {
                                       transition={{duration: 0.15, ease: "easeInOut"}}
                                       className={"absolute left-0 top-full w-48 flex flex-col gap-3 z-30 p-4 rounded bg-white shadow-navbar"}
                           >
-                              {nav_link.subtitles.map((sublink) => <motion.span initial={{ opacity: 0 }} exit={{opacity: 0, transition: {duration: 0.1} }} animate={{ opacity: 1, transition: {delay: 0.1, duration: 0.2, ease: "easeInOut"} }} key={nav_link.title + "sub" + sublink.title} className="text-[14px] text-[#080707ff] select-none">{sublink.title}</motion.span>)}
+                              {nav_link.subtitles.map((sublink) => <motion.span initial={{ opacity: 0 }} exit={{opacity: 0, transition: {duration: 0.1} }} animate={{ opacity: 1, transition: {delay: 0.1, duration: 0.2, ease: "easeInOut"} }} key={nav_link.title + "sub" + sublink.title} className="text-[14px] text-[#080707] select-none">{sublink.title}</motion.span>)}
                           </motion.div>}
                   </AnimatePresence>
               </div>
