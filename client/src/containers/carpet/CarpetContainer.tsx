@@ -256,28 +256,28 @@ const CarpetContainer = () => {
             <img
               alt="features"
               src="https://cdn.myikas.com/images/theme-images/03310641-9822-4fc3-927d-983f85d1baea/image_3840.webp"
-              className="object-cover w-12 h-12 mx-auto"
+              className="w-9 h-9 object-contain lg:w-12 lg:h-12 mx-auto"
               loading="lazy"
             />
-            <span className="text-black">Kredi kartına 12 ay taksit</span>
+            <span className="text-black text-[12px] h-8 lg:text-base lg:h-6 break-words overflow-hidden text-center">Kredi kartına 12 ay taksit</span>
           </div>
           <div className="flex flex-col gap-4 !items-center !justify-center">
             <img
               alt="features"
               src="https://cdn.myikas.com/images/theme-images/95b7493f-c23b-4f3a-9082-a5eff8d27b18/image_180.webp"
-              className="object-cover w-12 h-12 mx-auto"
+              className="w-9 h-9 object-contain lg:w-12 lg:h-12 mx-auto"
               loading="lazy"
             />
-            <span className="text-black">Ücretsiz Kargo</span>
+            <span className="text-black text-[12px] h-8 lg:text-base lg:h-6 break-words overflow-hidden text-center">Ücretsiz Kargo</span>
           </div>
           <div className="flex flex-col gap-4 !items-center !justify-center">
             <img
               alt="features"
               src="https://cdn.myikas.com/images/theme-images/9a98ee6b-dd5a-48a3-8f0e-654dd1bfa07f/image_180.webp"
-              className="object-cover w-12 h-12 mx-auto"
+              className="w-9 h-9 object-contain lg:w-12 lg:h-12 mx-auto"
               loading="lazy"
             />
-            <span className="text-black">14 gün içinde iade ve değişim</span>
+            <span className="text-black text-[12px] h-8 lg:text-base lg:h-6 break-words overflow-hidden text-center">14 gün içinde iade ve değişim</span>
           </div>
         </div>
       </div>

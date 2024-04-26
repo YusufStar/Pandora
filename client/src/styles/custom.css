@@ -1140,8 +1140,16 @@ input::-webkit-inner-spin-button {
 
 .payment-icons .payment-icon svg {
   vertical-align: middle;
-  height: 20px;
+  height: 14px;
   width: auto !important;
+}
+
+@media (min-width: 1024px) {
+  .payment-icons .payment-icon svg {
+    vertical-align: middle;
+    height: 20px;
+    width: auto !important;
+  }
 }
 
 .payment-icons .payment-icon:hover {

@@ -2,7 +2,7 @@ import React from "react";
 
 const Payments = () => {
   return (
-    <div className="payment-icons inline-block">
+    <div className="payment-icons">
       <div className="payment-icon">
         <svg
           version="1.1"

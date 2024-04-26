@@ -114,7 +114,7 @@ const Footer = () => {
 
         <div className="flex w-full items-center justify-between">
           <h3>
-            <span className="text-[14px] font-medium text-white/50">
+            <span className="text-[10px] lg:text-[14px] font-medium text-white/50">
               © 2023 MAJOLİKA
             </span>
           </h3>
