@@ -26,7 +26,7 @@ const HorizontalList = ({
 
   return (
     <div className="container px-4 products-slider-main mx-auto relative pb-8 pt-8">
-      <h2 className="uppercase flex justify-center text-[33px] text-center text-black font-medium pb-4">
+      <h2 className="uppercase flex justify-center text-[30px] lg:text-[40px] text-center text-black font-medium pb-4">
         {header}
       </h2>
 

@@ -168,7 +168,7 @@ const CarpetContainer = () => {
 
       {/* Olcunuze gore hlai sec kismi */}
       <div className="container mx-auto relative pb-8 pt-8">
-        <h2 className="uppercase flex justify-center text-[33px] text-center text-black font-medium pb-4">
+        <h2 className="uppercase flex justify-center text-[30px] lg:text-[40px] text-center text-black font-medium pb-4">
           Ölçüye Göre Halını Seç
         </h2>
 
@@ -176,7 +176,7 @@ const CarpetContainer = () => {
           <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
             <img
               draggable={false}
-              className="!w-[165px] object-contain"
+              className="!w-[125px] lg:!w-[165px] object-contain"
               src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/80x150-cm-95534650.webp"
               alt=""
             />
@@ -188,7 +188,7 @@ const CarpetContainer = () => {
           <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
             <img
               draggable={false}
-              className="!w-[165px] object-contain"
+              className="!w-[125px] lg:!w-[165px] object-contain"
               src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/120x180-cm-55158321.webp"
               alt=""
             />
@@ -200,7 +200,7 @@ const CarpetContainer = () => {
           <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
             <img
               draggable={false}
-              className="!w-[165px] object-contain"
+              className="!w-[125px] lg:!w-[165px] object-contain"
               src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/160x230-cm-82702929.webp"
               alt=""
             />
@@ -212,7 +212,7 @@ const CarpetContainer = () => {
           <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
             <img
               draggable={false}
-              className="!w-[165px] object-contain"
+              className="!w-[125px] lg:!w-[165px] object-contain"
               src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/200x200-cm-16434192.webp"
               alt=""
             />
@@ -224,7 +224,7 @@ const CarpetContainer = () => {
           <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
             <img
               draggable={false}
-              className="!w-[165px] object-contain"
+              className="!w-[125px] lg:!w-[165px] object-contain"
               src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/200x290-cm-4311029.webp"
               alt=""
             />
@@ -236,7 +236,7 @@ const CarpetContainer = () => {
           <div className="flex px-4 lg:px-6 flex-col items-center justify-center">
             <img
               draggable={false}
-              className="!w-[165px] object-contain"
+              className="!w-[125px] lg:!w-[165px] object-contain"
               src="https://percdn.com/f/864625/b3NhVUoyVTArYkI4Tmk4Z1RvTTZKYms9/a/240x340-cm-26775125.webp"
               alt=""
             />

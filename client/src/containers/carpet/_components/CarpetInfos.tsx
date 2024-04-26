@@ -9,7 +9,7 @@ const CarpetInfos = () => {
   };
 
   return (
-    <div className="container px-4 mx-auto pt-8 [&_p]:text-[14px] [&_h1]:font-medium [&_h1]:text-[18px] [&_h2]:font-medium [&_h2]:text-[18px] [&_h3]:font-medium [&_h3]:text-[18px]">
+    <div className="container px-4 mx-auto pt-8 [&_p]:text-[12px] lg:[&_p]:text-[14px] [&_h1]:font-medium [&_h1]:text-[16px] lg:[&_h1]:text-[18px] [&_h2]:font-medium [&_h2]:text-[16px] lg:[&_h2]:text-[18px] [&_h3]:font-medium [&_h3]:text-[16px] lg:[&_h3]:text-[18px]">
       <h1>
         <strong>Halı Modelleri</strong>
       </h1>
