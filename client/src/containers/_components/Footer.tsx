@@ -1,4 +1,3 @@
-"use client";
 import Payments from "@/components/icons/Payments";
 import {
   Accordion,

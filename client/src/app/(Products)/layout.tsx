@@ -1,5 +1,6 @@
-import Footer from "@/containers/_components/Footer";
-import Navbar from "@/containers/_components/Navbar";
+import dynamic from 'next/dynamic'
+const Footer = dynamic(() => import('@/containers/_components/Footer'), { ssr: true })
+const Navbar = dynamic(() => import('@/containers/_components/Navbar'), { ssr: true })
 import React, { ReactNode } from "react";
 
 const Layout = ({ children }: { children: ReactNode }) => {
