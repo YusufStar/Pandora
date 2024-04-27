@@ -2,7 +2,7 @@
 import React, {ReactNode, useEffect, useState} from "react";
 import {Loader2} from "lucide-react";
 
-const LoadingContainer = ({children}: {children: ReactNode | ReactNode[]}) => {
+const LoadingContainer = ({children}: { children: ReactNode | ReactNode[] }) => {
     const [loadedClient, setLoadedClient] = useState<boolean>(false)
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const LoadingContainer = ({children}: {children: ReactNode | ReactNode[]}) => {
     } else {
         return (
             <div className={'h-screen max-h-screen overflow-hidden flex items-center justify-center'}>
-                <Loader2 className="h-8 w-8 animate-spin" />
+                <Loader2 className="h-8 w-8 animate-spin"/>
             </div>
         )
     }

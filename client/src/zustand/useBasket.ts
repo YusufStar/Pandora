@@ -30,7 +30,7 @@ const useBasketStore = create<BasketStore>((set) => ({
         }),
 }));
 
-export const getProduct = (products : Product[]) => {
+export const getProduct = (products: Product[]) => {
     const new_data = products.map(item => {
         const product_id = item.product.product_id;
         const size_id = item.product.size_id;
@@ -56,7 +56,7 @@ export function cmToSquareMeter(dimensions: string): number {
     return (width / 100) * (height / 100);
 }
 
-export const calculateTotalPrice = (products : Product[]) => {
+export const calculateTotalPrice = (products: Product[]) => {
     const data = getProduct(products)
     let totalPrice = 0;
 
@@ -77,7 +77,7 @@ export const calculateTotalPrice = (products : Product[]) => {
     return formatCurrency(totalPrice);
 }
 
-export const formatCurrency = (number: number) =>  {
+export const formatCurrency = (number: number) => {
     const formated = new Intl.NumberFormat("tr-TR", {
         style: "currency",
         currency: "TRY",
@@ -86,6 +86,6 @@ export const formatCurrency = (number: number) =>  {
     return formated;
 }
 
-export const useDiscount = (price: number, discount: number) =>  price - (price * (discount / 100));
+export const useDiscount = (price: number, discount: number) => price - (price * (discount / 100));
 
 export default useBasketStore;
