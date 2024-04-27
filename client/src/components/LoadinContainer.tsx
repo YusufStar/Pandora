@@ -13,7 +13,7 @@ const LoadingContainer = ({children}: {children: ReactNode | ReactNode[]}) => {
                 setLoadedClient(true);
             });
         }
-    }, [window])
+    }, [])
 
     if (loadedClient) {
         return children
