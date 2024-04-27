@@ -7,7 +7,7 @@ const LoadingContainer = ({children}: { children: ReactNode | ReactNode[] }) => 
 
     useEffect(() => {
         if (window !== undefined) {
-            const delay = () => new Promise(resolve => setTimeout(resolve, 1000));
+            const delay = () => new Promise(resolve => setTimeout(resolve, 500));
 
             delay().then(() => {
                 setLoadedClient(true);
