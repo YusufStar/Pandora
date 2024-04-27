@@ -1,27 +1,20 @@
 import Link from "next/link";
-import React, { useCallback } from "react";
 import {cmToSquareMeter, formatCurrency, useDiscount} from "@/zustand/useBasket";
-import {sizes} from "@/zustand/mock-products";
+import {products, sizes} from "@/zustand/mock-products";
 
 type Props = {
-  src: string;
-  marka: string;
-  fiyat: number;
-  indirim: number;
-  description: string;
-  defaultSize: number;
-  id: any;
+    product_data: typeof products[0];
 };
 
-const BasicCard = ({ src, fiyat, indirim, marka, description, id, defaultSize }: Props) => {
+const BasicCard = ({ product_data }: Props) => {
   return (
-    <Link draggable={false} href={`/product/${id}`}>
+    <Link draggable={false} href={`/product/${product_data.id}`}>
       <div className="p-3 relative overflow-hidden h-auto flex product-container flex-col">
         <div className="!px-4 relative">
           <img
             draggable={false}
-            src={src}
-            alt={description}
+            src={product_data.banner}
+            alt={product_data.description}
             decoding="async"
             className="w-[210px] sm:w-[300px] md:w-[325px] lg:w-[350px]"
             style={{
@@ -36,7 +29,7 @@ const BasicCard = ({ src, fiyat, indirim, marka, description, id, defaultSize }:
           />
         </div>
 
-        <div className="uppercase products-slider-info-main product-list-item-info relative">
+          <div className="uppercase products-slider-info-main product-list-item-info relative">
           <h2
             className="brand"
             style={{
@@ -45,7 +38,7 @@ const BasicCard = ({ src, fiyat, indirim, marka, description, id, defaultSize }:
               fontWeight: 700,
             }}
           >
-            {marka}
+            {product_data.brand}
           </h2>
 
           <h3
@@ -57,10 +50,11 @@ const BasicCard = ({ src, fiyat, indirim, marka, description, id, defaultSize }:
               fontWeight: 400,
             }}
           >
-            {description} {sizes[defaultSize]}
+            {product_data.description} {sizes[product_data.defaultSize]}
           </h3>
+
           <div>
-            {indirim > 0 && (
+            {product_data.discount > 0 && (
               <div
                 className="flex items-center price-main"
                 style={{
@@ -80,21 +74,20 @@ const BasicCard = ({ src, fiyat, indirim, marka, description, id, defaultSize }:
                       borderRadius: "0px",
                     }}
                   >
-                    %{indirim}
+                    %{product_data.discount}
                   </div>
                   <div className="flex discount-price flex-col">
-                    <span>{formatCurrency(cmToSquareMeter(sizes[defaultSize]) * fiyat)}</span>
+                    <span>{formatCurrency(cmToSquareMeter(sizes[product_data.defaultSize]) * product_data.price)}</span>
                     <span style={{ color: "rgb(8, 8, 8)" }}>
-                      {formatCurrency(useDiscount(cmToSquareMeter(sizes[defaultSize]) * fiyat, indirim) as number)}
+                      {formatCurrency(useDiscount(cmToSquareMeter(sizes[product_data.defaultSize]) * product_data.price, product_data.discount) as number)}
                     </span>
                   </div>
                 </div>
               </div>
             )}
 
-            {indirim === 0 && (
+            {product_data.discount === 0 && (
               <div
-                className="price-main"
                 style={{
                   justifyContent: "unset",
                   fontWeight: 500,
@@ -102,12 +95,11 @@ const BasicCard = ({ src, fiyat, indirim, marka, description, id, defaultSize }:
               >
                 <div className="discount-price-main flex flex-row">
                   <div className="flex flex-col">
-                    <span></span>
                     <span
                       className="text-base lg:text-lg font-medium"
                       style={{ color: "rgb(8, 8, 8)" }}
                     >
-                      {formatCurrency(useDiscount(cmToSquareMeter(sizes[defaultSize]) * fiyat, indirim) as number)}
+                      {formatCurrency(cmToSquareMeter(sizes[product_data.defaultSize]) * product_data.price)}
                     </span>
                   </div>
                 </div>

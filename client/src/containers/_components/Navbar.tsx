@@ -15,10 +15,7 @@ const Navbar = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const basket = useBasket();
-  const data = getProduct(basket.products)
   const price = calculateTotalPrice(basket.products)
-
-  console.log(data)
 
   useEffect(() => {
     if (isExpanded) {

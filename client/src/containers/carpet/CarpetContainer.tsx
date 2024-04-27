@@ -95,15 +95,9 @@ const CarpetContainer = () => {
 
       {/* Cok Satanalar */}
       <HorizontalList settings={settings} header="ÇOK SATANLAR">
-        {products.map((product, product_index) => (
+        {products.filter((product) => product.discount > 0).sort((a, b) => b.discount - a.discount).slice(0, 19).map((product, product_index) => (
           <BasicCard
-            id={product_index}
-            src={product.banner}
-            fiyat={product.price}
-            indirim={product.discount}
-            marka={product.brand}
-            description={product.description}
-            defaultSize={product.defaultSize}
+            product_data={product}
             key={product_index}
           />
         ))}
@@ -111,16 +105,10 @@ const CarpetContainer = () => {
 
       <HorizontalList settings={settings} header="YENİ ÇIKANLAR">
         {/* Yeni Cikanlar */}
-        {products.reverse().map((product, product_index) => (
+        {products.filter((product) => product.discount === 0).map((product, product_index) => (
           <BasicCard
-            id={product_index}
-            src={product.banner}
-            fiyat={product.price}
-            indirim={product.discount}
-            marka={product.brand}
-            description={product.description}
-            defaultSize={product.defaultSize}
-            key={product_index}
+              product_data={product}
+              key={product_index}
           />
         ))}
       </HorizontalList>

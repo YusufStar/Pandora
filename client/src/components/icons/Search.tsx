@@ -5,7 +5,7 @@ const SearchIcon = () => {
     <svg
       stroke="#0a0809ff"
       fill="#0a0809ff"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 24 24"
       color="#0a0809ff"
       height="24"

@@ -34,13 +34,14 @@ export const getProduct = (products : Product[]) => {
     const new_data = products.map(item => {
         const product_id = item.product.product_id;
         const size_id = item.product.size_id;
+        const product_data = mock_products.filter((product) => product.id === Number(product_id))[0]
 
         const updatedItem = {
             ...item,
-            product: mock_products[product_id],
+            product: product_data,
             size: sizes[size_id],
-            m2: cmToSquareMeter(sizes[size_id]),
-            sizes: mock_products[product_id].sizes.map((id) => sizes[id])
+            m2: Number(cmToSquareMeter(sizes[size_id]).toFixed(2)),
+            sizes: product_data.sizes.map((id) => sizes[id])
         };
 
         return updatedItem;
@@ -67,10 +68,10 @@ export const calculateTotalPrice = (products : Product[]) => {
     data.forEach(item => {
         const product = item.product;
         const quantity = item.quantity;
-        const m2 = item.m2
+        const m2 = Number(item.m2.toFixed(2))
 
         // Ürünün indirimli fiyatını miktarla çarp ve toplam fiyata ekle
-        totalPrice += useDiscount((product.price * m2), product.discount) * quantity;
+        totalPrice += useDiscount(product.price * m2, product.discount) * quantity;
     });
 
     return formatCurrency(totalPrice);
