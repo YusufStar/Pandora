@@ -51,8 +51,12 @@ const ProductContainer = ({product_id}: Props) => {
 
     const handleAddBasket = () => {
         setLoading(true);
-        addToBasket(data)
-        setLoading(false)
+        const delay = () => new Promise(resolve => setTimeout(resolve, 1250));
+
+        delay().then(() => {
+            addToBasket(data)
+            setLoading(false)
+        })
     }
 
     return (
