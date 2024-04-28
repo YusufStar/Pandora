@@ -1,5 +1,6 @@
-import NextAuth from "next-auth";
+import NextAuth from 'next-auth'
 import authOptions from "@/lib/auth-options";
 
-const route = NextAuth(authOptions)
-export {route as GET, route as PATH}
+const handler = NextAuth(authOptions)
+
+export { handler as GET, handler as POST
