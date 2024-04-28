@@ -3,6 +3,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
 import {compare} from "bcrypt";
 
+interface Usertype {
+    id: number;     username: string;     email: string;     password: string;     createdAt: Date;     updatedAt: Date;
+}
+
 export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
@@ -28,22 +32,24 @@ export const authOptions: NextAuthOptions = {
                     return null
                 }
 
-                const user = await prisma.user.findUnique({
+                const emailFinded = await prisma.user.findUnique({
                     where: {
-                        OR: [
-                            {
-                                email: credentials?.EmailOrUsername,
-                            },
-                            {
-                                username: credentials?.EmailOrUsername,
-                            }
-                        ]
-                    }
-                })
+                        email: credentials?.EmailOrUsername
+                    },
+                });
 
-                if(!user) {
+                const usernameFinded = await prisma.user.findUnique({
+                    where: {
+                        username: credentials?.EmailOrUsername
+                    },
+                });
+
+                if(!usernameFinded && !emailFinded) {
                     return null
                 }
+
+                const u = usernameFinded ?? emailFinded
+                const user = u as Usertype
 
                 const isValidPassword = await compare(
                     credentials.password,
@@ -82,9 +88,12 @@ export const authOptions: NextAuthOptions = {
                     randomKey: u.randomKey
                 }
             }
+
+            return {
+                token: null
+            }
         }
     }
 }
 
-const handler = NextAuth(authOptions);
-export {handler as GET, handler as POST};
+export default NextAuth(authOptions);
