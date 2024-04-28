@@ -1,9 +1,13 @@
-import React from "react";
+"use client"
+import React, {useEffect} from "react";
+import {redirect} from "next/navigation";
 
 const Page = () => {
-  return <main>
-      page
-  </main>;
+useEffect(() => {
+    redirect("/carpet")
+} , [])
+
+    return <></>
 };
 
 export default Page;
