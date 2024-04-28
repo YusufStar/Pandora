@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 
 const CarpetContainer = dynamic(() => import("@/containers/carpet/CarpetContainer"), { ssr: false })
 
-const Page = () => {
+const Page = async () => {
   return <CarpetContainer />;
 };
 

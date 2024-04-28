@@ -13,3 +13,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model File {
+  id             Int       @id @default(autoincrement())
+  url            String
+  file_name      String
+  file_extension String
+  Product        Product[]
+}
+
+model Size {
+  id         Int       @id @default(autoincrement())
+  dimensions String
+  product    Product[]
+}
+
+model Product {
+  id            Int     @id @default(autoincrement())
+  banner        File    @relation(fields: [fileId], references: [id])
+  price         Int
+  images        Json[] // Json olarak resimlerin URL'leri
+  discount      Int
+  brand         String
+  description   String
+  defaultSizeId String?
+
+  sizes    Size[]
+  fileId   Int
+  Basket   Basket? @relation(fields: [basketId], references: [id])
+  basketId Int?
+  Orders   Orders? @relation(fields: [ordersId], references: [id])
+  ordersId Int?
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  email    String @unique
+  password String
+
+  baskets Basket[]
+  Orders  Orders[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Basket {
+  id         Int       @id @default(autoincrement())
+  totalPrice Int
+  products   Product[]
+  user       User?     @relation(fields: [userId], references: [id])
+  userId     Int?
+}
+
+model Orders {
+  id         Int       @id @default(autoincrement())
+  totalPrice Int
+  products   Product[]
+  user       User?     @relation(fields: [userId], references: [id])
+  userId     Int?
+}
