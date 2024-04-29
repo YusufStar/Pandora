@@ -5,9 +5,13 @@ import HorizontalList from "@/components/sliders/HorizontalList";
 import useDeviceType from "@/hooks/DeviceType";
 import CarpetInfos from "./_components/CarpetInfos";
 import {products} from "@/zustand/mock-products";
+import {useSession} from "next-auth/react";
 
 const CarpetContainer = () => {
     const {isMobile} = useDeviceType();
+    const {data} = useSession()
+
+    console.log(data)
 
     const slides = !isMobile
         ? [

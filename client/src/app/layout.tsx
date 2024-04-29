@@ -21,7 +21,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <LoadingContainer>
             {children}
         </LoadingContainer>
-            <ToastProvider />
+
+        <ToastProvider />
       </body>
     </html>
   );

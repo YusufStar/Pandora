@@ -1,115 +1,81 @@
-// Import necessary modules and dependencies
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { compare } from 'bcrypt'
+import NextAuth, { type NextAuthOptions } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import prisma from "@/lib/prisma";
-import { compare } from "bcrypt";
 
-// Define the UserType interface
-interface UserType {
-    id: number;
-    username: string;
-    email: string;
-    password: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-// Define the NextAuth options
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
     session: {
-        strategy: "jwt",
+        strategy: 'jwt'
     },
     providers: [
         CredentialsProvider({
-            name: "Sign in",
+            name: 'Sign in',
             credentials: {
-                EmailOrUsername: {
-                    label: "Email or username",
-                    type: "text",
-                    placeholder: "Email or username",
+                email: {
+                    label: 'Email',
+                    type: 'email',
+                    placeholder: 'hello@example.com'
                 },
-                password: {
-                    label: "Password",
-                    type: "password",
-                    placeholder: "Password",
-                }
+                password: { label: 'Password', type: 'password' }
             },
-            // Authorize function
             // @ts-ignore
             async authorize(credentials) {
-                // Validation checks
-                if (!credentials?.EmailOrUsername || !credentials.password) {
-                    return null;
+                if (!credentials?.email || !credentials.password) {
+                    return null
                 }
 
-                // Find user by email
-                const emailFinded = await prisma.user.findUnique({
+                const user = await prisma.user.findUnique({
                     where: {
-                        email: credentials?.EmailOrUsername
-                    },
-                });
+                        email: credentials.email
+                    }
+                })
 
-                // Find user by username
-                const usernameFinded = await prisma.user.findUnique({
-                    where: {
-                        username: credentials?.EmailOrUsername
-                    },
-                });
-
-                // If user not found by email or username, return null
-                if (!usernameFinded && !emailFinded) {
-                    return null;
+                if (!user) {
+                    return null
                 }
 
-                // Determine user object based on which search was successful
-                const user = usernameFinded ?? emailFinded as UserType;
-
-                // Compare passwords
-                const isValidPassword = await compare(
+                const isPasswordValid = await compare(
                     credentials.password,
                     user.password
-                );
+                )
 
-                // If password is invalid, return null
-                if (!isValidPassword) {
-                    return null;
+                if (!isPasswordValid) {
+                    return null
                 }
 
-                // Return user object with additional data
+                delete user["password"]
+
                 return {
                     ...user,
-                    randomKey: "Hey this is cool."
-                };
+                    randomKey: 'Hey cool'
+                }
             }
         })
     ],
     callbacks: {
         session: ({ session, token }) => {
+            console.log('Session Callback', { session, token })
             return {
                 ...session,
                 user: {
-                    ...session.user,
-                    id: token.id,
-                    randomKey: token.randomKey
+                    ...token
                 }
-            };
+            }
         },
         jwt: ({ token, user }) => {
+            console.log('JWT Callback', { token, user })
             if (user) {
-                const u = user as any;
-
+                const u = user as unknown as any
                 return {
                     ...token,
-                    id: u.id,
+                    ...user,
                     randomKey: u.randomKey
-                };
+                }
             }
-
-            return {
-                token: null
-            };
+            return token
         }
     }
-};
+}
 
-export default authOptions
+const handler = NextAuth(authOptions)
+export { handler as GET, handler as POST }
