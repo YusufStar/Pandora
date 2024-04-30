@@ -7,6 +7,10 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt'
     },
+    pages: {
+        signIn: "/login",
+        newUser: "/register",
+    },
     providers: [
         CredentialsProvider({
             name: 'Sign in',
@@ -43,11 +47,14 @@ export const authOptions: NextAuthOptions = {
                     return null
                 }
 
+                // @ts-ignore
                 delete user["password"]
+
+                const randomKey = crypto.randomUUID()
 
                 return {
                     ...user,
-                    randomKey: 'Hey cool'
+                    randomKey: randomKey
                 }
             }
         })
