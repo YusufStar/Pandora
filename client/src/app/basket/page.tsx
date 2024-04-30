@@ -20,7 +20,7 @@ const BasketPage = () => {
     return <div className={"flex flex-col gap-4 p-12"}>
         {products.map((product, index) => {
             return (
-                <div className={"flex flex-col gap-2 p-2.5 rounded border w-full max-w-sm"}>
+                <div key={index} className={"flex flex-col gap-2 p-2.5 rounded border w-full max-w-sm"}>
                     <span className={"text-sm font-medium"}>{product.product.description} - {product.size.dimensions}</span>
 
                     <div>
