@@ -2,46 +2,26 @@
 import {create} from 'zustand';
 import {products as mock_products, sizes} from "@/zustand/mock-products";
 
-type Product = {
-    product: any;
-    quantity: number;
-};
-
 type BasketStore = {
-    products: Product[];
-    addToBasket: (product: Product) => void;
-    removeFromBasket: (productId: number) => void;
-    clearBasket: () => void;
+    products: any[];
+    setBasket: (product: any[]) => void;
 };
 
 const useBasketStore = create<BasketStore>((set) => ({
     products: [],
-    addToBasket: (product) =>
+    setBasket: (products) =>
         set((state) => ({
-            products: [...state.products, product],
-        })),
-    removeFromBasket: (productId) =>
-        set((state) => ({
-            products: state.products.filter((_, index) => index !== productId),
-        })),
-    clearBasket: () =>
-        set({
-            products: [],
-        }),
+            products: products,
+        }))
 }));
 
-export const getProduct = (products: Product[]) => {
+export const getProduct = (products: any[]) => {
     const new_data = products.map(item => {
-        const product_id = item.product.product_id;
-        const size_id = item.product.size_id;
-        const product_data = mock_products.filter((product) => product.id === Number(product_id))[0]
-
         const updatedItem = {
             ...item,
-            product: product_data,
-            size: sizes[size_id],
-            m2: Number(cmToSquareMeter(sizes[size_id]).toFixed(2)),
-            sizes: product_data.sizes.map((id) => sizes[id])
+            product: item,
+            size: item.size.dimensions,
+            m2: cmToSquareMeter(item.size.dimensions)
         };
 
         return updatedItem;
@@ -56,22 +36,30 @@ export function cmToSquareMeter(dimensions: string): number {
     return (width / 100) * (height / 100);
 }
 
-export const calculateTotalPrice = (products: Product[]) => {
+export const calculateTotalPrice = (products: any[]) => {
     const data = getProduct(products)
     let totalPrice = 0;
 
-    if (data.length < 1) {
+    if (data.length === 0) {
         return formatCurrency(0)
     }
 
     // Sepetteki her ürünün fiyatını topla
     data.forEach(item => {
-        const product = item.product;
         const quantity = item.quantity;
         const m2 = Number(item.m2.toFixed(2))
+        const product = item.product
 
-        // Ürünün indirimli fiyatını miktarla çarp ve toplam fiyata ekle
-        totalPrice += useDiscount(product.price * m2, product.discount) * quantity;
+        console.log(item)
+
+        console.log({
+            price: product.product.price,
+            m2,
+            discount: product.product.discount,
+            quantity: quantity
+        })
+
+        totalPrice += useDiscount(product.product.price * m2, product.product.discount) * quantity;
     });
 
     return formatCurrency(totalPrice);

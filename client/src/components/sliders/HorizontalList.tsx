@@ -8,7 +8,7 @@ const HorizontalList = ({
   header,
   settings,
 }: {
-  children: ReactNode[];
+  children: ReactNode | ReactNode[];
   header?: string;
   settings: any;
 }) => {

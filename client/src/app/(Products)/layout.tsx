@@ -1,9 +1,24 @@
+"use client"
 import dynamic from 'next/dynamic'
 const Footer = dynamic(() => import('@/containers/_components/Footer'), { ssr: true })
 const Navbar = dynamic(() => import('@/containers/_components/Navbar'), { ssr: true })
-import React, { ReactNode } from "react";
+import React, {ReactNode, useEffect} from "react";
+import useBasket from "@/zustand/useBasket";
 
 const Layout = ({ children }: { children: ReactNode }) => {
+    const {setBasket} = useBasket()
+
+    const getData = async () => {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`).then((x) => x.json()).then(({data}) => {
+            setBasket(data)
+            console.log(data)
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
   return (
     <div className="w-full h-full min-h-screen flex flex-col">
       <a

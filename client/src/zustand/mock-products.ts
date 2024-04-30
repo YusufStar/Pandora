@@ -22,7 +22,7 @@ export const products = [
         "defaultSize": 4,
         "id": 1,
         "sizes": [
-            0,
+            1,
             2,
             4
         ]
@@ -76,10 +76,10 @@ export const products = [
         "discount": 17,
         "brand": "Majolika",
         "description": "Modern Desenli Halı Alvin AL01A",
-        "defaultSize": 0,
+        "defaultSize": 2,
         "id": 3,
         "sizes": [
-            0,
+            2,
             1,
             3,
             4
@@ -108,7 +108,6 @@ export const products = [
         "defaultSize": 6,
         "id": 4,
         "sizes": [
-            0,
             2,
             5,
             6
@@ -137,7 +136,6 @@ export const products = [
         "defaultSize": 4,
         "id": 5,
         "sizes": [
-            0,
             1,
             2,
             4,
@@ -198,7 +196,6 @@ export const products = [
         "defaultSize": 4,
         "id": 7,
         "sizes": [
-            0,
             2,
             4,
             6
@@ -256,7 +253,6 @@ export const products = [
         "defaultSize": 2,
         "id": 9,
         "sizes": [
-            0,
             2,
             3,
             6
@@ -314,7 +310,6 @@ export const products = [
         "defaultSize": 6,
         "id": 11,
         "sizes": [
-            0,
             3,
             4,
             6
@@ -430,7 +425,6 @@ export const products = [
         "defaultSize": 6,
         "id": 15,
         "sizes": [
-            0,
             3,
             5,
             6
@@ -488,7 +482,6 @@ export const products = [
         "defaultSize": 1,
         "id": 17,
         "sizes": [
-            0,
             2,
             1,
             6

@@ -12,8 +12,6 @@ export default withAuth(async function middleware(req) {
     // Sayfanın URL'ini alıyoruz, ve izin verdiğimiz path ile eşleşip eşleşmediğini kontrol ediyoruz.
     const currentPath = req.nextUrl.pathname;
 
-    console.log(session)
-
     if (!session) {
         if (currentPath !== "/login" && currentPath !== "/register") {
             return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/login`);

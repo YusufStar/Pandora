@@ -1,0 +1,45 @@
+[
+  {
+    "id": 3,
+    "quantity": 1,
+    "sizeId": 3,
+    "userId": 5,
+    "productId": 122,
+    "product": {
+      "id": 122,
+      "fileId": 122,
+      "price": 800,
+      "images": [
+        {
+          "url": "https://newimage.com/41.jpg"
+        },
+        {
+          "url": "https://newimage.com/42.jpg"
+        },
+        {
+          "url": "https://newimage.com/43.jpg"
+        },
+        {
+          "url": "https://newimage.com/44.jpg"
+        }
+      ],
+      "discount": 0,
+      "brand": "NewBrand",
+      "description": "Yeni Modern Desenli Halı 10",
+      "defaultSizeId": 3,
+      "ordersId": null
+    },
+    "user": {
+      "id": 5,
+      "username": "Yusuf",
+      "email": "yyilidz518@gmail.com",
+      "password": "$2b$10$cJs6b946PfXkHNsL.nVkJ.4ezOQbqtBn/io3tQG0u23//Tcz7T2LS",
+      "createdAt": "2024-04-29T18:50:52.148Z",
+      "updatedAt": "2024-04-29T18:50:52.148Z"
+    },
+    "size": {
+      "id": 3,
+      "dimensions": "200 x 290"
+    }
+  }
+]

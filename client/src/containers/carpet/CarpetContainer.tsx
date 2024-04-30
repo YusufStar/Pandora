@@ -1,17 +1,13 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import BasicCard from "@/components/cards/BasicCard";
 import HorizontalList from "@/components/sliders/HorizontalList";
 import useDeviceType from "@/hooks/DeviceType";
 import CarpetInfos from "./_components/CarpetInfos";
-import {products} from "@/zustand/mock-products";
-import {useSession} from "next-auth/react";
 
 const CarpetContainer = () => {
+    const [products, setProducts] = useState(null);
     const {isMobile} = useDeviceType();
-    const {data} = useSession()
-
-    console.log(data)
 
     const slides = !isMobile
         ? [
@@ -82,6 +78,15 @@ const CarpetContainer = () => {
         slidesToScroll: 1,
     };
 
+    const getData = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`).then((x) => x.json())
+        setProducts(response.data)
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
     return (
         <div className="h-full w-full flex flex-col">
             <div className={`home-slider-main`}>
@@ -99,17 +104,21 @@ const CarpetContainer = () => {
 
             {/* Cok Satanalar */}
             <HorizontalList settings={settings} header="ÇOK SATANLAR">
-                {products.filter((product) => product.discount > 0).sort((a, b) => b.discount - a.discount).slice(0, 19).map((product, product_index) => (
-                    <BasicCard
-                        product_data={product}
-                        key={product_index}
-                    />
-                ))}
+                   {
+                       // @ts-ignore
+                       products && products.filter((product) => product.discount > 0).sort((a, b) => b.discount - a.discount).slice(0, 19).map((product, product_index) => (
+                           <BasicCard
+                               product_data={product}
+                               key={product_index}
+                           />
+                       ))}
             </HorizontalList>
 
             <HorizontalList settings={settings} header="YENİ ÇIKANLAR">
                 {/* Yeni Cikanlar */}
-                {products.filter((product) => product.discount === 0).map((product, product_index) => (
+                {
+                    // @ts-ignore
+                    products && products.filter((product) => product.discount === 0).map((product, product_index) => (
                     <BasicCard
                         product_data={product}
                         key={product_index}

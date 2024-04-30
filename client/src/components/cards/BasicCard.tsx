@@ -1,9 +1,8 @@
 import Link from "next/link";
 import {cmToSquareMeter, formatCurrency, useDiscount} from "@/zustand/useBasket";
-import {products, sizes} from "@/zustand/mock-products";
 
 type Props = {
-    product_data: typeof products[0];
+    product_data: any;
 };
 
 const BasicCard = ({ product_data }: Props) => {
@@ -13,7 +12,7 @@ const BasicCard = ({ product_data }: Props) => {
         <div className="!px-4 relative">
           <img
             draggable={false}
-            src={product_data.banner}
+            src={product_data.banner.url}
             alt={product_data.description}
             decoding="async"
             className="w-[210px] sm:w-[300px] md:w-[325px] lg:w-[350px]"
@@ -50,7 +49,9 @@ const BasicCard = ({ product_data }: Props) => {
               fontWeight: 400,
             }}
           >
-            {product_data.description} {sizes[product_data.defaultSize]}
+            {product_data.description}
+              {" - "}
+              {product_data.defaultSizeId.dimensions}
           </h3>
 
           <div>
@@ -77,9 +78,9 @@ const BasicCard = ({ product_data }: Props) => {
                     %{product_data.discount}
                   </div>
                   <div className="flex discount-price flex-col">
-                    <span>{formatCurrency(cmToSquareMeter(sizes[product_data.defaultSize]) * product_data.price)}</span>
+                    <span>{formatCurrency(cmToSquareMeter(product_data.defaultSizeId.dimensions) * product_data.price)}</span>
                     <span style={{ color: "rgb(8, 8, 8)" }}>
-                      {formatCurrency(useDiscount(cmToSquareMeter(sizes[product_data.defaultSize]) * product_data.price, product_data.discount) as number)}
+                      {formatCurrency(useDiscount(cmToSquareMeter(product_data.defaultSizeId.dimensions) * product_data.price, product_data.discount) as number)}
                     </span>
                   </div>
                 </div>
@@ -99,7 +100,7 @@ const BasicCard = ({ product_data }: Props) => {
                       className="text-base lg:text-lg font-medium"
                       style={{ color: "rgb(8, 8, 8)" }}
                     >
-                      {formatCurrency(cmToSquareMeter(sizes[product_data.defaultSize]) * product_data.price)}
+                      {formatCurrency(cmToSquareMeter(product_data.defaultSizeId.dimensions) * product_data.price)}
                     </span>
                   </div>
                 </div>
