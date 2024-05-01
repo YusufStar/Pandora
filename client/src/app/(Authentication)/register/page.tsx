@@ -34,7 +34,7 @@ const RegisterPage = () => {
         setLoading(true)
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+            const response = await fetch(`/api/auth/register`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 mode: "no-cors",

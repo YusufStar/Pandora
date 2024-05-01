@@ -27,7 +27,7 @@ const ProductContainer = ({product_id}: Props) => {
     })
 
     const getData = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?productId=${product_id}`, {
+        const response = await fetch(`/api/products?productId=${product_id}`, {
             mode: "no-cors",
         }).then((x) => x.json())
         setProductData(response.data)
@@ -68,7 +68,7 @@ const ProductContainer = ({product_id}: Props) => {
     const handleAddBasket = async () => {
         setLoading(true);
 
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`, {
+        await fetch(`/api/basket`, {
             method: "POST",
             body: JSON.stringify({
                 productId: productData.id,
@@ -78,7 +78,7 @@ const ProductContainer = ({product_id}: Props) => {
         }).then((x) => {
             x.json()
         }).then(async () => {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`, {
+            await fetch(`/api/basket`, {
                 mode: "no-cors",
             }).then((x) => x.json()).then(({data}) => {
                 setLoading(false)

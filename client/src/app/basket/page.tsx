@@ -7,7 +7,7 @@ const BasketPage = () => {
     const {setBasket, products } = useBasket()
 
     const getData = async () => {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`, {
+        await fetch(`/api/basket`, {
             mode: "no-cors",
         }).then((x) => x.json()).then(({data}) => {
             setBasket(data)
