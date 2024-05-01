@@ -45,6 +45,7 @@ const ProductContainer = ({product_id}: Props) => {
     }, [])
 
     const {isMobile} = useDeviceType();
+
     const settings = {
         dots: isMobile,
         arrows: !isMobile,
@@ -81,8 +82,8 @@ const ProductContainer = ({product_id}: Props) => {
             await fetch(`/api/basket`, {
                 mode: "no-cors",
             }).then((x) => x.json()).then(({data}) => {
-                setLoading(false)
                 setBasket(data)
+                setLoading(false)
             })
         }).catch(() => {
             setLoading(false)
@@ -151,9 +152,9 @@ const ProductContainer = ({product_id}: Props) => {
                                                     %{productData.discount}
                                                 </div>
                                                 <div className="flex discount-price flex-col">
-                                                    <span>{formatCurrency(cmToSquareMeter(productData.defaultSizeId.dimensions) * productData.price)}</span>
+                                                    <span>{formatCurrency(cmToSquareMeter(productData.sizes.filter((size: any) => size.id === data.product.size_id)[0].dimensions) * productData.price)}</span>
                                                     <span style={{color: "rgb(8, 8, 8)"}}>
-                                                {formatCurrency(useDiscount(Number(cmToSquareMeter(productData.defaultSizeId.dimensions).toFixed(2)) * productData.price, productData.discount) as number)}
+                                                {formatCurrency(useDiscount(Number(cmToSquareMeter(productData.sizes.filter((size: any) => size.id === data.product.size_id)[0].dimensions).toFixed(2)) * productData.price, productData.discount) as number)}
                                             </span>
                                                 </div>
                                             </div>
@@ -173,7 +174,7 @@ const ProductContainer = ({product_id}: Props) => {
                                                 className="text-base lg:text-lg font-medium"
                                                 style={{color: "rgb(8, 8, 8)"}}
                                             >
-                                                {formatCurrency(useDiscount(Number(cmToSquareMeter(productData.defaultSizeId.dimensions).toFixed(2)) * productData.price, productData.discount) as number)}
+                                                {formatCurrency(Number(cmToSquareMeter(productData.sizes.filter((size: any) => size.id === data.product.size_id)[0].dimensions).toFixed(2)) * productData.price)}
                                             </span>
                                                 </div>
                                             </div>

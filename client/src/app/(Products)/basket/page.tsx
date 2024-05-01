@@ -80,10 +80,10 @@ const BasketPage = () => {
 
             <div className="flex flex-col">
                 {!product.discount || product.discount !== 0 &&
-                    <span className={"text-[#8a8b94] text-[13px] sm:text-[14px] line-through"}>{formatCurrency(cmToSquareMeter(size.dimensions) * product.price)}</span>}
+                    <span className={"text-[#8a8b94] text-[13px] sm:text-[14px] line-through"}>{formatCurrency(cmToSquareMeter(size.dimensions) * product.price * quantity)}</span>}
 
                 <span className={"text-[13px] sm:text-[14px] font-medium text-black"}>
-                    {formatCurrency(useDiscount(Number(cmToSquareMeter(size.dimensions).toFixed(2)) * product.price, product.discount) as number)}
+                    {formatCurrency(useDiscount(Number(cmToSquareMeter(size.dimensions).toFixed(2)) * product.price * quantity, product.discount) as number)}
                 </span>
             </div>
         </div>

@@ -50,15 +50,6 @@ export const calculateTotalPrice = (products: any[]) => {
         const m2 = Number(item.m2.toFixed(2))
         const product = item.product
 
-        console.log(item)
-
-        console.log({
-            price: product.product.price,
-            m2,
-            discount: product.product.discount,
-            quantity: quantity
-        })
-
         totalPrice += useDiscount(product.product.price * m2, product.product.discount) * quantity;
     });
 
