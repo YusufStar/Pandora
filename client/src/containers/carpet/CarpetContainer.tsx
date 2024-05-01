@@ -40,7 +40,7 @@ const CarpetContainer = () => {
         ];
 
     const settings = {
-        infinite: false,
+        infinite: true,
         slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
