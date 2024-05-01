@@ -36,7 +36,8 @@ const RegisterPage = () => {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
                 method: "POST",
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
+                mode: "no-cors",
             }).then((x) => x.json())
 
             if (response.type === "error") {
