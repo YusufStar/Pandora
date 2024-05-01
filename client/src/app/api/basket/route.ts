@@ -25,7 +25,12 @@ export async function GET(request: Request) {
             }
         },
         include: {
-            product: true,
+            product: {
+                include: {
+                    sizes: true,
+                    banner: true,
+                }
+            },
             user: true,
             size: true
         }
