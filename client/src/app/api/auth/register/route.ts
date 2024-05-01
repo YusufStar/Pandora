@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 import prisma from '@/lib/prisma';
 import { NextResponse } from "next/server";
-import corsMiddleware from "@/cors";
 
 const saltRounds = 10;
 
