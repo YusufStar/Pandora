@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt';
 import prisma from '@/lib/prisma';
 import { NextResponse } from "next/server";
+import corsMiddleware from "@/cors";
 
 const saltRounds = 10;
 
-export async function POST ( req: Request) {
+export async function POST ( req: Request, response: Response) {
         const { username, password, email } = await req.json();
 
         if (!username || !password || !email) {
