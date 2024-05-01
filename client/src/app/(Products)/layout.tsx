@@ -9,7 +9,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
     const {setBasket} = useBasket()
 
     const getData = async () => {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`).then((x) => x.json()).then(({data}) => {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`, {
+            mode: "no-cors",
+        }).then((x) => x.json()).then(({data}) => {
             setBasket(data)
             console.log(data)
         })

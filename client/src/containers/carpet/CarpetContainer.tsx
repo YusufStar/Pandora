@@ -79,7 +79,9 @@ const CarpetContainer = () => {
     };
 
     const getData = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`).then((x) => x.json())
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+            mode: "no-cors",
+        }).then((x) => x.json())
         setProducts(response.data)
     }
 
