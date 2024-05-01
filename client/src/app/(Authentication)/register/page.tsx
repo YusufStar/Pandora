@@ -37,6 +37,11 @@ const RegisterPage = () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
                 method: "POST",
                 body: JSON.stringify(data),
+                headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
             }).then((x) => x.json())
 
             if (response.type === "error") {

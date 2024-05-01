@@ -27,7 +27,13 @@ const ProductContainer = ({product_id}: Props) => {
     })
 
     const getData = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?productId=${product_id}`).then((x) => x.json())
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?productId=${product_id}`, {
+            headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+        }).then((x) => x.json())
         setProductData(response.data)
         setData((prev) => ({
             ...prev,
@@ -72,11 +78,22 @@ const ProductContainer = ({product_id}: Props) => {
                 productId: productData.id,
                 quantity: data.quantity,
                 sizeId: data.product.size_id
-            })
+            }),
+            headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
         }).then((x) => {
             x.json()
         }).then(async () => {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`).then((x) => x.json()).then(({data}) => {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`, {
+                headers: {
+                    "Access-Control-Allow-Headers" : "Content-Type",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                },
+            }).then((x) => x.json()).then(({data}) => {
                 setLoading(false)
                 setBasket(data)
             })

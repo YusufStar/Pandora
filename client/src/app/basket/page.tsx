@@ -7,7 +7,13 @@ const BasketPage = () => {
     const {setBasket, products } = useBasket()
 
     const getData = async () => {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`).then((x) => x.json()).then(({data}) => {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/basket`, {
+            headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+        }).then((x) => x.json()).then(({data}) => {
             setBasket(data)
             console.log(data)
         })
