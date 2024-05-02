@@ -5,7 +5,8 @@ import { NextResponse } from "next/server";
 const saltRounds = 10;
 
 export async function POST ( req: Request, response: Response) {
-        const { username, password, email } = await req.json();
+        const { username, password, email: x } = await req.json();
+        const email = x.toLowerCase();
 
         if (!username || !password || !email) {
             return NextResponse.json({
