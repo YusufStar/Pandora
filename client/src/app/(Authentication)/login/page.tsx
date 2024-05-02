@@ -8,11 +8,11 @@ import Image from "next/image";
 import React, {useState} from "react";
 import {Loader2} from "lucide-react";
 import {toast} from "sonner";
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import {signIn} from 'next-auth/react';
+import {useRouter} from 'next/navigation';
 
 const RegisterPage = () => {
-    const { push } = useRouter();
+    const {push} = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
     const [data, setData] = useState({
         email: "",
@@ -71,7 +71,7 @@ const RegisterPage = () => {
                     <Input
                         value={data.email}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+                            setData((prev) => ({...prev, [e.target.name]: e.target.value}));
                         }}
                         type="text"
                         id="email"
@@ -90,7 +90,7 @@ const RegisterPage = () => {
                     <Input
                         value={data.password}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+                            setData((prev) => ({...prev, [e.target.name]: e.target.value}));
                         }}
                         type="password"
                         id="password"
