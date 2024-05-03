@@ -100,6 +100,7 @@ const ProductContainer = ({product_id}: Props) => {
                                 className="!max-h-[400px] lg:!max-h-[800px] image-slider product-detail-page-slider relative">
                                 <HorizontalList settings={settings}>
                                     {
+                                        // @ts-ignore
                                         productData.images.map(({url}, index) => {
                                             return <img
                                                 key={index + "product-detail-image"}
