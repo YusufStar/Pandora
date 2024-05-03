@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import useDeviceType from "@/hooks/DeviceType";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {toast} from "sonner";
-import useBasket, {cmToSquareMeter, formatCurrency, getProduct, useDiscount} from "@/zustand/useBasket";
+import useBasket, {cmToSquareMeter, formatCurrency, useDiscount} from "@/zustand/useBasket";
 import {Loader2} from "lucide-react";
 
 type Props = {
@@ -100,15 +100,14 @@ const ProductContainer = ({product_id}: Props) => {
                                 className="!max-h-[400px] lg:!max-h-[800px] image-slider product-detail-page-slider relative">
                                 <HorizontalList settings={settings}>
                                     {
-                                        // @ts-ignore
                                         productData.images.map(({url}, index) => {
-                                        return <img
-                                            key={index + "product-detail-image"}
-                                            className="h-[350px] lg:h-[800px] object-contain"
-                                            alt=""
-                                            src={url}
-                                        />
-                                    })}
+                                            return <img
+                                                key={index + "product-detail-image"}
+                                                className="h-[350px] lg:h-[800px] object-contain"
+                                                alt=""
+                                                src={url}
+                                            />
+                                        })}
                                 </HorizontalList>
                             </div>
                         </div>

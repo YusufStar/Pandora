@@ -63,6 +63,7 @@ const SearchPage = () => {
     };
 
     const applyFiltersWithProducts = () => {
+        // @ts-ignore
         let filteredProducts = [...products];
         for (const filterField in activeFilters) {
             const activeFilterValues = Object.keys(activeFilters[filterField]).filter(key => activeFilters[filterField][key]);
