@@ -63,13 +63,17 @@ const SearchPage = () => {
     };
 
     const applyFiltersWithProducts = () => {
-        // @ts-ignore
-        let filteredProducts = [...products];
-        for (const filterField in activeFilters) {
-            const activeFilterValues = Object.keys(activeFilters[filterField]).filter(key => activeFilters[filterField][key]);
-            filteredProducts = filteredProducts.filter(product => activeFilterValues.includes(product[filterField]));
+        //@ts-ignore
+        if (Object.keys(activeFilters).length === 0) {
+            return products;
+        } else {
+            let filteredProducts = [...products];
+            for (const filterField in activeFilters) {
+                const activeFilterValues = Object.keys(activeFilters[filterField]).filter(key => activeFilters[filterField][key]);
+                filteredProducts = filteredProducts.filter(product => activeFilterValues.includes(product[filterField]));
+            }
+            return filteredProducts;
         }
-        return filteredProducts;
     };
 
     return (
