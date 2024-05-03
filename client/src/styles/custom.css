@@ -1555,3 +1555,95 @@ span:first-child {
     margin-bottom: 10px;
     color: #636363
 }
+
+.desktop-filters .filter-type-box {
+    padding: 5px 10px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 40px;
+    height: 40px;
+    margin-bottom: 10px
+}
+
+.desktop-filters .filter-type-box.active {
+    background-color: var(--primary-color)!important;
+    color: #fff;
+    font-weight: 700
+}
+
+.desktop-filters .filter-type-swatch {
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 50%
+}
+
+.desktop-filters .swatch-image {
+    border-radius: 50%!important;
+}
+
+.desktop-filters .filter-type-swatch.active {
+    border: 2px solid #717171;
+}
+
+.desktop-filters .filter-type-swatch-check {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    color: #e4e4e4;
+    font-weight: 900;
+}
+
+.desktop-filters .filter-type-list-checkbox {
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    background-color: #ebeef5;
+}
+
+.desktop-filters .filter-type-list-checkbox.checked {
+    background-color: var(--primary-color);
+}
+
+.desktop-filters .filter-type-list-check {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    color: #fff;
+    font-weight: 900;
+}
+
+.desktop-filters .sticky-filter::-webkit-scrollbar {
+    width: 5px;
+}
+
+.desktop-filters .sticky-filter::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.desktop-filters .sticky-filter::-webkit-scrollbar-thumb {
+    background: #b6b6b6;
+    border-radius: 10px;
+}
+
+.desktop-filters .sticky-filter::-webkit-scrollbar-thumb:hover {
+    background: #747474;
+}
+
+.desktop-filters .sticky-filter {
+    position: sticky;
+    top: 100px;
+    height: 85vh;
+    overflow-y: auto!important;
+    overflow-x: hidden!important;
+}
