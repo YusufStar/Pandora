@@ -10,9 +10,9 @@ const SearchPage = () => {
     const [filterItems, setFilterItems] = useState<null | any[]>([]);
     const [activeFilters, setActiveFilters] = useState<null | any>({});
     const [expanded, setExpanded] = useState<any>({});
+    const [search, setSearch] = useState<string>("");
 
     const params = useSearchParams();
-    const search = params.get("s") as string;
 
     const getData = async () => {
         const response = await fetch(`/api/products`, {
@@ -23,6 +23,8 @@ const SearchPage = () => {
 
     useEffect(() => {
         getData();
+
+        setSearch(params.get("s") as string)
     }, []);
 
     useEffect(() => {
@@ -70,8 +72,12 @@ const SearchPage = () => {
             //@ts-ignore
             let filteredProducts = [...products];
             for (const filterField in activeFilters) {
-                const activeFilterValues = Object.keys(activeFilters[filterField]).filter(key => activeFilters[filterField][key]);
-                filteredProducts = filteredProducts.filter(product => activeFilterValues.includes(product[filterField]));
+                if (Object.values(activeFilters[filterField]).some((x) => x)) {
+                    const activeFilterValues = Object.keys(activeFilters[filterField]).filter(key => activeFilters[filterField][key]);
+                    filteredProducts = filteredProducts.filter(product => activeFilterValues.includes(product[filterField]));
+                } else {
+                    filteredProducts = [...products]
+                }
             }
             return filteredProducts;
         }
@@ -87,7 +93,17 @@ const SearchPage = () => {
                 <div className="flex items-centers flex-col sm:flex-row md:flex-row lg:flex-row">
                     <div className="search-main w-full sm:w-64 md:w-64 lg:w-64 ">
                         <div className="px-4 relative">
-                            Search
+                            <input type="text"
+                                   value={search}
+                                   onChange={(e) => setSearch(e.target.value)}
+                                   className="search-input outline-none"
+                                   placeholder="Ne aramıştınız?"/>
+
+                            <span onClick={() => setSearch("")} className="search-icon"><svg stroke="currentColor" fill="currentColor"
+                                                               stroke-width="0" viewBox="0 0 24 24" height="1em"
+                                                               width="1em" xmlns="http://www.w3.org/2000/svg"><path
+                                fill="none" d="M0 0h24v24H0z"></path><path
+                                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></span>
                         </div>
                     </div>
 
