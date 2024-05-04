@@ -53,11 +53,21 @@ export async function POST(request: Request) {
 
     const {newData} = await request.json()
 
-    console.log(newData)
-
-    // const data = await prisma.product.create({
-    //    data: newData
-    // })
+    const data = await prisma.product.create({
+        data: {
+            brand: newData.brand,
+            discount: Number(newData.discount),
+            description: newData.description,
+            price: newData.price,
+            banner: {
+                connect: {
+                    id: newData.banner.id,
+                }
+            },
+            images: newData.images,
+            
+        }
+    })
 
     // return NextResponse.json({authenticated: !!session, data: data})
     return NextResponse.json({authenticated: !!session})

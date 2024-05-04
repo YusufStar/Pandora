@@ -14,7 +14,7 @@ import {
     DialogTrigger
 } from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
-import {Loader2, MoreHorizontal, Plus} from "lucide-react";
+import {Loader2, MoreHorizontal, Plus, PlusCircle} from "lucide-react";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {
@@ -31,25 +31,34 @@ const ProductDashboardPage = () => {
     const supabase = createClient('https://ipjfbfzysroitylwokvj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwamZiZnp5c3JvaXR5bHdva3ZqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMzgwMjMxNiwiZXhwIjoyMDI5Mzc4MzE2fQ.rsBA9PMr3zGMT5ZD1TiJDA2_gUwpY32JhEJFlwUKlNA')
 
     const bannerFileRef = useRef<null | HTMLInputElement>(null);
+    const imagesRef = useRef([]);
 
     const [products, setProducts] = useState<null | any[]>(null);
+    const [sizes, setSizes] = useState<null | any[]>([]);
+    const [selectedSize, setSelectedSize] = useState<any>([])
     const [loading, setLoading] = useState({
         banner: false
     })
+
     const [addData, setAddData] = useState({
         brand: "",
         discount: 0,
         description: "",
+        price: 0,
         banner: {
             url: "",
             file_name: "",
             file_extension: "",
         },
-        images: [],
-        colors: [],
-        stocks: [],
+        images: [
+            {
+                url: "",
+                file_name: "",
+                file_extension: "",
+            }
+        ],
         defaultSizeId: 0,
-        sizes: [],
+        sizes: [null],
     })
 
     const getData = async () => {
@@ -59,8 +68,20 @@ const ProductDashboardPage = () => {
         setProducts(response.data);
     };
 
+    const getSizes = async () => {
+        const response = await fetch(`/api/sizes`, {
+            mode: "no-cors",
+        }).then((x) => x.json());
+        const y = response.data?.map((size: any) => {
+            return {value: size.id, label: size.dimensions}
+        })
+        console.log(y)
+        setSizes(y);
+    }
+
     useEffect(() => {
         getData();
+        getSizes()
     }, []);
 
     const resetData = () => {
@@ -68,16 +89,21 @@ const ProductDashboardPage = () => {
             brand: "",
             discount: 0,
             description: "",
+            price: 0,
             banner: {
                 url: "",
                 file_name: "",
                 file_extension: "",
             },
-            images: [],
-            colors: [],
-            stocks: [],
+            images: [
+                {
+                    url: "",
+                    file_name: "",
+                    file_extension: "",
+                }
+            ],
             defaultSizeId: 0,
-            sizes: [],
+            sizes: [null],
         })
     }
 
@@ -142,15 +168,48 @@ const ProductDashboardPage = () => {
             })
 
         if (data) {
-            console.log("set")
-            changeData("banner", {
-                url: `https://ipjfbfzysroitylwokvj.supabase.co/storage/v1/object/public/${data?.fullPath}`,
-                file_name: file.name,
-                file_extension: file.type,
-            })
+            await fetch("/api/file", {
+                method: "POST",
+                body: JSON.stringify({
+                    url: `https://ipjfbfzysroitylwokvj.supabase.co/storage/v1/object/public/${data?.fullPath}`,
+                    file_name: file.name,
+                    file_extension: file.type,
+                })
+            }).then((res) => res.json()).then((res) => changeData("banner", res.data))
         }
 
         setLoading((prev) => ({...prev, banner: false}))
+    }
+
+    const handleChangeImages = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        // @ts-ignore
+        const file = e.target.files[0] as File
+
+        // @ts-ignore
+        const {data, error} = await supabase
+            .storage
+            .from('images')
+            .upload(`public/${crypto.randomUUID()}`, file, {
+                cacheControl: '3600',
+                upsert: false
+            })
+
+        if (data) {
+            await fetch("/api/file", {
+                method: "POST",
+                body: JSON.stringify({
+                    url: `https://ipjfbfzysroitylwokvj.supabase.co/storage/v1/object/public/${data?.fullPath}`,
+                    file_name: file.name,
+                    file_extension: file.type,
+                })
+            }).then((res) => res.json()).then((res) => {
+                setAddData((prev) => {
+                    const updatedImages = [...prev.images];
+                    updatedImages[index] = res.data;
+                    return {...prev, images: updatedImages};
+                });
+            })
+        }
     }
 
     const changeData = (key: string, value: any) => {
@@ -208,11 +267,26 @@ const ProductDashboardPage = () => {
                                 </Label>
                                 <Input
                                     id="description"
-                                    placeholder={'10'}
+                                    placeholder={'Açıklama'}
                                     min={0}
                                     max={100}
                                     value={addData.description}
                                     onChange={(e) => changeData("description", e.target.value)}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label className={"text-nowrap text-right"} htmlFor="price">
+                                    Fiyat
+                                </Label>
+                                <Input
+                                    id="price"
+                                    placeholder={'Fiyat'}
+                                    min={0}
+                                    max={100}
+                                    type={"number"}
+                                    value={addData.price}
+                                    onChange={(e) => changeData("price", e.target.value)}
                                     className="col-span-3"
                                 />
                             </div>
@@ -245,6 +319,60 @@ const ProductDashboardPage = () => {
                                         </Link>
                                     </>
                                 )}
+                            </div>
+
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="description"
+                                       className="text-right align-text-top h-full text-nowrap">
+                                    Detay Görselleri
+                                </Label>
+
+                                <div className="col-span-3 px-3 py-2 rounded border flex flex-col gap-2">
+                                    {addData.images.map(({url, file_name}, index) => (
+                                        <React.Fragment key={index}>
+                                            <input
+                                                onChange={(e) => handleChangeImages(e, index)}
+                                                type="file"
+                                                ref={(el) => (imagesRef.current[index] = el as HTMLInputElement)}
+                                                accept="image/*"
+                                                className="hidden"
+                                            />
+
+                                            <button
+                                                disabled={url !== ""}
+                                                onClick={() => imagesRef?.current[index]?.click()}
+                                                className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3"
+                                            >
+                                                {url !== "" ? file_name : "Resim yükle"}
+                                            </button>
+                                        </React.Fragment>
+                                    ))}
+
+
+                                    <div
+                                        onClick={() => {
+                                            setAddData((prev) => ({
+                                                ...prev,
+                                                images: [...prev.images, {
+                                                    url: "",
+                                                    file_name: "",
+                                                    file_extension: "",
+                                                }]
+                                            }))
+                                        }}
+                                        className={"flex items-center gap-2 text-sm justify-center w-full py-2 border rounded hover:bg-border transition-all duration-300 cursor-pointer"}>
+                                        <PlusCircle size={16}/>
+                                        Görsel Ekle
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label className={"text-nowrap text-right"} htmlFor="price">
+                                    Ölçüler
+                                </Label>
+
+                                Ölçüler
                             </div>
                         </div>
                         <DialogFooter className={'flex items-center gap-2'}>
