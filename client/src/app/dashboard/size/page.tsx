@@ -1,6 +1,7 @@
+"use client"
+
 import {useEffect, useState} from "react";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import Link from "next/link";
 
 const SizeDashboardPage = () => {
     const [sizes, setSizes] = useState<null | any[]>(null);
@@ -39,7 +40,6 @@ const SizeDashboardPage = () => {
             </div>
         </div>
     )
-}
 }
 
 export default SizeDashboardPage
