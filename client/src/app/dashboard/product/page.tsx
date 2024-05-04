@@ -26,6 +26,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {createClient} from '@supabase/supabase-js'
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 
 const ProductDashboardPage = () => {
     const supabase = createClient('https://ipjfbfzysroitylwokvj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwamZiZnp5c3JvaXR5bHdva3ZqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMzgwMjMxNiwiZXhwIjoyMDI5Mzc4MzE2fQ.rsBA9PMr3zGMT5ZD1TiJDA2_gUwpY32JhEJFlwUKlNA')
@@ -34,8 +35,7 @@ const ProductDashboardPage = () => {
     const imagesRef = useRef([]);
 
     const [products, setProducts] = useState<null | any[]>(null);
-    const [sizes, setSizes] = useState<null | any[]>([]);
-    const [selectedSize, setSelectedSize] = useState<any>([])
+    const [sizes, setSizes] = useState<null | any[]>();
     const [loading, setLoading] = useState({
         banner: false
     })
@@ -75,7 +75,6 @@ const ProductDashboardPage = () => {
         const y = response.data?.map((size: any) => {
             return {value: size.id, label: size.dimensions}
         })
-        console.log(y)
         setSizes(y);
     }
 
@@ -330,21 +329,27 @@ const ProductDashboardPage = () => {
                                 <div className="col-span-3 px-3 py-2 rounded border flex flex-col gap-2">
                                     {addData.images.map(({url, file_name}, index) => (
                                         <React.Fragment key={index}>
-                                            <input
-                                                onChange={(e) => handleChangeImages(e, index)}
-                                                type="file"
-                                                ref={(el) => (imagesRef.current[index] = el as HTMLInputElement)}
-                                                accept="image/*"
-                                                className="hidden"
-                                            />
+                                            {
+                                                // @ts-ignore
+                                                <input
+                                                    onChange={(e) => handleChangeImages(e, index)}
+                                                    type="file"
+                                                    ref={(el) => (imagesRef.current[index] = el as HTMLInputElement)}
+                                                    accept="image/*"
+                                                    className="hidden"
+                                                />
+                                            }
 
-                                            <button
-                                                disabled={url !== ""}
-                                                onClick={() => imagesRef?.current[index]?.click()}
-                                                className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3"
-                                            >
-                                                {url !== "" ? file_name : "Resim yükle"}
-                                            </button>
+                                            {
+                                                // @ts-ignore
+                                                <button
+                                                    disabled={url !== ""}
+                                                    onClick={() => imagesRef?.current[index]?.click()}
+                                                    className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3"
+                                                >
+                                                    {url !== "" ? file_name : "Resim yükle"}
+                                                </button>
+                                            }
                                         </React.Fragment>
                                     ))}
 
@@ -372,7 +377,45 @@ const ProductDashboardPage = () => {
                                     Ölçüler
                                 </Label>
 
-                                Ölçüler
+                                <div className="flex flex-col gap-2 w-full col-span-3">
+                                    {addData.sizes.map((size, index) => {
+                                        return <>
+                                            {
+                                                // @ts-ignore
+                                                <Select
+                                                    value={size === null ? undefined : size}
+                                                    onValueChange={(val) => {
+                                                        setAddData((prev) => {
+                                                            const updatedSizes = [...prev.sizes];
+                                                            updatedSizes[index] = val;
+                                                            return {...prev, sizes: updatedSizes};
+                                                        });
+                                                    }}
+                                                >
+                                                    <SelectTrigger className="col-span-3">
+                                                        <SelectValue placeholder="Tüm ölçüler"/>
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {sizes?.map((size) => <SelectItem
+                                                            value={size.value}>{size.label}</SelectItem>)}
+                                                    </SelectContent>
+                                                </Select>
+                                            }
+                                        </>
+                                    })}
+
+                                    <div
+                                        onClick={() => {
+                                            setAddData((prev) => ({
+                                                ...prev,
+                                                sizes: [...prev.sizes, null]
+                                            }))
+                                        }}
+                                        className={"flex items-center gap-2 text-sm justify-center w-full py-2 border rounded hover:bg-border transition-all duration-300 cursor-pointer"}>
+                                        <PlusCircle size={16}/>
+                                        Ölçü ekle
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <DialogFooter className={'flex items-center gap-2'}>

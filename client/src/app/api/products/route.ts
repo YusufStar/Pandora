@@ -53,6 +53,8 @@ export async function POST(request: Request) {
 
     const {newData} = await request.json()
 
+    console.log(newData)
+
     const data = await prisma.product.create({
         data: {
             brand: newData.brand,
@@ -65,10 +67,14 @@ export async function POST(request: Request) {
                 }
             },
             images: newData.images,
-            
+            defaultSizeId: newData.sizes[0],
+            sizes: {
+                connect: newData.sizes.map((size: number) => {
+                    return {id: size}
+                }),
+            }
         }
     })
 
-    // return NextResponse.json({authenticated: !!session, data: data})
-    return NextResponse.json({authenticated: !!session})
+    return NextResponse.json({authenticated: !!session, data: data})
 }
