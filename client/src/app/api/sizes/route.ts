@@ -29,11 +29,10 @@ export async function POST(request: Request) {
     }
 
     const {dimensions} = await request.json()
-    const userId = (session.user as any).id
 
     const newSizeBasket = await prisma.size.create({
         data: {
-          dimensions: dimensions
+            dimensions: dimensions
         }
     })
 
@@ -49,12 +48,11 @@ export async function DELETE(request: Request) {
         })
     }
 
-    const {sizeId} = await request.json()
-    const userId = (session.user as any).id
+    const {id} = await request.json()
 
     const deletedSize = await prisma.size.delete({
         where: {
-            id: sizeId
+            id: id
         }
     })
 
