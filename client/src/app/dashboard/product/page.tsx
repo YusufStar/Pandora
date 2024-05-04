@@ -547,7 +547,7 @@ const ProductDashboardPage = () => {
 
                                 <TableCell className={"w-[8rem]"}>
                                         <div className="flex flex-wrap w-full gap-2">
-                                            {product.colors.map((color, index) => {
+                                            {product.colors.map((color: any, index: number) => {
 
                                                 if (Array.isArray(color)) {
                                                     return <div
