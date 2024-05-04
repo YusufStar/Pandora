@@ -171,7 +171,7 @@ const ProductDashboardPage = () => {
             await fetch("/api/file", {
                 method: "POST",
                 body: JSON.stringify({
-                    url: `https://ipjfbfzysroitylwokvj.supabase.co/storage/v1/object/public/${data?.fullPath}`,
+                    url: `https://ipjfbfzysroitylwokvj.supabase.co/storage/v1/object/public/${(data as any)?.fullPath}`,
                     file_name: file.name,
                     file_extension: file.type,
                 })
@@ -198,7 +198,7 @@ const ProductDashboardPage = () => {
             await fetch("/api/file", {
                 method: "POST",
                 body: JSON.stringify({
-                    url: `https://ipjfbfzysroitylwokvj.supabase.co/storage/v1/object/public/${data?.fullPath}`,
+                    url: `https://ipjfbfzysroitylwokvj.supabase.co/storage/v1/object/public/${(data as any)?.fullPath}`,
                     file_name: file.name,
                     file_extension: file.type,
                 })
