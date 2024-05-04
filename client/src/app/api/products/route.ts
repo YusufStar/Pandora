@@ -53,31 +53,12 @@ export async function POST(request: Request) {
 
     const {newData} = await request.json()
 
-    console.log({
-        brand: newData.brand,
-        discount: Number(newData.discount),
-        description: newData.description,
-        price: newData.price,
-        banner: {
-            connect: {
-                id: newData.banner.id,
-            }
-        },
-        images: newData.images,
-        defaultSizeId: newData.sizes[0],
-        sizes: {
-            connect: newData.sizes.map((size: number) => {
-                return {id: size}
-            }),
-        }
-    })
-
     const data = await prisma.product.create({
         data: {
             brand: newData.brand,
             discount: Number(newData.discount),
             description: newData.description,
-            price: newData.price,
+            price: Number(newData.price),
             banner: {
                 connect: {
                     id: newData.banner.id,
@@ -94,4 +75,24 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json({authenticated: !!session, data: data})
+}
+
+export async function DELETE(request: Request) {
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        return new NextResponse(JSON.stringify({error: 'unauthorized'}), {
+            status: 401
+        })
+    }
+
+    const {id} = await request.json()
+
+    const deletedProduct = await prisma.product.delete({
+        where: {
+            id: id
+        }
+    })
+
+    return NextResponse.json({authenticated: !!session, data: deletedProduct})
 }

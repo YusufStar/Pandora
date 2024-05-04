@@ -120,17 +120,17 @@ const ProductDashboardPage = () => {
             success: () => {
                 resetData()
                 getData()
-                return `Yeni ölçü eklendi.`;
+                return `Yeni Urun eklendi.`;
             },
             error: () => {
                 resetData()
-                return 'Hatalı ölçü.'
+                return 'Veri de hata var.'
             },
         });
     }
 
     const handleDeleteProduct = async (id: number) => {
-        const promise = fetch('/api/sizes', {
+        const promise = fetch('/api/products', {
             method: "DELETE",
             body: JSON.stringify({
                 id: id
@@ -142,11 +142,11 @@ const ProductDashboardPage = () => {
             success: (data) => {
                 resetData()
                 getData()
-                return `Ölçü silindi..`;
+                return `Urun silindi..`;
             },
             error: () => {
                 resetData()
-                return 'Hatalı ölçü.'
+                return 'Urun Silinirken bir hata olustu.'
             },
         });
     }
@@ -334,6 +334,7 @@ const ProductDashboardPage = () => {
                                                 <input
                                                     onChange={(e) => handleChangeImages(e, index)}
                                                     type="file"
+                                                    // @ts-ignore
                                                     ref={(el) => (imagesRef.current[index] = el as HTMLInputElement)}
                                                     accept="image/*"
                                                     className="hidden"
@@ -344,7 +345,9 @@ const ProductDashboardPage = () => {
                                                 // @ts-ignore
                                                 <button
                                                     disabled={url !== ""}
-                                                    onClick={() => imagesRef?.current[index]?.click()}
+                                                    onClick={() =>
+                                                        // @ts-ignore
+                                                        imagesRef?.current[index]?.click()}
                                                     className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3"
                                                 >
                                                     {url !== "" ? file_name : "Resim yükle"}
@@ -387,6 +390,7 @@ const ProductDashboardPage = () => {
                                                     onValueChange={(val) => {
                                                         setAddData((prev) => {
                                                             const updatedSizes = [...prev.sizes];
+                                                            // @ts-ignore
                                                             updatedSizes[index] = val;
                                                             return {...prev, sizes: updatedSizes};
                                                         });
@@ -439,11 +443,10 @@ const ProductDashboardPage = () => {
                             <TableHead>Id</TableHead>
                             <TableHead>Brand</TableHead>
                             <TableHead>Discount</TableHead>
+                            <TableHead>Price</TableHead>
                             <TableHead>Description</TableHead>
                             <TableHead>Banner</TableHead>
                             <TableHead>Images</TableHead>
-                            <TableHead className={"max-w-[60px]"}>Colors</TableHead>
-                            <TableHead>Stocks</TableHead>
                             <TableHead>Default Size</TableHead>
                             <TableHead>Sizes</TableHead>
                             <TableHead>Actions</TableHead>
@@ -455,42 +458,31 @@ const ProductDashboardPage = () => {
                                 <TableCell className="font-medium">{product.id}</TableCell>
                                 <TableCell>{product.brand}</TableCell>
                                 <TableCell className="font-medium">%{product.discount}</TableCell>
+                                <TableCell className="font-medium">{product.price}</TableCell>
                                 <TableCell>{product.description}</TableCell>
+
                                 <TableCell>
                                     <Link className={"text-blue-500 font-medium"} target={"_blank"}
-                                          href={product.banner.url}>View Banner Image</Link>
+                                          href={product.banner.url}>View Banner</Link>
                                 </TableCell>
 
                                 <TableCell className={"flex flex-col"}>
                                     {
                                         //@ts-ignore
                                         product?.images?.map(({url}, index: number) => {
-                                            return <Link key={index} className={"text-blue-500 text-xs font-medium"}
-                                                         target={"_blank"} href={url}>View Image {index}</Link>
+                                            return <Link key={index} className={"text-blue-500 text-sm font-medium"}
+                                                         target={"_blank"} href={url}>Image {index}</Link>
                                         })}
                                 </TableCell>
-                                <TableCell className={"flex flex-wrap max-w-[60px]"}>
-                                    {
-                                        //@ts-ignore
-                                        product?.colors?.map((color, index: number) => {
-                                            return <span key={index} className={`w-3 h-3 rounded-full bg-[${color}]`}/>
-                                        })}
-                                </TableCell>
-                                <TableCell className={"flex flex-col"}>
-                                    {
-                                        //@ts-ignore
-                                        product?.stocks?.map((stock, index: number) => {
-                                            return <span key={index}
-                                                         className={"text-xs font-medium"}>{stock.dimension} - {stock.count}</span>
-                                        })}
-                                </TableCell>
+
                                 <TableCell>{product.defaultSizeId.dimensions}</TableCell>
+
                                 <TableCell className={"flex flex-col"}>
                                     {
                                         //@ts-ignore
                                         product?.sizes?.map((size, index: number) => {
                                             return <span key={index}
-                                                         className={"text-xs font-medium"}>{size.dimensions}</span>
+                                                         className={"text-sm font-medium"}>{size.dimensions}</span>
                                         })}
                                 </TableCell>
 
