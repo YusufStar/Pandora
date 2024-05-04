@@ -30,7 +30,7 @@ const SizeDashboardPage = () => {
                     </TableHeader>
                     <TableBody>
                         {sizes && sizes.map((size) => (
-                            <TableRow>
+                            <TableRow key={size.id}>
                                 <TableCell className="font-medium">{size.id}</TableCell>
                                 <TableCell>{size.dimension}</TableCell>
                             </TableRow>

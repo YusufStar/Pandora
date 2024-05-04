@@ -136,7 +136,7 @@ const Navbar = () => {
 
                 {/* Nav Links */}
                 <div onMouseLeave={() => setActiveLink("")} className="gap-6 hidden lg:flex items-center flex-1">
-                    {nav_links.map((nav_link) => (
+                    {nav_links.map((nav_link, index) => (
                         <div onMouseEnter={() => setActiveLink(nav_link.title)}
                              className={"flex hover-interstellar gap-2 items-center relative cursor-pointer"}
                              key={nav_link.title}>

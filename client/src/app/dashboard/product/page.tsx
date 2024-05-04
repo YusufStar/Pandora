@@ -1,13 +1,5 @@
 "use client"
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
 import {useEffect, useState} from "react";
 import Link from "next/link";
 
@@ -46,35 +38,38 @@ const ProductDashboardPage = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {products && products.map((product) => (
-                            <TableRow>
+                        {products && products.map((product, index) => (
+                            <TableRow key={index}>
                                 <TableCell className="font-medium">{product.id}</TableCell>
                                 <TableCell>{product.brand}</TableCell>
                                 <TableCell className="font-medium">%{product.discount}</TableCell>
                                 <TableCell>{product.description}</TableCell>
                                 <TableCell>
-                                    <Link className={"text-blue-500 font-medium"} target={"_blank"} href={product.banner.url}>View Banner Image</Link>
+                                    <Link className={"text-blue-500 font-medium"} target={"_blank"}
+                                          href={product.banner.url}>View Banner Image</Link>
                                 </TableCell>
 
                                 <TableCell className={"flex flex-col"}>
                                     {
                                         //@ts-ignore
                                         product?.images?.map(({url}, index: number) => {
-                                        return <Link key={index} className={"text-blue-500 text-xs font-medium"} target={"_blank"} href={url}>View Image {index}</Link>
-                                    })}
+                                            return <Link key={index} className={"text-blue-500 text-xs font-medium"}
+                                                         target={"_blank"} href={url}>View Image {index}</Link>
+                                        })}
                                 </TableCell>
                                 <TableCell className={"flex flex-wrap max-w-[60px]"}>
                                     {
                                         //@ts-ignore
                                         product?.colors?.map((color, index: number) => {
-                                            return <span key={index} className={`w-3 h-3 rounded-full bg-[${color}]`} />
+                                            return <span key={index} className={`w-3 h-3 rounded-full bg-[${color}]`}/>
                                         })}
                                 </TableCell>
                                 <TableCell className={"flex flex-col"}>
                                     {
                                         //@ts-ignore
                                         product?.stocks?.map((stock, index: number) => {
-                                            return <span key={index} className={"text-xs font-medium"}>{stock.dimension} - {stock.count}</span>
+                                            return <span key={index}
+                                                         className={"text-xs font-medium"}>{stock.dimension} - {stock.count}</span>
                                         })}
                                 </TableCell>
                                 <TableCell>{product.defaultSizeId.dimensions}</TableCell>
@@ -82,7 +77,8 @@ const ProductDashboardPage = () => {
                                     {
                                         //@ts-ignore
                                         product?.sizes?.map((size, index: number) => {
-                                            return <span key={index} className={"text-xs font-medium"}>{size.dimensions}</span>
+                                            return <span key={index}
+                                                         className={"text-xs font-medium"}>{size.dimensions}</span>
                                         })}
                                 </TableCell>
                             </TableRow>
