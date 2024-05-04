@@ -1,5 +1,5 @@
-import { getServerSession } from 'next-auth/next'
-import { NextResponse } from 'next/server'
+import {getServerSession} from 'next-auth/next'
+import {NextResponse} from 'next/server'
 import {authOptions} from "@/lib/auth-options";
 import prisma from "@/lib/prisma";
 
@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-        return new NextResponse(JSON.stringify({ error: 'unauthorized' }), {
+        return new NextResponse(JSON.stringify({error: 'unauthorized'}), {
             status: 401
         })
     }
@@ -33,8 +33,32 @@ export async function GET(request: Request) {
 
     if (productId) {
         // @ts-ignore
-        return NextResponse.json({ authenticated: !!session, data: data.filter((dt) => Number(dt.id) === Number(productId))[0] })
+        return NextResponse.json({
+            authenticated: !!session,
+            data: data.filter((dt) => Number(dt.id) === Number(productId))[0]
+        })
     } else {
-        return NextResponse.json({ authenticated: !!session, data: data })
+        return NextResponse.json({authenticated: !!session, data: data})
     }
+}
+
+export async function POST(request: Request) {
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        return new NextResponse(JSON.stringify({error: 'unauthorized'}), {
+            status: 401
+        })
+    }
+
+    const {newData} = await request.json()
+
+    console.log(newData)
+
+    // const data = await prisma.product.create({
+    //    data: newData
+    // })
+
+    // return NextResponse.json({authenticated: !!session, data: data})
+    return NextResponse.json({authenticated: !!session})
 }

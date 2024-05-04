@@ -29,7 +29,21 @@ import {
 
 const ProductDashboardPage = () => {
     const [products, setProducts] = useState<null | any[]>(null);
-    const [newDimension, setNewDimension] = useState("")
+    const [addData, setAddData] = useState({
+        brand: "",
+        discount: 0,
+        description: "",
+        banner: {
+            url: "",
+            file_name: "",
+            file_extension: "",
+        },
+        images: [],
+        colors: [],
+        stocks: [],
+        defaultSizeId: 0,
+        sizes: [],
+    })
 
     const getData = async () => {
         const response = await fetch(`/api/products`, {
@@ -42,30 +56,48 @@ const ProductDashboardPage = () => {
         getData();
     }, []);
 
-    const handleAddSize = async () => {
-        const promise = fetch('/api/sizes', {
+    const resetData = () => {
+        setAddData({
+            brand: "",
+            discount: 0,
+            description: "",
+            banner: {
+                url: "",
+                file_name: "",
+                file_extension: "",
+            },
+            images: [],
+            colors: [],
+            stocks: [],
+            defaultSizeId: 0,
+            sizes: [],
+        })
+    }
+
+    const handleAddProduct = async () => {
+        const promise = fetch('/api/products', {
             mode: "no-cors",
             method: "POST",
             body: JSON.stringify({
-                dimensions: newDimension
+                newData: addData
             })
         });
 
         toast.promise(promise, {
             loading: 'Loading...',
-            success: (data) => {
-                setNewDimension("")
+            success: () => {
+                resetData()
                 getData()
                 return `Yeni ölçü eklendi.`;
             },
             error: () => {
-                setNewDimension("")
+                resetData()
                 return 'Hatalı ölçü.'
             },
         });
     }
 
-    const handleDeleteSize = async (id: number) => {
+    const handleDeleteProduct = async (id: number) => {
         const promise = fetch('/api/sizes', {
             method: "DELETE",
             body: JSON.stringify({
@@ -76,20 +108,24 @@ const ProductDashboardPage = () => {
         toast.promise(promise, {
             loading: 'Loading...',
             success: (data) => {
-                setNewDimension("")
+                resetData()
                 getData()
                 return `Ölçü silindi..`;
             },
             error: () => {
-                setNewDimension("")
+                resetData()
                 return 'Hatalı ölçü.'
             },
         });
     }
 
+    const changeData = (key: string, value: any) => {
+        setAddData((prev) => ({...prev, [key]: value}))
+    }
+
     return (
         <div className={"p-4 w-full h-full flex items-center justify-center"}>
-            <div className="mx-auto max-w-screen-xl overflow-y-auto h-fit w-full border rounded">
+            <div className="mx-auto max-w-screen-xl h-fit w-full border rounded relative">
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button variant="outline" className={'w-8 h-8 rounded-full absolute -top-4 -right-4'}
@@ -97,7 +133,7 @@ const ProductDashboardPage = () => {
                             <Plus size={18}/>
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogContent className="sm:max-w-[500px]">
                         <DialogHeader>
                             <DialogTitle>Yeni Ölçü Gir</DialogTitle>
                             <DialogDescription>
@@ -106,27 +142,72 @@ const ProductDashboardPage = () => {
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="dimension" className="text-right">
-                                    Ölçü
+                                <Label className={"text-nowrap"} htmlFor="brand" className="text-right">
+                                    Marka
                                 </Label>
                                 <Input
-                                    id="dimension"
-                                    placeholder={'100 x 100'}
-                                    value={newDimension}
-                                    onChange={(e) => setNewDimension(e.target.value)}
+                                    id="brand"
+                                    placeholder={'Pandora Halı'}
+                                    value={addData.brand}
+                                    onChange={(e) => changeData("brand", e.target.value)}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label className={"text-nowrap"} htmlFor="discount" className="text-right">
+                                    Indirim
+                                </Label>
+                                <Input
+                                    id="discount"
+                                    placeholder={'10'}
+                                    min={0}
+                                    max={100}
+                                    type={"number"}
+                                    value={addData.discount}
+                                    onChange={(e) => changeData("discount", e.target.value)}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label className={"text-nowrap"} htmlFor="description" className="text-right">
+                                    Açıklama
+                                </Label>
+                                <Input
+                                    id="description"
+                                    placeholder={'10'}
+                                    min={0}
+                                    max={100}
+                                    value={addData.description}
+                                    onChange={(e) => changeData("description", e.target.value)}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="description"
+                                       className="text-right text-nowrap">
+                                    Kapak Görseli
+                                </Label>
+                                <Input
+                                    id="description"
+                                    placeholder={'10'}
+                                    min={0}
+                                    max={100}
+                                    value={addData.description}
+                                    type={"file"}
+                                    onChange={(e) => changeData("description", e.target.value)}
                                     className="col-span-3"
                                 />
                             </div>
                         </div>
                         <DialogFooter className={'flex items-center gap-2'}>
                             <DialogClose>
-                                <Button onClick={() => setNewDimension("")} variant={'destructive'}>
+                                <Button onClick={() => resetData()} variant={'destructive'}>
                                     Iptal
                                 </Button>
                             </DialogClose>
 
                             <DialogClose>
-                                <Button onClick={handleAddSize} type="submit">Kaydet</Button>
+                                <Button onClick={handleAddProduct} type="submit">Kaydet</Button>
                             </DialogClose>
                         </DialogFooter>
                     </DialogContent>
@@ -206,7 +287,7 @@ const ProductDashboardPage = () => {
                                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                             <DropdownMenuSeparator/>
                                             <DropdownMenuItem
-                                                onClick={() => handleDeleteSize(size.id)}>Sil</DropdownMenuItem>
+                                                onClick={() => handleDeleteProduct(product.id)}>Sil</DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </TableCell>
