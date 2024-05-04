@@ -53,7 +53,24 @@ export async function POST(request: Request) {
 
     const {newData} = await request.json()
 
-    console.log(newData)
+    console.log({
+        brand: newData.brand,
+        discount: Number(newData.discount),
+        description: newData.description,
+        price: newData.price,
+        banner: {
+            connect: {
+                id: newData.banner.id,
+            }
+        },
+        images: newData.images,
+        defaultSizeId: newData.sizes[0],
+        sizes: {
+            connect: newData.sizes.map((size: number) => {
+                return {id: size}
+            }),
+        }
+    })
 
     const data = await prisma.product.create({
         data: {
