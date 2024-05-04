@@ -234,6 +234,7 @@ const ProductDashboardPage = () => {
                             <TableHead>Images</TableHead>
                             <TableHead>Default Size</TableHead>
                             <TableHead>Sizes</TableHead>
+                            <TableHead>Colors</TableHead>
                             <TableHead>
                                 <Dialog>
                                     <DialogTrigger asChild>
@@ -544,6 +545,27 @@ const ProductDashboardPage = () => {
                                         })}
                                 </TableCell>
 
+                                <TableCell className={"w-[8rem]"}>
+                                        <div className="flex flex-wrap w-full gap-2">
+                                            {product.colors.map((color, index) => {
+
+                                                if (Array.isArray(color)) {
+                                                    return <div
+                                                        className={"flex w-6 h-6 rounded-full border"}>
+                                                                    <span className={"w-full h-full rounded-l-full"}
+                                                                          style={{backgroundColor: color[0]}}/>
+
+                                                        <span className={"w-full h-full rounded-r-full"}
+                                                              style={{backgroundColor: color[1]}}/>
+                                                    </div>
+                                                } else {
+                                                    return <span className={"w-6 h-6 rounded-full border"}
+                                                                 style={{backgroundColor: color}}/>
+                                                }
+                                            })}
+                                        </div>
+                                </TableCell>
+
                                 <TableCell>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
@@ -561,12 +583,12 @@ const ProductDashboardPage = () => {
                                     </DropdownMenu>
                                 </TableCell>
                             </TableRow>
-                        ))}
+                            ))}
                     </TableBody>
                 </Table>
             </div>
         </div>
-    )
+)
 }
 
 export default ProductDashboardPage
