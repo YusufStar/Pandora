@@ -19,7 +19,7 @@ const DashboardLayout = ({children} : {children : ReactNode}) => {
         }
     ]
 
-    return <div className={"flex h-screen w-screen overflow-hidden"}>
+    return <div className={"flex h-screen overflow-hidden w-full"}>
         <div className="flex flex-col gap-2 max-w-xs h-full overflow-y-auto overflow-x-hidden border-r w-full px-4">
             <div className="w-full border-b py-4 mb-4">
                 <Image

@@ -39,7 +39,7 @@ model Product {
   brand       String
   description String
 
-  // colors      String[] // ["red", "white"]
+  colors Json[] // ["red", "white"]
   // stocks      Json[] // { sizeId: 0, stock: 1000 } stock -> adet
 
   defaultSizeId Int?

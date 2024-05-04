@@ -70,7 +70,8 @@ export async function POST(request: Request) {
                 connect: newData.sizes.map((size: number) => {
                     return {id: size}
                 }),
-            }
+            },
+            colors: newData.colors
         }
     })
 

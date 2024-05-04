@@ -34,6 +34,7 @@ const ProductDashboardPage = () => {
     const bannerFileRef = useRef<null | HTMLInputElement>(null);
     const imagesRef = useRef([]);
 
+    const [color, setColor] = useState("")
     const [products, setProducts] = useState<null | any[]>(null);
     const [sizes, setSizes] = useState<null | any[]>();
     const [loading, setLoading] = useState({
@@ -59,6 +60,7 @@ const ProductDashboardPage = () => {
         ],
         defaultSizeId: 0,
         sizes: [null],
+        colors: []
     })
 
     const getData = async () => {
@@ -103,6 +105,7 @@ const ProductDashboardPage = () => {
             ],
             defaultSizeId: 0,
             sizes: [null],
+            colors: []
         })
     }
 
@@ -217,225 +220,7 @@ const ProductDashboardPage = () => {
 
     return (
         <div className={"p-4 w-full h-full flex items-center justify-center"}>
-            <div className="mx-auto max-w-screen-xl h-fit w-full border rounded relative">
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button variant="outline" className={'w-8 h-8 rounded-full absolute -top-4 -right-4'}
-                                size="icon">
-                            <Plus size={18}/>
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[500px]">
-                        <DialogHeader>
-                            <DialogTitle>Yeni Ölçü Gir</DialogTitle>
-                            <DialogDescription>
-                                Make changes to your profile here. Click save when you're done.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid gap-4 py-4">
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className={"text-nowrap text-right"} htmlFor="brand">
-                                    Marka
-                                </Label>
-                                <Input
-                                    id="brand"
-                                    placeholder={'Pandora Halı'}
-                                    value={addData.brand}
-                                    onChange={(e) => changeData("brand", e.target.value)}
-                                    className="col-span-3"
-                                />
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className={"text-nowrap text-right"} htmlFor="discount">
-                                    Indirim
-                                </Label>
-                                <Input
-                                    id="discount"
-                                    placeholder={'10'}
-                                    min={0}
-                                    max={100}
-                                    type={"number"}
-                                    value={addData.discount}
-                                    onChange={(e) => changeData("discount", e.target.value)}
-                                    className="col-span-3"
-                                />
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className={"text-nowrap text-right"} htmlFor="description">
-                                    Açıklama
-                                </Label>
-                                <Input
-                                    id="description"
-                                    placeholder={'Açıklama'}
-                                    min={0}
-                                    max={100}
-                                    value={addData.description}
-                                    onChange={(e) => changeData("description", e.target.value)}
-                                    className="col-span-3"
-                                />
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className={"text-nowrap text-right"} htmlFor="price">
-                                    Fiyat
-                                </Label>
-                                <Input
-                                    id="price"
-                                    placeholder={'Fiyat'}
-                                    min={0}
-                                    max={100}
-                                    type={"number"}
-                                    value={addData.price}
-                                    onChange={(e) => changeData("price", e.target.value)}
-                                    className="col-span-3"
-                                />
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="description"
-                                       className="text-right text-nowrap">
-                                    Kapak Görseli
-                                </Label>
-
-                                {addData.banner.url === "" ? (
-                                    <>
-                                        <input onChange={handleChangeBanner} type={"file"} ref={bannerFileRef}
-                                               accept={"image/*"} className={"hidden"}/>
-
-                                        <button
-                                            disabled={loading.banner}
-                                            onClick={() => bannerFileRef?.current?.click()}
-                                            className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3">
-                                            {loading.banner ?
-                                                <Loader2 className="h-4 w-4 animate-spin"/> : "Click to upload file"}
-                                        </button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Link
-                                            target={"_blank"}
-                                            href={addData.banner.url}
-                                            className="flex cursor-not-allowed opacity-75 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3">
-                                            {addData.banner.file_name}
-                                        </Link>
-                                    </>
-                                )}
-                            </div>
-
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="description"
-                                       className="text-right align-text-top h-full text-nowrap">
-                                    Detay Görselleri
-                                </Label>
-
-                                <div className="col-span-3 px-3 py-2 rounded border flex flex-col gap-2">
-                                    {addData.images.map(({url, file_name}, index) => (
-                                        <React.Fragment key={index}>
-                                            {
-                                                // @ts-ignore
-                                                <input
-                                                    onChange={(e) => handleChangeImages(e, index)}
-                                                    type="file"
-                                                    // @ts-ignore
-                                                    ref={(el) => (imagesRef.current[index] = el as HTMLInputElement)}
-                                                    accept="image/*"
-                                                    className="hidden"
-                                                />
-                                            }
-
-                                            {
-                                                // @ts-ignore
-                                                <button
-                                                    disabled={url !== ""}
-                                                    onClick={() =>
-                                                        // @ts-ignore
-                                                        imagesRef?.current[index]?.click()}
-                                                    className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3"
-                                                >
-                                                    {url !== "" ? file_name : "Resim yükle"}
-                                                </button>
-                                            }
-                                        </React.Fragment>
-                                    ))}
-
-
-                                    <div
-                                        onClick={() => {
-                                            setAddData((prev) => ({
-                                                ...prev,
-                                                images: [...prev.images, {
-                                                    url: "",
-                                                    file_name: "",
-                                                    file_extension: "",
-                                                }]
-                                            }))
-                                        }}
-                                        className={"flex items-center gap-2 text-sm justify-center w-full py-2 border rounded hover:bg-border transition-all duration-300 cursor-pointer"}>
-                                        <PlusCircle size={16}/>
-                                        Görsel Ekle
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className={"text-nowrap text-right"} htmlFor="price">
-                                    Ölçüler
-                                </Label>
-
-                                <div className="flex flex-col gap-2 w-full col-span-3">
-                                    {addData.sizes.map((size, index) => {
-                                        return <>
-                                            {
-                                                // @ts-ignore
-                                                <Select
-                                                    value={size === null ? undefined : size}
-                                                    onValueChange={(val) => {
-                                                        setAddData((prev) => {
-                                                            const updatedSizes = [...prev.sizes];
-                                                            // @ts-ignore
-                                                            updatedSizes[index] = val;
-                                                            return {...prev, sizes: updatedSizes};
-                                                        });
-                                                    }}
-                                                >
-                                                    <SelectTrigger className="col-span-3">
-                                                        <SelectValue placeholder="Tüm ölçüler"/>
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {sizes?.map((size) => <SelectItem
-                                                            value={size.value}>{size.label}</SelectItem>)}
-                                                    </SelectContent>
-                                                </Select>
-                                            }
-                                        </>
-                                    })}
-
-                                    <div
-                                        onClick={() => {
-                                            setAddData((prev) => ({
-                                                ...prev,
-                                                sizes: [...prev.sizes, null]
-                                            }))
-                                        }}
-                                        className={"flex items-center gap-2 text-sm justify-center w-full py-2 border rounded hover:bg-border transition-all duration-300 cursor-pointer"}>
-                                        <PlusCircle size={16}/>
-                                        Ölçü ekle
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <DialogFooter className={'flex items-center gap-2'}>
-                            <DialogClose>
-                                <Button onClick={() => resetData()} variant={'destructive'}>
-                                    Iptal
-                                </Button>
-                            </DialogClose>
-
-                            <DialogClose>
-                                <Button onClick={handleAddProduct} type="submit">Kaydet</Button>
-                            </DialogClose>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
-
+            <div className="mx-auto max-w-screen-xl max-h-[900px] overflow-y-auto w-full overflow-x-hidden border rounded relative">
                 <Table>
                     <TableCaption>Urunleri listeleyin ve yeni urunler ekleyin.</TableCaption>
                     <TableHeader>
@@ -449,7 +234,280 @@ const ProductDashboardPage = () => {
                             <TableHead>Images</TableHead>
                             <TableHead>Default Size</TableHead>
                             <TableHead>Sizes</TableHead>
-                            <TableHead>Actions</TableHead>
+                            <TableHead>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button variant="outline" className={'w-8 h-8'}
+                                                size="icon">
+                                            <Plus size={18}/>
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[500px]">
+                                        <DialogHeader>
+                                            <DialogTitle>Yeni Ölçü Gir</DialogTitle>
+                                            <DialogDescription>
+                                                Make changes to your profile here. Click save when you're done.
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="grid gap-4 py-4">
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label className={"text-nowrap text-right"} htmlFor="brand">
+                                                    Marka
+                                                </Label>
+                                                <Input
+                                                    id="brand"
+                                                    placeholder={'Pandora Halı'}
+                                                    value={addData.brand}
+                                                    onChange={(e) => changeData("brand", e.target.value)}
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label className={"text-nowrap text-right"} htmlFor="discount">
+                                                    Indirim
+                                                </Label>
+                                                <Input
+                                                    id="discount"
+                                                    placeholder={'10'}
+                                                    min={0}
+                                                    max={100}
+                                                    type={"number"}
+                                                    value={addData.discount}
+                                                    onChange={(e) => changeData("discount", e.target.value)}
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label className={"text-nowrap text-right"} htmlFor="description">
+                                                    Açıklama
+                                                </Label>
+                                                <Input
+                                                    id="description"
+                                                    placeholder={'Açıklama'}
+                                                    min={0}
+                                                    max={100}
+                                                    value={addData.description}
+                                                    onChange={(e) => changeData("description", e.target.value)}
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label className={"text-nowrap text-right"} htmlFor="price">
+                                                    Fiyat
+                                                </Label>
+                                                <Input
+                                                    id="price"
+                                                    placeholder={'Fiyat'}
+                                                    min={0}
+                                                    max={100}
+                                                    type={"number"}
+                                                    value={addData.price}
+                                                    onChange={(e) => changeData("price", e.target.value)}
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="description"
+                                                       className="text-right text-nowrap">
+                                                    Kapak Görseli
+                                                </Label>
+
+                                                {addData.banner.url === "" ? (
+                                                    <>
+                                                        <input onChange={handleChangeBanner} type={"file"}
+                                                               ref={bannerFileRef}
+                                                               accept={"image/*"} className={"hidden"}/>
+
+                                                        <button
+                                                            disabled={loading.banner}
+                                                            onClick={() => bannerFileRef?.current?.click()}
+                                                            className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3">
+                                                            {loading.banner ?
+                                                                <Loader2
+                                                                    className="h-4 w-4 animate-spin"/> : "Click to upload file"}
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Link
+                                                            target={"_blank"}
+                                                            href={addData.banner.url}
+                                                            className="flex cursor-not-allowed opacity-75 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3">
+                                                            {addData.banner.file_name}
+                                                        </Link>
+                                                    </>
+                                                )}
+                                            </div>
+
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="description"
+                                                       className="text-right align-text-top h-full text-nowrap">
+                                                    Detay Görselleri
+                                                </Label>
+
+                                                <div
+                                                    className="col-span-3 px-3 py-2 rounded border flex flex-col gap-2">
+                                                    {addData.images.map(({url, file_name}, index) => (
+                                                        <React.Fragment key={index}>
+                                                            {
+                                                                // @ts-ignore
+                                                                <input
+                                                                    onChange={(e) => handleChangeImages(e, index)}
+                                                                    type="file"
+                                                                    // @ts-ignore
+                                                                    ref={(el) => (imagesRef.current[index] = el as HTMLInputElement)}
+                                                                    accept="image/*"
+                                                                    className="hidden"
+                                                                />
+                                                            }
+
+                                                            {
+                                                                // @ts-ignore
+                                                                <button
+                                                                    disabled={url !== ""}
+                                                                    onClick={() =>
+                                                                        // @ts-ignore
+                                                                        imagesRef?.current[index]?.click()}
+                                                                    className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3"
+                                                                >
+                                                                    {url !== "" ? file_name : "Resim yükle"}
+                                                                </button>
+                                                            }
+                                                        </React.Fragment>
+                                                    ))}
+
+
+                                                    <div
+                                                        onClick={() => {
+                                                            setAddData((prev) => ({
+                                                                ...prev,
+                                                                images: [...prev.images, {
+                                                                    url: "",
+                                                                    file_name: "",
+                                                                    file_extension: "",
+                                                                }]
+                                                            }))
+                                                        }}
+                                                        className={"flex items-center gap-2 text-sm justify-center w-full py-2 border rounded hover:bg-border transition-all duration-300 cursor-pointer"}>
+                                                        <PlusCircle size={16}/>
+                                                        Görsel Ekle
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label className={"text-nowrap text-right"} htmlFor="price">
+                                                    Ölçüler
+                                                </Label>
+
+                                                <div className="flex flex-col gap-2 w-full col-span-3">
+                                                    {addData.sizes.map((size, index) => {
+                                                        return <>
+                                                            {
+                                                                // @ts-ignore
+                                                                <Select
+                                                                    value={size === null ? undefined : size}
+                                                                    onValueChange={(val) => {
+                                                                        setAddData((prev) => {
+                                                                            const updatedSizes = [...prev.sizes];
+                                                                            // @ts-ignore
+                                                                            updatedSizes[index] = val;
+                                                                            return {...prev, sizes: updatedSizes};
+                                                                        });
+                                                                    }}
+                                                                >
+                                                                    <SelectTrigger className="col-span-3">
+                                                                        <SelectValue placeholder="Tüm ölçüler"/>
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        {sizes?.map((size) => <SelectItem
+                                                                            value={size.value}>{size.label}</SelectItem>)}
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            }
+                                                        </>
+                                                    })}
+
+                                                    <div
+                                                        onClick={() => {
+                                                            setAddData((prev) => ({
+                                                                ...prev,
+                                                                sizes: [...prev.sizes, null]
+                                                            }))
+                                                        }}
+                                                        className={"flex items-center gap-2 text-sm justify-center w-full py-2 border rounded hover:bg-border transition-all duration-300 cursor-pointer"}>
+                                                        <PlusCircle size={16}/>
+                                                        Ölçü ekle
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="description"
+                                                       className="text-right align-text-top h-full text-nowrap">
+                                                    Renkler
+                                                </Label>
+
+                                                <div
+                                                    className="col-span-3 flex flex-col px-3 py-2 rounded border flex flex-col gap-2">
+                                                    <div className="flex flex-wrap w-full gap-2">
+                                                        {addData.colors.map((color, index) => {
+
+                                                            if (Array.isArray(color)) {
+                                                                return <div
+                                                                    className={"flex w-6 h-6 rounded-full border"}>
+                                                                    <span className={"w-full h-full rounded-l-full"}
+                                                                          style={{backgroundColor: color[0]}}/>
+
+                                                                    <span className={"w-full h-full rounded-r-full"}
+                                                                          style={{backgroundColor: color[1]}}/>
+                                                                </div>
+                                                            } else {
+                                                                return <span className={"w-6 h-6 rounded-full border"}
+                                                                             style={{backgroundColor: color}}/>
+                                                            }
+                                                        })}
+                                                    </div>
+
+                                                    <Input name={`color`} placeholder="Renkler , ile ayiriniz." value={color} onChange={(e) => setColor(e.target.value)} />
+
+                                                    <Button
+                                                        onClick={() => {
+                                                            if (color.includes(",")) {
+                                                                const colors_split = color.split(",") as string[]
+                                                                // @ts-ignore
+                                                                setAddData((prev) =>
+                                                                    ({...prev, colors: [...prev.colors, colors_split]}));
+
+                                                                setColor("")
+                                                            } else {
+                                                                // @ts-ignore
+                                                                setAddData((prev) =>
+                                                                    ({...prev, colors: [...prev.colors, color]}));
+
+                                                                setColor("")
+                                                            }
+                                                        }}
+                                                        variant={"outline"}>
+                                                        Renkleri ekle
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <DialogFooter className={'flex items-center gap-2'}>
+                                            <DialogClose>
+                                                <Button onClick={() => resetData()} variant={'destructive'}>
+                                                    Iptal
+                                                </Button>
+                                            </DialogClose>
+
+                                            <DialogClose>
+                                                <Button onClick={handleAddProduct} type="submit">Kaydet</Button>
+                                            </DialogClose>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
