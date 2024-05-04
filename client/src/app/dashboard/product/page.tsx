@@ -1,6 +1,6 @@
 "use client"
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import {toast} from "sonner";
 import {
@@ -14,7 +14,7 @@ import {
     DialogTrigger
 } from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
-import {MoreHorizontal, Plus} from "lucide-react";
+import {Loader2, MoreHorizontal, Plus} from "lucide-react";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {
@@ -25,10 +25,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-
+import {createClient} from '@supabase/supabase-js'
 
 const ProductDashboardPage = () => {
+    const supabase = createClient('https://ipjfbfzysroitylwokvj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwamZiZnp5c3JvaXR5bHdva3ZqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMzgwMjMxNiwiZXhwIjoyMDI5Mzc4MzE2fQ.rsBA9PMr3zGMT5ZD1TiJDA2_gUwpY32JhEJFlwUKlNA')
+
+    const bannerFileRef = useRef<null | HTMLInputElement>(null);
+
     const [products, setProducts] = useState<null | any[]>(null);
+    const [loading, setLoading] = useState({
+        banner: false
+    })
     const [addData, setAddData] = useState({
         brand: "",
         discount: 0,
@@ -119,6 +126,33 @@ const ProductDashboardPage = () => {
         });
     }
 
+    const handleChangeBanner = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLoading((prev) => ({...prev, banner: true}))
+
+        // @ts-ignore
+        const file = e.target.files[0] as File
+
+        // @ts-ignore
+        const {data, error} = await supabase
+            .storage
+            .from('images')
+            .upload(`public/${crypto.randomUUID()}`, file, {
+                cacheControl: '3600',
+                upsert: false
+            })
+
+        if (data) {
+            console.log("set")
+            changeData("banner", {
+                url: `https://ipjfbfzysroitylwokvj.supabase.co/storage/v1/object/public/${data?.fullPath}`,
+                file_name: file.name,
+                file_extension: file.type,
+            })
+        }
+
+        setLoading((prev) => ({...prev, banner: false}))
+    }
+
     const changeData = (key: string, value: any) => {
         setAddData((prev) => ({...prev, [key]: value}))
     }
@@ -142,7 +176,7 @@ const ProductDashboardPage = () => {
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className={"text-nowrap"} htmlFor="brand" className="text-right">
+                                <Label className={"text-nowrap text-right"} htmlFor="brand">
                                     Marka
                                 </Label>
                                 <Input
@@ -154,7 +188,7 @@ const ProductDashboardPage = () => {
                                 />
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className={"text-nowrap"} htmlFor="discount" className="text-right">
+                                <Label className={"text-nowrap text-right"} htmlFor="discount">
                                     Indirim
                                 </Label>
                                 <Input
@@ -169,7 +203,7 @@ const ProductDashboardPage = () => {
                                 />
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className={"text-nowrap"} htmlFor="description" className="text-right">
+                                <Label className={"text-nowrap text-right"} htmlFor="description">
                                     Açıklama
                                 </Label>
                                 <Input
@@ -187,16 +221,30 @@ const ProductDashboardPage = () => {
                                        className="text-right text-nowrap">
                                     Kapak Görseli
                                 </Label>
-                                <Input
-                                    id="description"
-                                    placeholder={'10'}
-                                    min={0}
-                                    max={100}
-                                    value={addData.description}
-                                    type={"file"}
-                                    onChange={(e) => changeData("description", e.target.value)}
-                                    className="col-span-3"
-                                />
+
+                                {addData.banner.url === "" ? (
+                                    <>
+                                        <input onChange={handleChangeBanner} type={"file"} ref={bannerFileRef}
+                                               accept={"image/*"} className={"hidden"}/>
+
+                                        <button
+                                            disabled={loading.banner}
+                                            onClick={() => bannerFileRef?.current?.click()}
+                                            className="flex cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3">
+                                            {loading.banner ?
+                                                <Loader2 className="h-4 w-4 animate-spin"/> : "Click to upload file"}
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            target={"_blank"}
+                                            href={addData.banner.url}
+                                            className="flex cursor-not-allowed opacity-75 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 col-span-3">
+                                            {addData.banner.file_name}
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <DialogFooter className={'flex items-center gap-2'}>

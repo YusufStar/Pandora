@@ -20,6 +20,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@react-three/drei": "^9.105.4",
     "@react-three/fiber": "^8.16.2",
+    "@supabase/supabase-js": "^2.43.1",
     "@tanstack/react-table": "^8.16.0",
     "@types/bcrypt": "^5.0.2",
     "@types/next-auth": "^3.15.0",
