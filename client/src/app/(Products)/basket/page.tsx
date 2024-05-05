@@ -93,8 +93,7 @@ const BasketPage = () => {
                                             <div>
                                                 <Link
                                                     className="hover:underline text-xs sm:text-sm font-normal"
-                                                    href={`/product/${product.id}`}>Modern
-                                                    Desenli Halı Alvin AL01A</Link>
+                                                    href={`/product/${product.id}`}>{product.description}</Link>
 
                                                 <div className="[&_span]:text-[12px] sm:[&_span]:text-[13px]">
                                                 <span
@@ -151,7 +150,7 @@ const BasketPage = () => {
 
                         <span className="mt-12 mb-4 flex text-sm" style={{color: "rgb(99, 99, 99)"}}>Kargo sonraki adımda hesaplanacaktır. </span>
 
-                        <Link href={"/carpet"}>
+                        <Link href={"/checkout"}>
                             <div className="basket-checkout-btn items-center mb-6 flex">
                                 <span className="mr-3">ALIŞVERİŞİ TAMAMLA</span>
                                 <span><svg stroke="currentColor" fill="currentColor" strokeWidth="0"
