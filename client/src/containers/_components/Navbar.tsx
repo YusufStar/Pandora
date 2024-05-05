@@ -9,10 +9,12 @@ import {ChevronDown, ChevronLeft, ChevronRight, MenuIcon, X} from "lucide-react"
 import SearchIcon from "@/components/icons/Search";
 import useBasket, {calculateTotalPrice} from "@/zustand/useBasket";
 import {nav_links} from "@/zustand/mock-products";
-
+import {Input} from "@/components/ui/input";
+import {useRouter} from "next/navigation";
 const Navbar = () => {
     const [activeLink, setActiveLink] = useState<string>("");
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
+    const {push} = useRouter()
 
     const basket = useBasket();
     const price = calculateTotalPrice(basket.products)
@@ -119,21 +121,6 @@ const Navbar = () => {
                     />
                 </Link>
 
-                {/* Search Bar */}
-                {/*
-        <div className="w-full ml-4 flex relative items-center h-9">
-          <input
-            type="text"
-            placeholder="Hayalinizde ki urunu Arayin..."
-            className="w-full placeholder:text-black/70 text-base focus:shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out font-medium px-4 pl-12 h-full rounded outline-none border border-black/20"
-          />
-
-          <span className="absolute left-4">
-            <SearchIcon />
-          </span>
-        </div>
-        */}
-
                 {/* Nav Links */}
                 <div onMouseLeave={() => setActiveLink("")} className="gap-6 hidden lg:flex items-center flex-1">
                     {nav_links.map((nav_link, index) => (
@@ -169,10 +156,15 @@ const Navbar = () => {
                 </div>
 
                 {/* Buttons */}
-                <div className="h-full w-auto flex items-center gap-4">
-                    <button>
-                        <SearchIcon/>
-                    </button>
+                <div className="h-full w-full max-w-xl flex items-center justify-end gap-4">
+                    <form onSubmit={(e) => {
+                        e.preventDefault()
+                        push(`/search?s=${(e.target as any)[0].value as string}`)
+                    }} className={"flex items-center w-full relative max-w-sm gap-2"}>
+                        <Input className={"max-w-md w-full focus-visible:!ring-0 !ring-0"}/>
+                        <SearchIcon className={"absolute shrink-0 right-4"}/>
+                    </form>
+
                     <button>
                         <ProfileIcon/>
                     </button>

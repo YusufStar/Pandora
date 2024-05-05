@@ -82,6 +82,8 @@ export async function POST(request: Request) {
         }
     })
 
+    console.log(newDataBasket)
+
     return NextResponse.json({authenticated: !!session, data: newDataBasket})
 }
 
