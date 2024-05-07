@@ -5,16 +5,18 @@ import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import {Label} from "@/components/ui/label";
 import {useSession} from "next-auth/react";
-import {Button} from "@/components/ui/button";
-import {
-    AlertDialog, AlertDialogAction, AlertDialogCancel,
-    AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger
-} from "@/components/ui/alert-dialog";
 import Link from "next/link";
 import {Checkbox} from "@/components/ui/checkbox";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue
+} from "@/components/ui/select";
+import {turkey} from "@/lib/turkey";
 
 const CheckoutPage = () => {
     const {data} = useSession()
@@ -22,8 +24,22 @@ const CheckoutPage = () => {
     const [step, setStep] = useState(1);
     const [inputs, setInputs] = useState<{
         email: string;
+        name: string;
+        surname: string;
+        adress: string;
+        detail: string;
+        city: string;
+        state: string;
+        tel: string;
     }>({
-        email: ""
+        email: "",
+        name: "",
+        surname: "",
+        adress: "",
+        detail: "",
+        city: "",
+        state: "",
+        tel: "",
     })
 
     const {setBasket, products} = useBasket()
@@ -83,7 +99,7 @@ const CheckoutPage = () => {
                                 </Label>
                                 <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
                                     <Label htmlFor={"email"}
-                                           className={"text-xs w-full text-[#8A8B94]"}>E-posta</Label>
+                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>E-posta</Label>
                                     <input
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
@@ -100,80 +116,104 @@ const CheckoutPage = () => {
 
                             <div className="flex w-full gap-2 items-center">
                                 <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                    <Label htmlFor={"email"}
-                                           className={"text-xs w-full text-[#8A8B94]"}>E-posta</Label>
+                                    <Label htmlFor={"name"}
+                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>Ad</Label>
                                     <input
                                         required
-                                        onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                        id={"email"}
+                                        onChange={(e) => setInputs((prev) => ({...prev, name: e.target.value}))}
+                                        id={"name"}
                                         className={"w-full outline-0 text-sm font-medium"}
-                                        placeholder={"Email"}
+                                        placeholder={"Ad"}
                                     />
                                 </div>
+
                                 <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                    <Label htmlFor={"email"}
-                                           className={"text-xs w-full text-[#8A8B94]"}>E-posta</Label>
+                                    <Label htmlFor={"surname"}
+                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>Soyad</Label>
                                     <input
                                         required
-                                        onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                        id={"email"}
+                                        onChange={(e) => setInputs((prev) => ({...prev, surname: e.target.value}))}
+                                        id={"surname"}
                                         className={"w-full outline-0 text-sm font-medium"}
-                                        placeholder={"Email"}
+                                        placeholder={"Soyad"}
                                     />
                                 </div>
                             </div>
                             <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                <Label htmlFor={"email"} className={"text-xs w-full text-[#8A8B94]"}>E-posta</Label>
+                                <Label htmlFor={"adress"}
+                                       className={"text-xs w-full font-normal text-[#8A8B94]"}>Adres</Label>
                                 <input
                                     required
-                                    onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                    id={"email"}
+                                    onChange={(e) => setInputs((prev) => ({...prev, adress: e.target.value}))}
+                                    id={"adress"}
                                     className={"w-full outline-0 text-sm font-medium"}
-                                    placeholder={"Email"}
+                                    placeholder={"Adres"}
                                 />
                             </div>
                             <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                <Label htmlFor={"email"} className={"text-xs w-full text-[#8A8B94]"}>E-posta</Label>
+                                <Label htmlFor={"detail"}
+                                       className={"text-xs w-full font-normal text-[#8A8B94]"}>Apartman, daire,
+                                    vb.</Label>
                                 <input
                                     required
-                                    onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                    id={"email"}
+                                    onChange={(e) => setInputs((prev) => ({...prev, detail: e.target.value}))}
+                                    id={"detail"}
                                     className={"w-full outline-0 text-sm font-medium"}
-                                    placeholder={"Email"}
+                                    placeholder={"Apartman, daire, vb."}
                                 />
                             </div>
                             <div className="flex w-full gap-2 items-center">
                                 <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                    <Label htmlFor={"email"}
-                                           className={"text-xs w-full text-[#8A8B94]"}>E-posta</Label>
-                                    <input
-                                        required
-                                        onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                        id={"email"}
-                                        className={"w-full outline-0 text-sm font-medium"}
-                                        placeholder={"Email"}
-                                    />
+                                    <Label htmlFor={"il"}
+                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>İl</Label>
+                                    <Select onValueChange={(value) => setInputs((prev) => ({...prev, city: value}))}>
+                                        <SelectTrigger id={'il'} className="border-none w-full h-min p-0 py-1 ring-0">
+                                            <SelectValue className={"capitalize"} placeholder="İl seçiniz."/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>İller</SelectLabel>
+                                                {turkey.map((item, index) => <SelectItem className={"capitalize"}
+                                                                                         value={item.il_adi}>{item.il_adi}</SelectItem>)}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                                 <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                    <Label htmlFor={"email"}
-                                           className={"text-xs w-full text-[#8A8B94]"}>E-posta</Label>
-                                    <input
-                                        required
-                                        onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                        id={"email"}
-                                        className={"w-full outline-0 text-sm font-medium"}
-                                        placeholder={"Email"}
-                                    />
+                                    <Label htmlFor={"ce"}
+                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>İlçe</Label>
+                                    <Select onValueChange={(value) => setInputs((prev) => ({...prev, state: value}))}>
+                                        <SelectTrigger id={'ilce'} className="border-none w-full h-min p-0 py-1 ring-0">
+                                            <SelectValue className={"capitalize"} placeholder="İlçe seçiniz."/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>İlçeler</SelectLabel>
+                                                {turkey?.filter((item) => inputs.city === "" || item.il_adi === inputs.city)?.map((item, index) => {
+                                                        if (item?.ilceler) {
+                                                            return <>
+                                                                {item.ilceler.map((state, index) => <SelectItem
+                                                                    className={"capitalize"}
+                                                                    value={state.ilce_adi}>{state.ilce_adi.toLowerCase()}</SelectItem>)}
+                                                            </>
+                                                        }
+                                                        return <></>
+                                                    }
+                                                )}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             </div>
                             <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                <Label htmlFor={"email"} className={"text-xs w-full text-[#8A8B94]"}>E-posta</Label>
+                                <Label htmlFor={"phone"}
+                                       className={"text-xs w-full font-normal text-[#8A8B94]"}>Telefon</Label>
                                 <input
                                     required
-                                    onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                    id={"email"}
+                                    onChange={(e) => setInputs((prev) => ({...prev, phone: e.target.value}))}
+                                    id={"phone"}
                                     className={"w-full outline-0 text-sm font-medium"}
-                                    placeholder={"Email"}
+                                    placeholder={"Telefon"}
                                 />
                             </div>
 
@@ -283,17 +323,19 @@ const CheckoutPage = () => {
                                 <div className="flex items-center gap-4">
                                     <Checkbox id={"check-01"} className={"w-[20px] h-[20px]"}/>
 
-                                    <Label htmlFor={"check-01"} className={"text-[#8A8B94] text-sm font-normal"}>Fatura adresim teslimat adresimle aynı</Label>
+                                    <Label htmlFor={"check-01"} className={"text-[#8A8B94] text-sm font-normal"}>Fatura
+                                        adresim teslimat adresimle aynı</Label>
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <Checkbox id={"check-02"} className={"w-[20px] h-[20px]"}/>
 
-                                    <Label htmlFor={"check-02"} className="flex items-center gap-1 text-[#8A8B94] text-sm font-normal">
+                                    <Label htmlFor={"check-02"}
+                                           className="flex items-center gap-1 text-[#8A8B94] text-sm font-normal">
                                         <span
-                                        className="text-black font-medium text-sm">Gizlilik Sözleşmesini</span>
+                                            className="text-black font-medium text-sm">Gizlilik Sözleşmesini</span>
                                         ve
                                         <span
-                                        className="text-black font-medium text-sm">Satış Sözleşmesini</span>
+                                            className="text-black font-medium text-sm">Satış Sözleşmesini</span>
                                         okudum, onaylıyorum.
                                     </Label>
                                 </div>
@@ -316,7 +358,7 @@ const CheckoutPage = () => {
                                 return (
                                     <div key={id} className={"w-full py-4 relative h-fit"}>
                                         <div className="flex items-center">
-                                        <div className="flex-shrink-0 w-20 h-fit relative">
+                                            <div className="flex-shrink-0 w-20 h-fit relative">
                                                 <img src={product.banner.url} alt=""/>
                                             </div>
 
@@ -357,7 +399,8 @@ const CheckoutPage = () => {
                                                             <span
                                                                 className={"text-[#8a8b94] text-[13px] sm:text-[14px] line-through"}>{formatCurrency(cmToSquareMeter(size.dimensions) * product.price * quantity)}</span>}
 
-                                                        <span className={"text-[13px] sm:text-[14px] font-medium text-black"}>
+                                                        <span
+                                                            className={"text-[13px] sm:text-[14px] font-medium text-black"}>
                     {formatCurrency(useDiscount(Number(cmToSquareMeter(size.dimensions).toFixed(2)) * product.price * quantity, product.discount) as number)}
                 </span>
                                                     </div>
@@ -368,7 +411,7 @@ const CheckoutPage = () => {
                                 )
                             })}
                         </div>
-                        
+
                         <div className="py-4 border-b flex flex-col gap-4">
                             <div className="w-full flex items-center justify-between">
                                 <span className={"text-[#8A8B94] text-sm"}>Ara Toplam</span>
