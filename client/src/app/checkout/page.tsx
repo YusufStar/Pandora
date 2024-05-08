@@ -93,14 +93,14 @@ const CheckoutPage = () => {
                     </div>
 
                     {step === 1 && (
-                        <div className="flex w-full flex-col m-12 items-center gap-2">
-                            <div className="w-full flex flex-col gap-2 mb-8">
+                        <div className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
+                            <div className="w-full flex flex-col gap-2 mb-6 sm:mb-8">
                                 <Label className={"text-nowrap text-left w-full text-lg font-normal"} htmlFor="email">
                                     Email
                                 </Label>
-                                <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
+                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                     <Label htmlFor={"email"}
-                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>E-posta</Label>
+                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>E-posta</Label>
                                     <input
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
@@ -116,9 +116,9 @@ const CheckoutPage = () => {
                             </Label>
 
                             <div className="flex w-full gap-2 items-center">
-                                <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
+                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                     <Label htmlFor={"name"}
-                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>Ad</Label>
+                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Ad</Label>
                                     <input
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, name: e.target.value}))}
@@ -128,9 +128,9 @@ const CheckoutPage = () => {
                                     />
                                 </div>
 
-                                <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
+                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                     <Label htmlFor={"surname"}
-                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>Soyad</Label>
+                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Soyad</Label>
                                     <input
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, surname: e.target.value}))}
@@ -140,9 +140,9 @@ const CheckoutPage = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
+                            <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                 <Label htmlFor={"adress"}
-                                       className={"text-xs w-full font-normal text-[#8A8B94]"}>Adres</Label>
+                                       className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Adres</Label>
                                 <input
                                     required
                                     onChange={(e) => setInputs((prev) => ({...prev, adress: e.target.value}))}
@@ -151,9 +151,9 @@ const CheckoutPage = () => {
                                     placeholder={"Adres"}
                                 />
                             </div>
-                            <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
+                            <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                 <Label htmlFor={"detail"}
-                                       className={"text-xs w-full font-normal text-[#8A8B94]"}>Apartman, daire,
+                                       className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Apartman, daire,
                                     vb.</Label>
                                 <input
                                     required
@@ -164,9 +164,9 @@ const CheckoutPage = () => {
                                 />
                             </div>
                             <div className="flex w-full gap-2 items-center">
-                                <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
+                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                     <Label htmlFor={"il"}
-                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>İl</Label>
+                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>İl</Label>
                                     <Select onValueChange={(value) => setInputs((prev) => ({...prev, city: value}))}>
                                         <SelectTrigger id={'il'} className="border-none w-full h-min p-0 py-1 ring-0">
                                             <SelectValue className={"capitalize"} placeholder="İl seçiniz."/>
@@ -180,9 +180,9 @@ const CheckoutPage = () => {
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
+                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                     <Label htmlFor={"ce"}
-                                           className={"text-xs w-full font-normal text-[#8A8B94]"}>İlçe</Label>
+                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>İlçe</Label>
                                     <Select onValueChange={(value) => setInputs((prev) => ({...prev, state: value}))}>
                                         <SelectTrigger id={'ilce'} className="border-none w-full h-min p-0 py-1 ring-0">
                                             <SelectValue className={"capitalize"} placeholder="İlçe seçiniz."/>
@@ -206,9 +206,9 @@ const CheckoutPage = () => {
                                     </Select>
                                 </div>
                             </div>
-                            <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
+                            <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                 <Label htmlFor={"phone"}
-                                       className={"text-xs w-full font-normal text-[#8A8B94]"}>Telefon</Label>
+                                       className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Telefon</Label>
                                 <input
                                     required
                                     onChange={(e) => setInputs((prev) => ({...prev, phone: e.target.value}))}
@@ -237,65 +237,65 @@ const CheckoutPage = () => {
                     </div>
 
                     {step === 2 && (
-                        <div className="flex w-full flex-col m-12 items-center gap-2">
+                        <div className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
                             <div
                                 className="w-full h-fit bg-[#F7F7F9] border-black border-2 rounded-[8px] p-[16px] flex flex-col gap-3">
-                                <div className="border w-full px-4 py-2 gap-2 rounded-md relative bg-white">
-                                    <Label htmlFor={"email"}
-                                           className={"text-xs font-medium w-full text-[#8A8B94]"}>E-posta</Label>
+                                <div className="border w-full px-4 py-3 sm:py-2 gap-2 mt-2 sm:mt-0 rounded-md relative bg-white">
+                                    <Label htmlFor={"credit-card-number"}
+                                           className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Credit Card Number</Label>
                                     <input
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                        id={"email"}
+                                        id={"credit-card-number"}
                                         className={"w-full outline-0 text-sm font-normal"}
-                                        placeholder={"Email"}
+                                        placeholder={"Credit Card Number"}
                                     />
                                 </div>
 
-                                <div className="border w-full px-4 py-2 gap-2 rounded-md relative bg-white">
-                                    <Label htmlFor={"email"}
-                                           className={"text-xs font-medium w-full text-[#8A8B94]"}>E-posta</Label>
+                                <div className="border w-full px-4 py-3 sm:py-2 gap-2 mt-2 sm:mt-0 rounded-md relative bg-white">
+                                    <Label htmlFor={"credit-card-name"}
+                                           className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Kart Üzerindeki İsim</Label>
                                     <input
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                        id={"email"}
+                                        id={"credit-card-name"}
                                         className={"w-full outline-0 text-sm font-normal"}
-                                        placeholder={"Email"}
+                                        placeholder={"Kart Üzerindeki İsim"}
                                     />
                                 </div>
 
-                                <div className="flex w-full gap-2 items-center bg-white">
-                                    <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                        <Label htmlFor={"email"}
-                                               className={"text-xs font-medium w-full text-[#8A8B94]"}>E-posta</Label>
+                                <div className="flex flex-col sm:flex-row bg-[#F7F7F9] w-full gap-2 items-center">
+                                    <div className="border w-full px-4 py-3 sm:py-2 gap-2 mt-2 sm:mt-0 rounded-md relative bg-white">
+                                        <Label htmlFor={"month/year"}
+                                               className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Ay / Yil</Label>
                                         <input
                                             required
                                             onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                            id={"email"}
+                                            id={"month/year"}
                                             className={"w-full outline-0 text-sm font-normal"}
-                                            placeholder={"Email"}
+                                            placeholder={"Ay / Yil"}
                                         />
                                     </div>
-                                    <div className="border w-full px-4 py-2 gap-2 rounded-md relative">
-                                        <Label htmlFor={"email"}
-                                               className={"text-xs font-medium w-full text-[#8A8B94]"}>E-posta</Label>
+                                    <div className="border w-full px-4 py-3 sm:py-2 gap-2 mt-2 sm:mt-0 rounded-md relative bg-white">
+                                        <Label htmlFor={"cvc"}
+                                               className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>CVC</Label>
                                         <input
                                             required
                                             onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                            id={"email"}
+                                            id={"cvc"}
                                             className={"w-full outline-0 text-sm font-normal"}
-                                            placeholder={"Email"}
+                                            placeholder={"CVC"}
                                         />
                                     </div>
                                 </div>
 
-                                <div className="mt-[32px]">
-                                    <div className="text-base mb-[16ox]">Taksit Seçenekleri</div>
+                                <div className="mt-[16px] sm:mt-[32px]">
+                                    <div className="text-base mb-[16px]">Taksit Seçenekleri</div>
                                     <div className="rounded-[8px] bg-white border">
                                         <div className="h-[56px] flex px-4 items-center">
                                             <div
                                                 className="w-auto p-0 flex">
-                                                <div className="mr-4 w-[20px] h-[20px] relative">
+                                                <div className="mr-2 w-[20px] h-[20px] relative">
                                                     <div
                                                         className="w-[24px] h-[24px] rounded-full absolute bg-[#272727]"></div>
                                                     <div
@@ -351,7 +351,7 @@ const CheckoutPage = () => {
                 </div>
             </div>
 
-            <div className="w-full h-full flex flex-col p-4 bg-[#F7F7F9]">
+            <div className="w-full hidden sm:flex h-full flex-col p-4 bg-[#F7F7F9]">
                 <div className="max-w-[600px] w-full mx-auto">
                     <div className="w-full h-full flex flex-col">
                         <div className="flex flex-col border-b w-full py-4">
