@@ -16,7 +16,7 @@ export async function GET(request: Request) {
         where: {},
         include: {
             banner: true,
-            sizes: true
+            sizes: true,
         }
     })
 

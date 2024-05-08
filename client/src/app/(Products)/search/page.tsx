@@ -44,11 +44,17 @@ const SearchPage = () => {
                     title: 'Markalar',
                     field: 'brand',
                     items: getUniqueBrandsWithCounts()
+                },
+                {
+                    title: 'Olculer',
+                    field: 'sizes',
+                    items: getUniqueSizesWithCounts()
                 }
             ]);
 
             setActiveFilters({
-                'brand': {}
+                'brand': {},
+                'sizes': {}
             })
         }
     }, [products]);
@@ -74,19 +80,47 @@ const SearchPage = () => {
         }
     };
 
+    const getUniqueSizesWithCounts = () => {
+        if (products && products.length > 0) {
+            const uniqueSizes = products.flatMap((product) => product.sizes.map((size: any) => size.dimensions)).filter(onlyUnique);
+
+            const sizesCounts = uniqueSizes.map((size: any) => {
+                return {
+                    field: size,
+                    count: products.filter((product) => {
+                        const sizes = product.sizes.map((size: any) => size.dimensions)
+
+                        return sizes.includes(size)
+                    }).length
+                };
+            });
+
+            return sizesCounts;
+        } else {
+            return [];
+        }
+    }
+
     const applyFiltersWithProducts = () => {
-        //@ts-ignore
         if (Object.keys(activeFilters).length === 0) {
             return products;
         } else {
-            //@ts-ignore
+            // @ts-ignore
             let filteredProducts = [...products];
             for (const filterField in activeFilters) {
                 if (Object.values(activeFilters[filterField]).some((x) => x)) {
                     const activeFilterValues = Object.keys(activeFilters[filterField]).filter(key => activeFilters[filterField][key]);
-                    filteredProducts = filteredProducts.filter(product => activeFilterValues.includes(product[filterField]));
+                    filteredProducts = filteredProducts.filter(product => {
+                        if (filterField === 'brand') {
+                            return activeFilterValues.includes(product[filterField]);
+                        } else if (filterField === 'sizes') {
+                            return product[filterField].some((size: any) => activeFilterValues.includes(size.dimensions));
+                        } else {
+                            return true;
+                        }
+                    });
                 } else {
-                    filteredProducts = [...products]
+                    filteredProducts = [...products];
                 }
             }
             return filteredProducts;
@@ -164,10 +198,6 @@ const SearchPage = () => {
                                                     {filter?.items.map((item: any, index: number) => {
                                                         return <span onClick={() => {
                                                             setActiveFilters((prev: any) => {
-                                                                console.log('prev:', prev);
-                                                                console.log('filter.field:', filter.field);
-                                                                console.log('item.field:', item.field);
-
                                                                 return {
                                                                     ...prev,
                                                                     [filter.field]: {

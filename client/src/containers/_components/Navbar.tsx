@@ -157,6 +157,7 @@ const Navbar = () => {
 
                 {/* Buttons */}
                 <div className="h-full w-full max-w-xl flex items-center justify-end gap-4">
+                    {/*
                     <form onSubmit={(e) => {
                         e.preventDefault()
                         push(`/search?s=${(e.target as any)[0].value as string}`)
@@ -164,6 +165,7 @@ const Navbar = () => {
                         <Input className={"max-w-md w-full focus-visible:!ring-0 !ring-0"}/>
                         <SearchIcon className={"absolute shrink-0 right-4"}/>
                     </form>
+                    */}
 
                     <button>
                         <ProfileIcon/>
