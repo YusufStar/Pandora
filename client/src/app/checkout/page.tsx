@@ -31,6 +31,10 @@ const CheckoutPage = () => {
         city: string;
         state: string;
         tel: string;
+        cardNumber: string;
+        cardName: string;
+        date: string;
+        cvc: string;
     }>({
         email: "",
         name: "",
@@ -40,6 +44,10 @@ const CheckoutPage = () => {
         city: "",
         state: "",
         tel: "",
+        cardNumber: "",
+        cardName: "",
+        date: "",
+        cvc: "",
     })
 
     const {setBasket, products} = useBasket()
@@ -78,18 +86,42 @@ const CheckoutPage = () => {
                         alt="logo"
                         decoding="async"
                         draggable="false"
-                        className={"mb-20"}
+                        className={"mb-10 sm:mb-20"}
                     />
 
-                    <div className="flex gap-6 items-center">
-                            <span
-                                className={"w-8 h-8 rounded-full flex items-center justify-center font-medium bg-black text-white"}>
-                            1
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <div className="flex gap-4 w-fit">
+                                <span
+                                    className={"w-8 h-8 rounded-full flex items-center justify-center font-medium bg-black text-white"}>
+                            {step === 2 ?
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10.3" height="8" viewBox="8.9 0.3 10.3 8"
+                                     enable-background="new 8.9 0.3 10.3 8">
+                                    <path fill="currentColor" d="M12.6 8.1l-3.7-3.8 1-1.1 2.7 2.7 5.5-5.4 1 1z"></path>
+                                </svg> : 1}
                         </span>
 
-                        <span className={"text-xl font-medium"}>
+                            <span className={"text-xl font-medium"}>
                                 Adres
                             </span>
+                        </div>
+                        
+                        <div className="flex flex-row sm:flex-col gap-1">
+                              {step === 2 && (
+                                  <div className={"flex flex-col w-full h-fit"}>
+                                      <span className={"text-sm font-medium mb-2"}>{inputs.email}</span>
+                                      <span className={"text-sm text-[#24262a] font-medium"}>{inputs.name} {inputs.surname}</span>
+                                      <span className={"text-xs text-[#24262a] font-medium"}>{inputs.tel}</span>
+                                      <span
+                                          className={"text-xs text-[#24262a] font-medium break-words overflow-hidden w-full"}>{inputs.adress}, {inputs.detail}, {inputs.state}, {inputs.city}</span>
+                                  </div>
+                              )}
+
+                            {step === 2 && <button className={"hover-interstellar block sm:hidden text-sm h-fit font-medium"} onClick={() => setStep(1)}>Edit</button>}
+                        </div>
+
+                        <div className="justify-end hidden sm:flex">
+                            {step === 2 && <button className={"hover-interstellar h-fit font-medium"} onClick={() => setStep(1)}>Edit</button>}
+                        </div>
                     </div>
 
                     {step === 1 && (
@@ -102,6 +134,7 @@ const CheckoutPage = () => {
                                     <Label htmlFor={"email"}
                                            className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>E-posta</Label>
                                     <input
+                                        value={inputs.email}
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
                                         id={"email"}
@@ -120,6 +153,7 @@ const CheckoutPage = () => {
                                     <Label htmlFor={"name"}
                                            className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Ad</Label>
                                     <input
+                                        value={inputs.name}
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, name: e.target.value}))}
                                         id={"name"}
@@ -132,6 +166,7 @@ const CheckoutPage = () => {
                                     <Label htmlFor={"surname"}
                                            className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Soyad</Label>
                                     <input
+                                        value={inputs.surname}
                                         required
                                         onChange={(e) => setInputs((prev) => ({...prev, surname: e.target.value}))}
                                         id={"surname"}
@@ -144,6 +179,7 @@ const CheckoutPage = () => {
                                 <Label htmlFor={"adress"}
                                        className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Adres</Label>
                                 <input
+                                    value={inputs.adress}
                                     required
                                     onChange={(e) => setInputs((prev) => ({...prev, adress: e.target.value}))}
                                     id={"adress"}
@@ -156,6 +192,7 @@ const CheckoutPage = () => {
                                        className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Apartman, daire,
                                     vb.</Label>
                                 <input
+                                    value={inputs.detail}
                                     required
                                     onChange={(e) => setInputs((prev) => ({...prev, detail: e.target.value}))}
                                     id={"detail"}
@@ -167,7 +204,7 @@ const CheckoutPage = () => {
                                 <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                     <Label htmlFor={"il"}
                                            className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>İl</Label>
-                                    <Select onValueChange={(value) => setInputs((prev) => ({...prev, city: value}))}>
+                                    <Select value={inputs.city} onValueChange={(value) => setInputs((prev) => ({...prev, city: value}))}>
                                         <SelectTrigger id={'il'} className="border-none w-full h-min p-0 py-1 ring-0">
                                             <SelectValue className={"capitalize"} placeholder="İl seçiniz."/>
                                         </SelectTrigger>
@@ -183,7 +220,7 @@ const CheckoutPage = () => {
                                 <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
                                     <Label htmlFor={"ce"}
                                            className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>İlçe</Label>
-                                    <Select onValueChange={(value) => setInputs((prev) => ({...prev, state: value}))}>
+                                    <Select value={inputs.state} onValueChange={(value) => setInputs((prev) => ({...prev, state: value}))}>
                                         <SelectTrigger id={'ilce'} className="border-none w-full h-min p-0 py-1 ring-0">
                                             <SelectValue className={"capitalize"} placeholder="İlçe seçiniz."/>
                                         </SelectTrigger>
@@ -210,8 +247,9 @@ const CheckoutPage = () => {
                                 <Label htmlFor={"phone"}
                                        className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Telefon</Label>
                                 <input
+                                    value={inputs.tel}
                                     required
-                                    onChange={(e) => setInputs((prev) => ({...prev, phone: e.target.value}))}
+                                    onChange={(e) => setInputs((prev) => ({...prev, tel: e.target.value}))}
                                     id={"phone"}
                                     className={"w-full outline-0 text-sm font-medium"}
                                     placeholder={"Telefon"}
@@ -244,8 +282,9 @@ const CheckoutPage = () => {
                                     <Label htmlFor={"credit-card-number"}
                                            className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Credit Card Number</Label>
                                     <input
+                                        value={inputs.cardNumber}
                                         required
-                                        onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
+                                        onChange={(e) => setInputs((prev) => ({...prev, cardNumber: e.target.value}))}
                                         id={"credit-card-number"}
                                         className={"w-full outline-0 text-sm font-normal"}
                                         placeholder={"Credit Card Number"}
@@ -256,8 +295,9 @@ const CheckoutPage = () => {
                                     <Label htmlFor={"credit-card-name"}
                                            className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Kart Üzerindeki İsim</Label>
                                     <input
+                                        value={inputs.cardName}
                                         required
-                                        onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
+                                        onChange={(e) => setInputs((prev) => ({...prev, cardName: e.target.value}))}
                                         id={"credit-card-name"}
                                         className={"w-full outline-0 text-sm font-normal"}
                                         placeholder={"Kart Üzerindeki İsim"}
@@ -269,8 +309,9 @@ const CheckoutPage = () => {
                                         <Label htmlFor={"month/year"}
                                                className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Ay / Yil</Label>
                                         <input
+                                            value={inputs.date}
                                             required
-                                            onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
+                                            onChange={(e) => setInputs((prev) => ({...prev, date: e.target.value}))}
                                             id={"month/year"}
                                             className={"w-full outline-0 text-sm font-normal"}
                                             placeholder={"Ay / Yil"}
@@ -280,8 +321,9 @@ const CheckoutPage = () => {
                                         <Label htmlFor={"cvc"}
                                                className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>CVC</Label>
                                         <input
+                                            value={inputs.cvc}
                                             required
-                                            onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
+                                            onChange={(e) => setInputs((prev) => ({...prev, cvc: e.target.value}))}
                                             id={"cvc"}
                                             className={"w-full outline-0 text-sm font-normal"}
                                             placeholder={"CVC"}
@@ -320,23 +362,23 @@ const CheckoutPage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex flex-col gap-4 mt-8 w-full">
+                            <div className="flex flex-col gap-6 mt-8 w-full">
                                 <div className="flex items-center gap-4">
-                                    <Checkbox id={"check-01"} className={"w-[20px] h-[20px]"}/>
+                                    <Checkbox id={"check-01"} className={"w-[16px] h-[16px] sm:w-[20px] sm:h-[20px]"}/>
 
-                                    <Label htmlFor={"check-01"} className={"text-[#8A8B94] text-sm font-normal"}>Fatura
+                                    <Label htmlFor={"check-01"} className={"text-[#8A8B94] text-xs sm:text-sm font-normal"}>Fatura
                                         adresim teslimat adresimle aynı</Label>
                                 </div>
-                                <div className="flex items-center gap-4">
-                                    <Checkbox id={"check-02"} className={"w-[20px] h-[20px]"}/>
+                                <div className="flex items-start sm:items-center gap-4">
+                                    <Checkbox id={"check-02"} className={"w-[16px] h-[16px] sm:w-[20px] sm:h-[20px]"}/>
 
                                     <Label htmlFor={"check-02"}
-                                           className="flex items-center gap-1 text-[#8A8B94] text-sm font-normal">
+                                           className="flex flex-wrap items-center gap-1 text-[#8A8B94] text-xs sm:text-sm font-normal">
                                         <span
-                                            className="text-black font-medium text-sm">Gizlilik Sözleşmesini</span>
+                                            className="text-black font-medium text-xs sm:text-sm text-nowrap">Gizlilik Sözleşmesini</span>
                                         ve
                                         <span
-                                            className="text-black font-medium text-sm">Satış Sözleşmesini</span>
+                                            className="text-black font-medium text-xs sm:text-sm text-nowrap">Satış Sözleşmesini</span>
                                         okudum, onaylıyorum.
                                     </Label>
                                 </div>
