@@ -1,8 +1,8 @@
 'use client';
 
-import {useSearchParams} from "next/navigation";
-import {useEffect, useState} from "react";
-import {AnimatePresence, motion} from "framer-motion";
+import { useEffect, useState } from "react";
+import {useRouter, useSearchParams} from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import BasicCard from "@/components/cards/BasicCard";
 
 const SearchPage = () => {
@@ -11,8 +11,10 @@ const SearchPage = () => {
     const [activeFilters, setActiveFilters] = useState<null | any>({});
     const [expanded, setExpanded] = useState<any>({});
     const [search, setSearch] = useState<string>("");
+    const [sort, setSort] = useState<"fiyat-artan" | "fiyat-azalan" | "indirim-artan" | "indirim-azalan" | "ilk-eklenen" | "son-eklenen" | "default">("default");
 
     const params = useSearchParams();
+    const router = useRouter();
 
     const getData = async () => {
         const response = await fetch(`/api/products`, {
@@ -26,6 +28,14 @@ const SearchPage = () => {
 
         setSearch(params.get("s") as string)
     }, []);
+
+    useEffect(() => {
+        const delay = setTimeout(() => {
+            router.push(`/search?s=${search}`);
+        }, 1000);
+
+        return () => clearTimeout(delay);
+    }, [search]);
 
     useEffect(() => {
         if (products) {
@@ -107,8 +117,16 @@ const SearchPage = () => {
                         </div>
                     </div>
 
-                    <div className="template-list desktop-sort-template items-center">
-                        Desktop sort list
+                    <div className="flex desktop-sort-template items-center">
+                        <div className="flex flex-wrap w-11/12">
+                            <div onClick={() => setSort("fiyat-artan")} className={`sort-item ${sort === "fiyat-artan" ? "active" : "passive"}`}>Fiyat artan</div>
+                            <div onClick={() => setSort("fiyat-azalan")} className={`sort-item ${sort === "fiyat-azalan" ? "active" : "passive"}`}>Fiyat azalan</div>
+                            <div onClick={() => setSort("indirim-artan")} className={`sort-item ${sort === "indirim-artan" ? "active" : "passive"}`}>İndirim oranı artan</div>
+                            <div onClick={() => setSort("indirim-azalan")} className={`sort-item ${sort === "indirim-azalan" ? "active" : "passive"}`}>İndirim oranı azalan</div>
+                            <div onClick={() => setSort("ilk-eklenen")} className={`sort-item ${sort === "ilk-eklenen" ? "active" : "passive"}`}>İlk eklenen</div>
+                            <div onClick={() => setSort("son-eklenen")} className={`sort-item ${sort === "son-eklenen" ? "active" : "passive"}`}>Son eklenen</div>
+                            <div onClick={() => setSort("default")} className={`sort-item ${sort === "default" ? "active" : "passive"}`}>Varsayılan</div>
+                        </div>
                     </div>
                 </div>
 
@@ -118,7 +136,7 @@ const SearchPage = () => {
                             {filterItems?.map((filter) => {
                                 return (
                                     <div key={filter.title}>
-                                        <div onClick={() => {
+                                    <div onClick={() => {
                                             setExpanded((prev: any) => ({
                                                 ...prev,
                                                 [filter.title]: !!!prev[filter.title]

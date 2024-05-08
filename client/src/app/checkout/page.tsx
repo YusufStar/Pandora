@@ -59,6 +59,7 @@ const CheckoutPage = () => {
 
     useEffect(() => {
         if (data?.user) {
+            // @ts-ignore
             setInputs((prev) => ({
                 email: data?.user?.email as string
             }))
