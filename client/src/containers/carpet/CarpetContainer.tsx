@@ -91,7 +91,7 @@ const CarpetContainer = () => {
 
     return (
         <div className="h-full w-full flex flex-col">
-            <div className={`home-slider-main`}>
+            <div className={`home-slider-main container mx-auto`}>
                 <HorizontalList settings={image_settings}>
                     {slides.map((slide, idx) => (
                         <img
