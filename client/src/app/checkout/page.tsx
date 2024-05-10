@@ -17,6 +17,7 @@ import {
     SelectValue
 } from "@/components/ui/select";
 import {turkey} from "@/lib/turkey";
+import LabelInput from "@/components/LabelInput";
 
 const CheckoutPage = () => {
     const {data} = useSession()
@@ -104,157 +105,130 @@ const CheckoutPage = () => {
                                 Adres
                             </span>
                         </div>
-                        
-                        <div className="flex flex-row sm:flex-col gap-1">
-                              {step === 2 && (
-                                  <div className={"flex flex-col w-full h-fit"}>
-                                      <span className={"text-sm font-medium mb-2"}>{inputs.email}</span>
-                                      <span className={"text-sm text-[#24262a] font-medium"}>{inputs.name} {inputs.surname}</span>
-                                      <span className={"text-xs text-[#24262a] font-medium"}>{inputs.tel}</span>
-                                      <span
-                                          className={"text-xs text-[#24262a] font-medium break-words overflow-hidden w-full"}>{inputs.adress}, {inputs.detail}, {inputs.state}, {inputs.city}</span>
-                                  </div>
-                              )}
 
-                            {step === 2 && <button className={"hover-interstellar block sm:hidden text-sm h-fit font-medium"} onClick={() => setStep(1)}>Edit</button>}
+                        <div className="flex flex-row sm:flex-col gap-1">
+                            {step === 2 && (
+                                <div className={"flex flex-col w-full h-fit"}>
+                                    <span className={"text-sm font-medium mb-2"}>{inputs.email}</span>
+                                    <span
+                                        className={"text-sm text-[#24262a] font-medium"}>{inputs.name} {inputs.surname}</span>
+                                    <span className={"text-xs text-[#24262a] font-medium"}>{inputs.tel}</span>
+                                    <span
+                                        className={"text-xs text-[#24262a] font-medium break-words overflow-hidden w-full"}>{inputs.adress}, {inputs.detail}, {inputs.state}, {inputs.city}</span>
+                                </div>
+                            )}
+
+                            {step === 2 &&
+                                <div className="justify-start sm:hidden flex">
+                                    {step === 2 && <button className={"hover-interstellar h-fit font-medium"}
+                                                           onClick={() => setStep(1)}>Edit</button>}
+                                </div>
+                            }
                         </div>
 
                         <div className="justify-end hidden sm:flex">
-                            {step === 2 && <button className={"hover-interstellar h-fit font-medium"} onClick={() => setStep(1)}>Edit</button>}
+                            {step === 2 && <button className={"hover-interstellar h-fit font-medium"}
+                                                   onClick={() => setStep(1)}>Edit</button>}
                         </div>
                     </div>
 
                     {step === 1 && (
                         <div className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
-                            <div className="w-full flex flex-col gap-2 mb-6 sm:mb-8">
+                            <div className="w-full flex flex-col mb-6 gap-4">
                                 <Label className={"text-nowrap text-left w-full text-lg font-normal"} htmlFor="email">
-                                    Email
+                                    İletişim Adresleri
                                 </Label>
-                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
-                                    <Label htmlFor={"email"}
-                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>E-posta</Label>
-                                    <input
-                                        value={inputs.email}
-                                        required
-                                        onChange={(e) => setInputs((prev) => ({...prev, email: e.target.value}))}
-                                        id={"email"}
-                                        className={"w-full outline-0 text-sm font-medium"}
-                                        placeholder={"Email"}
-                                    />
-                                </div>
+
+                                <LabelInput
+                                    value={inputs.email}
+                                    title={'Email'}
+                                    label={'email'}
+                                    setValue={setInputs}
+                                />
                             </div>
 
                             <Label className={"text-nowrap text-left w-full text-lg font-normal"} htmlFor="email">
                                 Teslimat Adresi
                             </Label>
 
-                            <div className="flex w-full gap-2 items-center">
-                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
-                                    <Label htmlFor={"name"}
-                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Ad</Label>
-                                    <input
-                                        value={inputs.name}
-                                        required
-                                        onChange={(e) => setInputs((prev) => ({...prev, name: e.target.value}))}
-                                        id={"name"}
-                                        className={"w-full outline-0 text-sm font-medium"}
-                                        placeholder={"Ad"}
-                                    />
-                                </div>
+                            <div className="flex w-full gap-4 items-center">
+                                <LabelInput
+                                    value={inputs.name}
+                                    title={'Ad'}
+                                    label={'name'}
+                                    setValue={setInputs}
+                                />
+                                <LabelInput
+                                    value={inputs.surname}
+                                    title={'Soyad'}
+                                    label={'surname'}
+                                    setValue={setInputs}
+                                />
+                            </div>
 
-                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
-                                    <Label htmlFor={"surname"}
-                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Soyad</Label>
-                                    <input
-                                        value={inputs.surname}
-                                        required
-                                        onChange={(e) => setInputs((prev) => ({...prev, surname: e.target.value}))}
-                                        id={"surname"}
-                                        className={"w-full outline-0 text-sm font-medium"}
-                                        placeholder={"Soyad"}
-                                    />
-                                </div>
-                            </div>
-                            <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
-                                <Label htmlFor={"adress"}
-                                       className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Adres</Label>
-                                <input
-                                    value={inputs.adress}
-                                    required
-                                    onChange={(e) => setInputs((prev) => ({...prev, adress: e.target.value}))}
-                                    id={"adress"}
-                                    className={"w-full outline-0 text-sm font-medium"}
-                                    placeholder={"Adres"}
-                                />
-                            </div>
-                            <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
-                                <Label htmlFor={"detail"}
-                                       className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Apartman, daire,
-                                    vb.</Label>
-                                <input
-                                    value={inputs.detail}
-                                    required
-                                    onChange={(e) => setInputs((prev) => ({...prev, detail: e.target.value}))}
-                                    id={"detail"}
-                                    className={"w-full outline-0 text-sm font-medium"}
-                                    placeholder={"Apartman, daire, vb."}
-                                />
-                            </div>
+                            <LabelInput
+                                value={inputs.adress}
+                                title={'Adres'}
+                                label={'adress'}
+                                setValue={setInputs}
+                            />
+
+                            <LabelInput
+                                value={inputs.detail}
+                                title={"Apartman, daire, vb."}
+                                label={'detail'}
+                                setValue={setInputs}
+                            />
+
                             <div className="flex w-full gap-2 items-center">
-                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
-                                    <Label htmlFor={"il"}
-                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>İl</Label>
-                                    <Select value={inputs.city} onValueChange={(value) => setInputs((prev) => ({...prev, city: value}))}>
-                                        <SelectTrigger id={'il'} className="border-none w-full h-min p-0 py-1 ring-0">
-                                            <SelectValue className={"capitalize"} placeholder="İl seçiniz."/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectLabel>İller</SelectLabel>
-                                                {turkey.map((item, index) => <SelectItem className={"capitalize"}
-                                                                                         value={item.il_adi}>{item.il_adi}</SelectItem>)}
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
-                                    <Label htmlFor={"ce"}
-                                           className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>İlçe</Label>
-                                    <Select value={inputs.state} onValueChange={(value) => setInputs((prev) => ({...prev, state: value}))}>
-                                        <SelectTrigger id={'ilce'} className="border-none w-full h-min p-0 py-1 ring-0">
-                                            <SelectValue className={"capitalize"} placeholder="İlçe seçiniz."/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectLabel>İlçeler</SelectLabel>
-                                                {turkey?.filter((item) => inputs.city === "" || item.il_adi === inputs.city)?.map((item, index) => {
-                                                        if (item?.ilceler) {
-                                                            return <>
-                                                                {item.ilceler.map((state, index) => <SelectItem
-                                                                    className={"capitalize"}
-                                                                    value={state.ilce_adi}>{state.ilce_adi.toLowerCase()}</SelectItem>)}
-                                                            </>
-                                                        }
-                                                        return <></>
+                                <Select value={inputs.city}
+                                        onValueChange={(value) => {
+                                            setInputs((prev) => ({...prev, city: value}))
+                                            setInputs((prev) => ({...prev, state: ""}))
+                                        }}>
+                                    <SelectTrigger id={'il'}
+                                                   className="border w-full px-4 !py-3 h-fit gap-2 rounded-md relative ring-0 !text-sm">
+                                        <SelectValue className={"capitalize !text-sm"} placeholder="İl seçiniz."/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>İller</SelectLabel>
+                                            {turkey.map((item, index) => <SelectItem className={"capitalize"}
+                                                                                     value={item.il_adi}>{item.il_adi}</SelectItem>)}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                                <Select value={inputs.state}
+                                        onValueChange={(value) => setInputs((prev) => ({...prev, state: value}))}>
+                                    <SelectTrigger id={'ilce'}
+                                                   className="border w-full px-4 !py-3 h-fit gap-2 rounded-md relative ring-0 !text-sm">
+                                        <SelectValue className={"capitalize"} placeholder="İlçe seçiniz."/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>İlçeler</SelectLabel>
+                                            {turkey?.filter((item) => inputs.city === "" || item.il_adi === inputs.city)?.map((item, index) => {
+                                                    if (item?.ilceler) {
+                                                        return <>
+                                                            {item.ilceler.map((state, index) => <SelectItem
+                                                                className={"capitalize"}
+                                                                value={state.ilce_adi}>{state.ilce_adi.toLowerCase()}</SelectItem>)}
+                                                        </>
                                                     }
-                                                )}
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
+                                                    return <></>
+                                                }
+                                            )}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
                             </div>
-                            <div className="border w-full px-4 py-2 gap-2 mt-2 sm:mt-0 rounded-md relative">
-                                <Label htmlFor={"phone"}
-                                       className={"text-xs w-full hidden sm:block font-normal text-[#8A8B94]"}>Telefon</Label>
-                                <input
-                                    value={inputs.tel}
-                                    required
-                                    onChange={(e) => setInputs((prev) => ({...prev, tel: e.target.value}))}
-                                    id={"phone"}
-                                    className={"w-full outline-0 text-sm font-medium"}
-                                    placeholder={"Telefon"}
-                                />
-                            </div>
+
+                            <LabelInput
+                                value={inputs.tel}
+                                title={"Telefon Numarası"}
+                                label={'tel'}
+                                setValue={setInputs}
+                            />
 
                             <button onClick={() => setStep(2)}
                                     className={"w-full mt-8 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"}>
@@ -278,70 +252,49 @@ const CheckoutPage = () => {
                         <div className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
                             <div
                                 className="w-full h-fit bg-[#F7F7F9] border-black border-2 rounded-[8px] p-[16px] flex flex-col gap-3">
-                                <div className="border w-full px-4 py-3 sm:py-2 gap-2 mt-2 sm:mt-0 rounded-md relative bg-white">
-                                    <Label htmlFor={"credit-card-number"}
-                                           className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Credit Card Number</Label>
-                                    <input
-                                        value={inputs.cardNumber}
-                                        required
-                                        onChange={(e) => setInputs((prev) => ({...prev, cardNumber: e.target.value}))}
-                                        id={"credit-card-number"}
-                                        className={"w-full outline-0 text-sm font-normal"}
-                                        placeholder={"Credit Card Number"}
-                                    />
-                                </div>
 
-                                <div className="border w-full px-4 py-3 sm:py-2 gap-2 mt-2 sm:mt-0 rounded-md relative bg-white">
-                                    <Label htmlFor={"credit-card-name"}
-                                           className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Kart Üzerindeki İsim</Label>
-                                    <input
-                                        value={inputs.cardName}
-                                        required
-                                        onChange={(e) => setInputs((prev) => ({...prev, cardName: e.target.value}))}
-                                        id={"credit-card-name"}
-                                        className={"w-full outline-0 text-sm font-normal"}
-                                        placeholder={"Kart Üzerindeki İsim"}
-                                    />
-                                </div>
+                                <LabelInput
+                                    value={inputs.cardNumber}
+                                    title={"Kart numarası"}
+                                    label={'cardNumber'}
+                                    setValue={setInputs}
+                                />
+
+                                <LabelInput
+                                    value={inputs.cardName}
+                                    title={"Kart üzerindeki isim"}
+                                    label={'cardName'}
+                                    setValue={setInputs}
+                                />
 
                                 <div className="flex flex-col sm:flex-row bg-[#F7F7F9] w-full gap-2 items-center">
-                                    <div className="border w-full px-4 py-3 sm:py-2 gap-2 mt-2 sm:mt-0 rounded-md relative bg-white">
-                                        <Label htmlFor={"month/year"}
-                                               className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>Ay / Yil</Label>
-                                        <input
-                                            value={inputs.date}
-                                            required
-                                            onChange={(e) => setInputs((prev) => ({...prev, date: e.target.value}))}
-                                            id={"month/year"}
-                                            className={"w-full outline-0 text-sm font-normal"}
-                                            placeholder={"Ay / Yil"}
-                                        />
-                                    </div>
-                                    <div className="border w-full px-4 py-3 sm:py-2 gap-2 mt-2 sm:mt-0 rounded-md relative bg-white">
-                                        <Label htmlFor={"cvc"}
-                                               className={"text-xs font-medium hidden sm:block w-full text-[#8A8B94]"}>CVC</Label>
-                                        <input
-                                            value={inputs.cvc}
-                                            required
-                                            onChange={(e) => setInputs((prev) => ({...prev, cvc: e.target.value}))}
-                                            id={"cvc"}
-                                            className={"w-full outline-0 text-sm font-normal"}
-                                            placeholder={"CVC"}
-                                        />
-                                    </div>
+                                    <LabelInput
+                                        value={inputs.date}
+                                        title={"Ay / Yil"}
+                                        label={'date'}
+                                        setValue={setInputs}
+                                    />
+
+                                    <LabelInput
+                                        value={inputs.cvc}
+                                        title={"CVC"}
+                                        label={'cvc'}
+                                        setValue={setInputs}
+                                    />
                                 </div>
 
-                                <div className="mt-[16px] sm:mt-[32px]">
+                                <div className="mt-[16px]">
                                     <div className="text-base mb-[16px]">Taksit Seçenekleri</div>
-                                    <div className="rounded-[8px] bg-white border">
+                                    <div
+                                        className="rounded-[8px] cursor-pointer hover:opacity-75 transition-all duration-200 bg-white border">
                                         <div className="h-[56px] flex px-4 items-center">
                                             <div
                                                 className="w-auto p-0 flex">
                                                 <div className="mr-2 w-[20px] h-[20px] relative">
                                                     <div
-                                                        className="w-[24px] h-[24px] rounded-full absolute bg-[#272727]"></div>
+                                                        className="w-[20px] h-[20px] rounded-full absolute bg-[#272727]"></div>
                                                     <div
-                                                        className="w-[24px] h-[24px] absolute flex items-center justify-center top-0 left-0">
+                                                        className="w-[16px] h-[16px] absolute left-0.5 top-0.5 flex items-center justify-center top-0 left-0">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="10.3" height="8"
                                                              viewBox="8.9 0.3 10.3 8"
                                                              color={"white"}
@@ -354,7 +307,7 @@ const CheckoutPage = () => {
                                                 <div className="style-module_CheckboxLabelContainer__1g1JQ"></div>
                                             </div>
 
-                                            <span className="text-sm ml-[6px]">Tek Çekim</span>
+                                            <span className="text-sm font-medium ml-2">Tek Çekim</span>
 
                                             <div className="ml-auto text-sm font-medium">₺ 8,460.00</div>
                                         </div>
@@ -366,7 +319,8 @@ const CheckoutPage = () => {
                                 <div className="flex items-center gap-4">
                                     <Checkbox id={"check-01"} className={"w-[16px] h-[16px] sm:w-[20px] sm:h-[20px]"}/>
 
-                                    <Label htmlFor={"check-01"} className={"text-[#8A8B94] text-xs sm:text-sm font-normal"}>Fatura
+                                    <Label htmlFor={"check-01"}
+                                           className={"text-[#8A8B94] text-xs sm:text-sm font-normal"}>Fatura
                                         adresim teslimat adresimle aynı</Label>
                                 </div>
                                 <div className="flex items-start sm:items-center gap-4">
@@ -393,15 +347,15 @@ const CheckoutPage = () => {
                 </div>
             </div>
 
-            <div className="w-full hidden sm:flex h-full flex-col p-4 bg-[#F7F7F9]">
+            <div className="w-full hidden sm:flex min-h-screen h-fit flex-col p-4 bg-[#F7F7F9]">
                 <div className="max-w-[600px] w-full mx-auto">
                     <div className="w-full h-full flex flex-col">
                         <div className="flex flex-col border-b w-full py-4">
                             {products.map(({product, size, quantity, id}, index) => {
                                 return (
-                                    <div key={id} className={"w-full py-4 relative h-fit"}>
+                                    <div key={id} className={"w-full py-1 relative h-fit"}>
                                         <div className="flex items-center">
-                                            <div className="flex-shrink-0 w-20 h-fit relative">
+                                            <div className="flex-shrink-0 w-10 h-fit relative">
                                                 <img src={product.banner.url} alt=""/>
                                             </div>
 
@@ -409,10 +363,10 @@ const CheckoutPage = () => {
                                                 <div className="flex flex-col justify-between h-full pl-6 w-full">
                                                     <div>
                                                         <Link
-                                                            className="hover:underline text-xs sm:text-sm font-normal"
+                                                            className="hover:underline text-xs font-normal"
                                                             href={`/product/${product.id}`}>{product.description}</Link>
 
-                                                        <div className="[&_span]:text-[12px] sm:[&_span]:text-[13px]">
+                                                        <div className="[&_span]:text-[11px]">
                                                 <span
                                                     className="variant-type">Fiyat: </span>
 
@@ -420,7 +374,7 @@ const CheckoutPage = () => {
                                                                 className="variant-name">{formatCurrency(Number(cmToSquareMeter(size.dimensions).toFixed(2)) * product.price)}</span>
                                                         </div>
 
-                                                        <div className="[&_span]:text-[12px] sm:[&_span]:text-[13px]">
+                                                        <div className="[&_span]:text-[11px]">
                                                 <span
                                                     className="variant-type"> ebat: </span>
                                                             <span className="variant-name">{size.dimensions}</span>
@@ -432,18 +386,18 @@ const CheckoutPage = () => {
                                                     className="basket-quantity-main flex flex-row justify-between pl-6 items-center">
                                                     <div className="flex items-center">
                                                 <span
-                                                    className={"text-[#9da5af] text-[13px] sm:text-[14px]"}>Adet:</span>
+                                                    className={"text-[#9da5af] text-[11px]"}>Adet:</span>
                                                         <span style={{color: "rgb(8, 8, 8)"}}
-                                                              className={"ml-1 text-[14px]"}>{quantity}</span>
+                                                              className={"ml-1 text-[12px]"}>{quantity}</span>
                                                     </div>
 
                                                     <div className="flex flex-col">
                                                         {!product.discount || product.discount !== 0 &&
                                                             <span
-                                                                className={"text-[#8a8b94] text-[13px] sm:text-[14px] line-through"}>{formatCurrency(cmToSquareMeter(size.dimensions) * product.price * quantity)}</span>}
+                                                                className={"text-[#8a8b94] text-[11px] line-through"}>{formatCurrency(cmToSquareMeter(size.dimensions) * product.price * quantity)}</span>}
 
                                                         <span
-                                                            className={"text-[13px] sm:text-[14px] font-medium text-black"}>
+                                                            className={"text-[13px] font-medium text-black"}>
                     {formatCurrency(useDiscount(Number(cmToSquareMeter(size.dimensions).toFixed(2)) * product.price * quantity, product.discount) as number)}
                 </span>
                                                     </div>
