@@ -36,7 +36,8 @@ const CheckoutPage = () => {
         cardName: string;
         date: string;
         cvc: string;
-    }>({
+    }>
+    ({
         email: "",
         name: "",
         surname: "",
@@ -133,7 +134,13 @@ const CheckoutPage = () => {
                     </div>
 
                     {step === 1 && (
-                        <div className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
+                        <form
+                            onSubmit={(event) => {
+                                event.preventDefault()
+                                console.log(inputs)
+                                setStep(2)
+                            }}
+                            className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
                             <div className="w-full flex flex-col mb-6 gap-4">
                                 <Label className={"text-nowrap text-left w-full text-lg font-normal"} htmlFor="email">
                                     İletişim Adresleri
@@ -227,14 +234,16 @@ const CheckoutPage = () => {
                                 value={inputs.tel}
                                 title={"Telefon Numarası"}
                                 label={'tel'}
+                                formater={'tel'}
                                 setValue={setInputs}
                             />
 
-                            <button onClick={() => setStep(2)}
-                                    className={"w-full mt-8 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"}>
+                            <button
+                                type={'submit'}
+                                className={"w-full mt-8 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"}>
                                 Kargo ile Devam Et
                             </button>
-                        </div>
+                        </form>
                     )}
 
                     <div className="flex gap-6 items-center my-10">
@@ -249,7 +258,13 @@ const CheckoutPage = () => {
                     </div>
 
                     {step === 2 && (
-                        <div className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
+                        <form
+                            onSubmit={(event) => {
+                                event.preventDefault()
+                                console.log(inputs)
+                                setStep(2)
+                            }}
+                            className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
                             <div
                                 className="w-full h-fit bg-[#F7F7F9] border-black border-2 rounded-[8px] p-[16px] flex flex-col gap-3">
 
@@ -257,6 +272,7 @@ const CheckoutPage = () => {
                                     value={inputs.cardNumber}
                                     title={"Kart numarası"}
                                     label={'cardNumber'}
+                                    formater={'cardNumber'}
                                     setValue={setInputs}
                                 />
 
@@ -272,6 +288,7 @@ const CheckoutPage = () => {
                                         value={inputs.date}
                                         title={"Ay / Yil"}
                                         label={'date'}
+                                        formater={'cardExpirationDate'}
                                         setValue={setInputs}
                                     />
 
@@ -279,6 +296,7 @@ const CheckoutPage = () => {
                                         value={inputs.cvc}
                                         title={"CVC"}
                                         label={'cvc'}
+                                        formater={'cvc'}
                                         setValue={setInputs}
                                     />
                                 </div>
@@ -286,7 +304,7 @@ const CheckoutPage = () => {
                                 <div className="mt-[16px]">
                                     <div className="text-base mb-[16px]">Taksit Seçenekleri</div>
                                     <div
-                                        className="rounded-[8px] cursor-pointer hover:opacity-75 transition-all duration-200 bg-white border">
+                                        className="rounded-[8px] cursor-pointer hover:opacity-90 transition-all duration-200 bg-white border">
                                         <div className="h-[56px] flex px-4 items-center">
                                             <div
                                                 className="w-auto p-0 flex">
@@ -339,10 +357,11 @@ const CheckoutPage = () => {
                             </div>
 
                             <button
+                                type={'submit'}
                                 className={"w-full mt-8 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"}>
                                 Siparişi Tamamla
                             </button>
-                        </div>
+                        </form>
                     )}
                 </div>
             </div>
