@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
 import BasicCard from "@/components/cards/BasicCard";
+import {cmToSquareMeter} from "@/zustand/useBasket";
 
 const SearchPage = () => {
     const [products, setProducts] = useState<null | any[]>(null);
@@ -25,9 +26,7 @@ const SearchPage = () => {
 
     useEffect(() => {
         getData();
-
-        setSearch(params.get("s") as string)
-    }, []);
+    }, [params]);
 
     useEffect(() => {
         const delay = setTimeout(() => {
@@ -101,6 +100,30 @@ const SearchPage = () => {
         }
     }
 
+    const sortProducts = (products: any[], sortType: string) => {
+        switch (sortType) {
+            case "fiyat-artan":
+                return products.sort((a, b) => {
+                    return (cmToSquareMeter(a.defaultSizeId.dimensions) * a.price) - (cmToSquareMeter(b.defaultSizeId.dimensions) * b.price)
+                });
+            case "fiyat-azalan":
+                return products.sort((a, b) => {
+                    return (cmToSquareMeter(b.defaultSizeId.dimensions) * b.price) - (cmToSquareMeter(a.defaultSizeId.dimensions) * a.price)
+                });
+            case "indirim-artan":
+                return products.sort((a, b) => a.discount - b.discount);
+            case "indirim-azalan":
+                return products.sort((a, b) => b.discount - a.discount);
+            default:
+                return products;
+        }
+    };
+
+    const applyFiltersWithSortedProducts = () => {
+        const filteredProducts = applyFiltersWithProducts();
+        return sortProducts(filteredProducts as any, sort);
+    };
+
     const applyFiltersWithProducts = () => {
         if (Object.keys(activeFilters).length === 0) {
             return products;
@@ -115,12 +138,8 @@ const SearchPage = () => {
                             return activeFilterValues.includes(product[filterField]);
                         } else if (filterField === 'sizes') {
                             return product[filterField].some((size: any) => activeFilterValues.includes(size.dimensions));
-                        } else {
-                            return true;
                         }
                     });
-                } else {
-                    filteredProducts = [...products];
                 }
             }
             return filteredProducts;
@@ -143,9 +162,13 @@ const SearchPage = () => {
                                    className="search-input outline-none"
                                    placeholder="Ne aramıştınız?"/>
 
-                            <span onClick={() => setSearch("")} className="search-icon"><svg stroke="currentColor" fill="currentColor"
-                                                                                             stroke-width="0" viewBox="0 0 24 24" height="1em"
-                                                                                             width="1em" xmlns="http://www.w3.org/2000/svg"><path
+                            <span onClick={() => setSearch("")} className="search-icon"><svg stroke="currentColor"
+                                                                                             fill="currentColor"
+                                                                                             stroke-width="0"
+                                                                                             viewBox="0 0 24 24"
+                                                                                             height="1em"
+                                                                                             width="1em"
+                                                                                             xmlns="http://www.w3.org/2000/svg"><path
                                 fill="none" d="M0 0h24v24H0z"></path><path
                                 d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></span>
                         </div>
@@ -153,13 +176,23 @@ const SearchPage = () => {
 
                     <div className="flex desktop-sort-template items-center">
                         <div className="flex flex-wrap w-11/12">
-                            <div onClick={() => setSort("fiyat-artan")} className={`sort-item ${sort === "fiyat-artan" ? "active" : "passive"}`}>Fiyat artan</div>
-                            <div onClick={() => setSort("fiyat-azalan")} className={`sort-item ${sort === "fiyat-azalan" ? "active" : "passive"}`}>Fiyat azalan</div>
-                            <div onClick={() => setSort("indirim-artan")} className={`sort-item ${sort === "indirim-artan" ? "active" : "passive"}`}>İndirim oranı artan</div>
-                            <div onClick={() => setSort("indirim-azalan")} className={`sort-item ${sort === "indirim-azalan" ? "active" : "passive"}`}>İndirim oranı azalan</div>
-                            <div onClick={() => setSort("ilk-eklenen")} className={`sort-item ${sort === "ilk-eklenen" ? "active" : "passive"}`}>İlk eklenen</div>
-                            <div onClick={() => setSort("son-eklenen")} className={`sort-item ${sort === "son-eklenen" ? "active" : "passive"}`}>Son eklenen</div>
-                            <div onClick={() => setSort("default")} className={`sort-item ${sort === "default" ? "active" : "passive"}`}>Varsayılan</div>
+                            <div onClick={() => setSort("fiyat-artan")}
+                                 className={`sort-item ${sort === "fiyat-artan" ? "active" : "passive"}`}>Fiyat artan
+                            </div>
+                            <div onClick={() => setSort("fiyat-azalan")}
+                                 className={`sort-item ${sort === "fiyat-azalan" ? "active" : "passive"}`}>Fiyat azalan
+                            </div>
+                            <div onClick={() => setSort("indirim-artan")}
+                                 className={`sort-item ${sort === "indirim-artan" ? "active" : "passive"}`}>İndirim
+                                oranı artan
+                            </div>
+                            <div onClick={() => setSort("indirim-azalan")}
+                                 className={`sort-item ${sort === "indirim-azalan" ? "active" : "passive"}`}>İndirim
+                                oranı azalan
+                            </div>
+                            <div onClick={() => setSort("default")}
+                                 className={`sort-item ${sort === "default" ? "active" : "passive"}`}>Varsayılan
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,7 +203,7 @@ const SearchPage = () => {
                             {filterItems?.map((filter) => {
                                 return (
                                     <div key={filter.title}>
-                                    <div onClick={() => {
+                                        <div onClick={() => {
                                             setExpanded((prev: any) => ({
                                                 ...prev,
                                                 [filter.title]: !!!prev[filter.title]
@@ -233,8 +266,11 @@ const SearchPage = () => {
                             <div
                                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
 
-                                {products && applyFiltersWithProducts()?.map((product: any, index: number) => <BasicCard
-                                    product_data={product} key={index}/>)}
+                                {products && applyFiltersWithSortedProducts()?.filter((dt) => {
+                                    return dt.brand.toLowerCase().includes((params.get("s") as string).toLowerCase()) || dt.description.toLowerCase().includes((params.get("s") as string).toLowerCase())
+                                })?.map((product: any, index: number) =>
+                                    <BasicCard
+                                        product_data={product} key={index}/>)}
                             </div>
                         </div>
 
