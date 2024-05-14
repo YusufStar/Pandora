@@ -1556,7 +1556,7 @@ span:first-child {
     color: #636363
 }
 
-.desktop-filters .filter-type-box {
+.filter-type-box {
     padding: 5px 10px;
     border: 1px solid var(--border-color);
     display: flex;
@@ -1567,13 +1567,13 @@ span:first-child {
     margin-bottom: 10px
 }
 
-.desktop-filters .filter-type-box.active {
+.filter-type-box.active {
     background-color: var(--primary-color)!important;
     color: #fff;
     font-weight: 700
 }
 
-.desktop-filters .filter-type-swatch {
+.filter-type-swatch {
     border: 1px solid var(--border-color);
     display: flex;
     justify-content: center;

@@ -104,6 +104,7 @@ const Navbar = () => {
 
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}}
                         className="lg:container px-4 mx-auto py-5 w-full flex items-center">
+                            
                 <button className={"block lg:hidden cursor-default"} onClick={() => setIsExpanded(true)}>
                     <MenuIcon size={24} color={"#080707ff"} className={"mr-2"}/>
                 </button>
