@@ -270,7 +270,9 @@ const SearchPage = () => {
                                     return dt.brand.toLowerCase().includes((params.get("s") as string).toLowerCase()) || dt.description.toLowerCase().includes((params.get("s") as string).toLowerCase())
                                 })?.map((product: any, index: number) =>
                                     <BasicCard
-                                        product_data={product} key={index}/>)}
+                                        list={true}
+                                        product_data={product}
+                                        key={index}/>)}
                             </div>
                         </div>
 

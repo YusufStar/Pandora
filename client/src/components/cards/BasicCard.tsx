@@ -3,13 +3,14 @@ import {cmToSquareMeter, formatCurrency, useDiscount} from "@/zustand/useBasket"
 
 type Props = {
     product_data: any;
+    list?: boolean;
 };
 
-const BasicCard = ({product_data}: Props) => {
+const BasicCard = ({product_data, list = false}: Props) => {
     return (
-        <Link className={'h-[525px]'} draggable={false} href={`/product/${product_data.id}`}>
+        <Link className={`${list && "h-[525px]"}`} draggable={false} href={`/product/${product_data.id}`}>
             <div className="p-3 relative overflow-hidden h-full flex product-container flex-col">
-                <div className="!px-4 relative h-full max-h-[400px]">
+                <div className={`!px-4 relative h-full ${list && "max-h-[400px]"}`}>
                     <img
                         draggable={false}
                         src={product_data.banner.url}
