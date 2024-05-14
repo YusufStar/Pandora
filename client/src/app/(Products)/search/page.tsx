@@ -153,7 +153,7 @@ const SearchPage = () => {
                     <h1 className={'text-gray-500 text-sm'}></h1>
                 </div>
 
-                <div className="flex items-centers flex-col sm:flex-row md:flex-row lg:flex-row">
+                <div className="hidden lg:flex items-centers flex-col sm:flex-row md:flex-row lg:flex-row">
                     <div className="search-main w-full sm:w-64 md:w-64 lg:w-64 ">
                         <div className="px-4 relative">
                             <input type="text"
@@ -198,7 +198,7 @@ const SearchPage = () => {
                 </div>
 
                 <div className="flex">
-                    <div className="w-64 p-4 desktop-filters h-[85vh]">
+                    <div className="w-64 p-4 hidden lg:flex desktop-filters h-[85vh]">
                         <div className="sticky-filter flex flex-col">
                             {filterItems?.map((filter) => {
                                 return (

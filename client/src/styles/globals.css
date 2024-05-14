@@ -94,7 +94,8 @@
     }
 }
 
-body, html {
+body,
+html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: "Poppins", sans-serif !important;
@@ -104,4 +105,16 @@ body, html {
     box-shadow: 2px 2px 3px #999;
     z-index: 100;
     outline: none;
+}
+
+@media screen and (min-width: 1024px) and (max-height: 1280px) {
+    .laptop {
+        height: 315px !important;
+    }
+}
+
+@media screen and (min-width: 1280px){
+    .laptop {
+        height: 410px !important;
+    }
 }
