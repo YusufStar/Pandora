@@ -40,7 +40,9 @@ model Product {
   description String
 
   colors Json[] // ["red", "white"]
-  // stocks      Json[] // { sizeId: 0, stock: 1000 } stock -> adet
+  stocks      Json? // { 0: 1000 } sizeId:adet
+
+  category Json? // {}
 
   defaultSizeId Int?
 
