@@ -28,6 +28,10 @@ export const config = {
         "/product",
         "/product/:id",
         "/product/:id*",
+        "/dashboard/product",
+        "/dashboard/category",
+        "/dashboard/size",
+        "/dashboard/feature",
         "/checkout",
     ],
 };

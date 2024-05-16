@@ -11,7 +11,6 @@ const SearchPage = () => {
   const [products, setProducts] = useState<null | any[]>(null);
   const [filterItems, setFilterItems] = useState<null | any[]>([]);
   const [activeFilters, setActiveFilters] = useState<null | any>({});
-  const [expanded, setExpanded] = useState<any>({});
   const [search, setSearch] = useState<string>("");
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [sort, setSort] = useState<
@@ -53,6 +52,11 @@ const SearchPage = () => {
           title: "Markalar",
           field: "brand",
           items: getUniqueBrandsWithCounts(),
+        },
+        {
+          title: "Seriler",
+          field: "category",
+          items: getUniqueCategoryWithCounts(),
         },
         {
           title: "Olculer",
@@ -114,6 +118,29 @@ const SearchPage = () => {
     }
   };
 
+  const getUniqueCategoryWithCounts = () => {
+    if (products && products.length > 0) {
+      const uniqueCategory = products
+        .flatMap((product) => product.category.map((ct: any) => ct.title))
+        .filter(onlyUnique);
+
+      const categoryCounts = uniqueCategory.map((ct: any) => {
+        return {
+          field: ct,
+          count: products.filter((product) => {
+            const category = product.category.map((ct: any) => ct.title);
+
+            return category.includes(ct);
+          }).length,
+        };
+      });
+
+      return categoryCounts;
+    } else {
+      return [];
+    }
+  };
+
   const sortProducts = (products: any[], sortType: string) => {
     switch (sortType) {
       case "fiyat-artan":
@@ -161,6 +188,10 @@ const SearchPage = () => {
             } else if (filterField === "sizes") {
               return product[filterField].some((size: any) =>
                 activeFilterValues.includes(size.dimensions)
+              );
+            } else if (filterField === "category") {
+              return product[filterField].some((ct: any) =>
+                activeFilterValues.includes(ct.title)
               );
             }
           });
@@ -387,28 +418,21 @@ const SearchPage = () => {
             </div>
           </div>
 
-          <div className="w-64 p-4 hidden lg:flex desktop-filters h-[85vh]">
-            <div className="sticky-filter flex flex-col">
+          <div className="w-64 p-4 hidden lg:flex desktop-filters h-[85vh] max-h-[85vh]">
+            <div className="sticky-filter w-full h-full flex flex-col gap-4">
               {filterItems?.map((filter) => {
                 return (
-                  <div key={filter.title}>
-                    <div
-                      onClick={() => {
-                        setExpanded((prev: any) => ({
-                          ...prev,
-                          [filter.title]: !!!prev[filter.title],
-                        }));
-                      }}
-                      className="flex justify-between items-center cursor-pointer"
-                    >
+                  <div
+                    key={filter.title}
+                    className="max-h-[17vh] h-auto overflow-y-auto w-full"
+                  >
+                    <div className="flex justify-between items-center cursor-pointer mb-2">
                       <span className="font-medium text-sm">
                         {filter.title}
                       </span>
 
                       <span
-                        className={`${
-                          !!expanded[filter.title] ? "rotate-180" : "rotate-0"
-                        } transition-all duration-300 ease-in-out`}
+                        className={`transition-all duration-300 ease-in-out rotate-180`}
                       >
                         <svg
                           stroke="currentColor"
@@ -424,65 +448,48 @@ const SearchPage = () => {
                       </span>
                     </div>
 
-                    <AnimatePresence>
-                      {!!expanded[filter.title] && (
-                        <motion.div
-                          className={
-                            "flex flex-wrap gap-1 pt-2 overflow-hidden w-full"
-                          }
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
-                        >
-                          {filter?.items.map((item: any, index: number) => {
-                            return (
-                              <span
-                                onClick={() => {
-                                  setActiveFilters((prev: any) => {
-                                    return {
-                                      ...prev,
-                                      [filter.field]: {
-                                        ...prev[filter.field],
-                                        [item.field]:
-                                          !!!prev[filter.field][item.field],
-                                      },
-                                    };
-                                  });
-                                }}
-                                key={index}
-                                style={{
-                                  backgroundColor:
-                                    !!activeFilters[filter.field] &&
-                                    !!activeFilters[filter.field][item.field]
-                                      ? "rgba(0, 0, 0, 1)"
-                                      : "",
-                                  color:
-                                    !!activeFilters[filter.field] &&
-                                    !!activeFilters[filter.field][item.field]
-                                      ? "rgba(255, 255, 255, 1)"
-                                      : "rgba(0, 0, 0, 1)",
-                                  fontWeight:
-                                    !!activeFilters[filter.field] &&
-                                    !!activeFilters[filter.field][item.field]
-                                      ? 500
-                                      : 400,
-                                }}
-                                className="cursor-pointer mr-2 rounded transition-all duration-200 ease-in-out filter-type-box text-xs"
-                              >
-                                <span>
-                                  {item.field}
-                                  <span className="text-xs text-gray-500">
-                                    {" "}
-                                    ( {item.count} )
-                                  </span>
-                                </span>
+                    <div className="flex flex-wrap gap-1 pt-2 overflow-hidden w-full">
+                      {filter?.items.map((item: any, index: number) => {
+                        return (
+                          <span
+                            onClick={() => {
+                              setActiveFilters((prev: any) => {
+                                return {
+                                  ...prev,
+                                  [filter.field]: {
+                                    ...(prev[filter.field] || {}), // Check if prev[filter.field] exists, otherwise use an empty object
+                                    [item.field]:
+                                      !!!prev[filter.field]?.[item.field], // Use optional chaining to avoid accessing undefined
+                                  },
+                                };
+                              });
+                            }}
+                            key={index + "-sub"}
+                            style={{
+                              backgroundColor:
+                                !!activeFilters[filter.field] &&
+                                !!activeFilters[filter.field][item.field]
+                                  ? "rgba(0, 0, 0, 1)"
+                                  : "",
+                              color:
+                                !!activeFilters[filter.field] &&
+                                !!activeFilters[filter.field][item.field]
+                                  ? "rgba(255, 255, 255, 1)"
+                                  : "rgba(0, 0, 0, 1)",
+                            }}
+                            className="cursor-pointer mr-2 rounded transition-all duration-200 ease-in-out filter-type-box text-xs"
+                          >
+                            <span>
+                              {item.field}
+                              <span className="text-xs text-gray-500">
+                                {" "}
+                                ( {item.count} )
                               </span>
-                            );
-                          })}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                            </span>
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
                 );
               })}

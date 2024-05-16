@@ -40,18 +40,33 @@ model Product {
   description String
 
   colors Json[] // ["red", "white"]
-  stocks      Json? // { 0: 1000 } sizeId:adet
-
-  category Json? // {}
+  stocks Json? // { 0: 1000 } sizeId:adet
 
   defaultSizeId Int?
 
   sizes Size[]
 
+  category Category[]
+  features Features[]
+
   Orders   Orders? @relation(fields: [ordersId], references: [id])
   ordersId Int?
 
   Basket Basket[]
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  title     String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Features {
+  id        Int      @id @default(autoincrement())
+  title     String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
 }
 
 model User {

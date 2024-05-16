@@ -17,6 +17,8 @@ export async function GET(request: Request) {
         include: {
             banner: true,
             sizes: true,
+            category: true,
+            features: true
         }
     })
 
@@ -69,6 +71,16 @@ export async function POST(request: Request) {
             sizes: {
                 connect: newData.sizes.map((size: number) => {
                     return {id: size}
+                }),
+            },
+            category: {
+                connect: newData.category.map((ct: number) => {
+                    return {id: ct}
+                }),
+            },
+            features: {
+                connect: newData.features.map((feature: number) => {
+                    return {id: feature}
                 }),
             },
             colors: newData.colors
