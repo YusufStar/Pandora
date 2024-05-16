@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { useEffect, useRef, useState } from "react";
+import React, { RefObject, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import {
@@ -37,9 +37,7 @@ import { createClient } from "@supabase/supabase-js";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -51,7 +49,7 @@ const ProductDashboardPage = () => {
   );
 
   const bannerFileRef = useRef<null | HTMLInputElement>(null);
-  const imagesRef = useRef([]);
+  const imagesRef: RefObject<(HTMLInputElement | null)[]> = useRef([]);
 
   const [color, setColor] = useState("");
   const [products, setProducts] = useState<null | any[]>(null);
@@ -443,10 +441,11 @@ const ProductDashboardPage = () => {
                                   onChange={(e) => handleChangeImages(e, index)}
                                   type="file"
                                   // @ts-ignore
-                                  ref={(el) =>
-                                    (imagesRef.current[index] =
-                                      el as HTMLInputElement)
-                                  }
+                                  ref={(el: HTMLInputElement) => {
+                                    if (imagesRef.current) {
+                                      imagesRef.current[index] = el;
+                                    }
+                                  }}
                                   accept="image/*"
                                   className="hidden"
                                 />
