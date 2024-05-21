@@ -13,7 +13,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
             mode: "no-cors",
         }).then((x) => x.json()).then(({data}) => {
             setBasket(data)
-            console.log(data)
         })
     }
 

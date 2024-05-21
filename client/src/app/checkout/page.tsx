@@ -137,7 +137,6 @@ const CheckoutPage = () => {
                         <form
                             onSubmit={(event) => {
                                 event.preventDefault()
-                                console.log(inputs)
                                 setStep(2)
                             }}
                             className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">
@@ -261,7 +260,6 @@ const CheckoutPage = () => {
                         <form
                             onSubmit={(event) => {
                                 event.preventDefault()
-                                console.log(inputs)
                                 setStep(2)
                             }}
                             className="flex w-full flex-col m-0 mt-6 sm:m-12 items-center gap-2">

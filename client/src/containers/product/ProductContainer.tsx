@@ -31,7 +31,6 @@ const ProductContainer = ({product_id}: Props) => {
             mode: "no-cors",
         }).then((x) => x.json())
         setProductData(response.data)
-        console.log(response.data)
         setData((prev) => ({
             ...prev,
             product: {

@@ -25,9 +25,6 @@ function MultiSelect({options, selected, onChange, className, ...props}: MultiSe
 
     const [open, setOpen] = React.useState(false)
 
-    console.log("options", options)
-    console.log("selected", selected)
-
     const handleUnselect = (item: string) => {
         onChange(selected.filter((i) => i !== item))
     }
