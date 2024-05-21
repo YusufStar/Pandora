@@ -57,24 +57,21 @@ model Product {
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  title     String
-  Product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  id      Int       @id @default(autoincrement())
+  title   String
+  Product Product[]
 }
 
 model Usage {
-  id        Int      @id @default(autoincrement())
-  title     String
-  Product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  id      Int       @id @default(autoincrement())
+  title   String
+  Product Product[]
 }
 
 model Features {
-  id        Int      @id @default(autoincrement())
-  title     String
-  Product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  id      Int       @id @default(autoincrement())
+  title   String
+  Product Product[]
 }
 
 model User {
