@@ -18,6 +18,23 @@ export async function GET(request: Request) {
         })
     }
 
+    const products = await prisma.product.findMany({})
+    products.map(async (product) => {
+        console.log(product.id)
+        await prisma.product.update({
+            where: {id: product.id},
+            data: {
+                usage: {
+                    connect: {
+                        id: 1,
+                    }
+                }
+            }
+        })
+
+        return true
+    })
+
     const basketData = await prisma.basket.findMany({
         where: {
             user: {

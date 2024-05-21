@@ -28,10 +28,10 @@ import {
 
 const SizeDashboardPage = () => {
     const [features, setFeatures] = useState<null | any[]>(null);
-    const [newCategory, setNewCategory] = useState("");
+    const [newUsage, setNewUsage] = useState("");
 
     const getData = async () => {
-        const response = await fetch(`/api/features`, {
+        const response = await fetch(`/api/usage`, {
             mode: "no-cors",
         }).then((x) => x.json());
         setFeatures(response.data);
@@ -42,30 +42,30 @@ const SizeDashboardPage = () => {
     }, []);
 
     const handleAddSize = async () => {
-        const promise = fetch("/api/features", {
+        const promise = fetch("/api/usage", {
             mode: "no-cors",
             method: "POST",
             body: JSON.stringify({
-                title: newCategory,
+                title: newUsage,
             }),
         });
 
         toast.promise(promise, {
             loading: "Loading...",
             success: (data) => {
-                setNewCategory("");
+                setNewUsage("");
                 getData();
-                return `Yeni ozellik eklendi.`;
+                return `Yeni kullanım alanı eklendi.`;
             },
             error: () => {
-                setNewCategory("");
-                return "Hatalı ozellik.";
+                setNewUsage("");
+                return "Hatalı kullanım alanı.";
             },
         });
     };
 
     const handleDeleteSize = async (id: number) => {
-        const promise = fetch("/api/features", {
+        const promise = fetch("/api/usage", {
             method: "DELETE",
             body: JSON.stringify({
                 id: id,
@@ -75,13 +75,13 @@ const SizeDashboardPage = () => {
         toast.promise(promise, {
             loading: "Loading...",
             success: (data) => {
-                setNewCategory("");
+                setNewUsage("");
                 getData();
                 return `Ozellik silindi..`;
             },
             error: () => {
-                setNewCategory("");
-                return "Hatalı ozellik.";
+                setNewUsage("");
+                return "Hatalı kullanım alanı.";
             },
         });
     };
@@ -101,21 +101,21 @@ const SizeDashboardPage = () => {
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                            <DialogTitle>Yeni Ozellik Gir</DialogTitle>
+                            <DialogTitle>Yeni Kullanım Alanı Gir</DialogTitle>
                             <DialogDescription>
                                 Make changes to your profile here. Click save when you're done.
                             </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="feature" className="text-right">
-                                    Ozellik
+                                <Label htmlFor="usage" className="text-right">
+                                    Kullanım alanı
                                 </Label>
                                 <Input
-                                    id="feature"
-                                    placeholder={"leke tutmaz"}
-                                    value={newCategory}
-                                    onChange={(e) => setNewCategory(e.target.value)}
+                                    id="usage"
+                                    placeholder={"Mutfak - Salon"}
+                                    value={newUsage}
+                                    onChange={(e) => setNewUsage(e.target.value)}
                                     className="col-span-3"
                                 />
                             </div>
@@ -123,7 +123,7 @@ const SizeDashboardPage = () => {
                         <DialogFooter className={"flex items-center gap-2"}>
                             <DialogClose>
                                 <Button
-                                    onClick={() => setNewCategory("")}
+                                    onClick={() => setNewUsage("")}
                                     variant={"destructive"}
                                 >
                                     Iptal
@@ -141,12 +141,12 @@ const SizeDashboardPage = () => {
 
                 <Table>
                     <TableCaption>
-                        Ölçüleri listeleyin ve yeni urunler ekleyin.
+                        Kullanım alanlarını listeleyin ve yeni urunler ekleyin.
                     </TableCaption>
                     <TableHeader>
                         <TableRow>
                             <TableHead>Id</TableHead>
-                            <TableHead>Özellik</TableHead>
+                            <TableHead>Kullanım Alanı</TableHead>
                             <TableHead>Actions</TableHead>
                         </TableRow>
                     </TableHeader>

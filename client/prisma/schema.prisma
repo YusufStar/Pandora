@@ -53,9 +53,17 @@ model Product {
   ordersId Int?
 
   Basket Basket[]
+  usage  Usage[]
 }
 
 model Category {
+  id        Int      @id @default(autoincrement())
+  title     String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Usage {
   id        Int      @id @default(autoincrement())
   title     String
   Product   Product? @relation(fields: [productId], references: [id])
