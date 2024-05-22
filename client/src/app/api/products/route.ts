@@ -6,12 +6,6 @@ import prisma from "@/lib/prisma";
 export async function GET(request: Request) {
     const session = await getServerSession(authOptions)
 
-    if (!session) {
-        return new NextResponse(JSON.stringify({error: 'unauthorized'}), {
-            status: 401
-        })
-    }
-
     const allProducts = await prisma.product.findMany({
         where: {},
         include: {

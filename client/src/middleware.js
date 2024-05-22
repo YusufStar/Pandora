@@ -25,7 +25,6 @@ export const config = {
     matcher: [
         "/",
         "/search",
-        "/carpet",
         "/product",
         "/product/:id",
         "/product/:id*",
