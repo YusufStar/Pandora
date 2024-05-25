@@ -59,14 +59,19 @@ const SearchPage = () => {
           items: getUniqueCategoryWithCounts(),
         },
         {
-          title: "Ölçüler",
-          field: "sizes",
-          items: getUniqueSizesWithCounts(),
-        },
-        {
           title: "Kullanım Alanları",
           field: "usage",
           items: getUniqueUsageWithCounts(),
+        },
+        {
+          title: "Ozellikler",
+          field: "features",
+          items: getUniqueFeaturesWithCounts(),
+        },
+        {
+          title: "Ölçüler",
+          field: "sizes",
+          items: getUniqueSizesWithCounts(),
         },
       ]);
 
@@ -118,6 +123,33 @@ const SearchPage = () => {
       });
 
       return sizesCounts;
+    } else {
+      return [];
+    }
+  };
+
+  const getUniqueFeaturesWithCounts = () => {
+    if (products && products.length > 0) {
+      const uniqueFeatures = products
+        .flatMap((product) =>
+          product.features.map((feature: any) => feature.title)
+        )
+        .filter(onlyUnique);
+
+      const featuresCounts = uniqueFeatures.map((features: any) => {
+        return {
+          field: features,
+          count: products.filter((product) => {
+            const allFeatures = product.features.map(
+              (feature: any) => feature.title
+            );
+
+            return allFeatures.includes(features);
+          }).length,
+        };
+      });
+
+      return featuresCounts;
     } else {
       return [];
     }
@@ -224,6 +256,10 @@ const SearchPage = () => {
             } else if (filterField === "usage") {
               return product[filterField].some((usage: any) =>
                 activeFilterValues.includes(usage.title)
+              );
+            } else if (filterField === "features") {
+              return product[filterField].some((feature: any) =>
+                activeFilterValues.includes(feature.title)
               );
             }
           });
