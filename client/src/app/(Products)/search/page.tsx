@@ -317,14 +317,14 @@ const SearchPage = () => {
                                   return {
                                     ...prev,
                                     [filter.field]: {
-                                      ...prev[filter.field],
+                                      ...(prev[filter.field] || {}), // Check if prev[filter.field] exists, otherwise use an empty object
                                       [item.field]:
-                                        !!!prev[filter.field][item.field],
+                                        !!!prev[filter.field]?.[item.field], // Use optional chaining to avoid accessing undefined
                                     },
                                   };
                                 });
                               }}
-                              key={index}
+                              key={index + "-sub"}
                               style={{
                                 backgroundColor:
                                   !!activeFilters[filter.field] &&
@@ -336,11 +336,6 @@ const SearchPage = () => {
                                   !!activeFilters[filter.field][item.field]
                                     ? "rgba(255, 255, 255, 1)"
                                     : "rgba(0, 0, 0, 1)",
-                                fontWeight:
-                                  !!activeFilters[filter.field] &&
-                                  !!activeFilters[filter.field][item.field]
-                                    ? 500
-                                    : 400,
                               }}
                               className="cursor-pointer mr-2 rounded transition-all duration-200 ease-in-out filter-type-box text-xs"
                             >
