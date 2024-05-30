@@ -325,7 +325,7 @@ const GarantiKosullariPage = () => {
             11- Satıcı tarafından bu Garanti Belgesi’nin verilmemesi durumunda,
             tüketici T.C. Ticaret Bakanlığı Tüketicinin Korunması ve Piyasa
             Gözetimi Genel Müdürlüğü’ne başvurabilir. Garanti Belgesi Öncelikle
-            MAJOLİKA Halı'yı ve kaliteyi tercih ettiğiniz için size teşekkür
+            PANDORA Halı'yı ve kaliteyi tercih ettiğiniz için size teşekkür
             ederiz. Halınızı, çok daha uzun süre aynı güzellikte kullanabilmeniz
             ve karşılaşacağınız olası sorunları anında çözebilmeniz için bu
             kılavuzdan yararlanmanızı ve bu kılavuzun içerdiği bilgileri
