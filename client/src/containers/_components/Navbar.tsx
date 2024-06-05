@@ -238,17 +238,17 @@ const Navbar = () => {
               <div className="flex flex-col h-full overflow-y-auto py-4 overflow-x-hidden">
                 {isExpanded && activeLink === "" ? (
                   <>
-                    {nav_links.map((nav_link, i) => (
+                    {filterItems?.map(({ title, items }, index) => (
                       <>
                         <div
-                          onClick={() => setActiveLink(nav_link.title)}
+                          onClick={() => setActiveLink(title)}
                           className={
                             "flex hover:bg-black/10 transition-all duration-200 px-4 py-2.5 gap-2 items-center relative cursor-pointer"
                           }
-                          key={nav_link.title}
+                          key={title}
                         >
                           <span className="text-sm text-[#080707ff] select-none">
-                            {nav_link.title}
+                            {title}
                           </span>
                           <ChevronRight
                             className={"ml-auto"}
@@ -273,23 +273,38 @@ const Navbar = () => {
                         {activeLink}
                       </span>
                     </div>
-                    {nav_links
-                      .filter((nav) => nav.title === activeLink)[0]
-                      .subtitles?.map((nav_link, i) => (
-                        <>
-                          <div
-                            onClick={() => setActiveLink(nav_link.title)}
-                            className={
-                              "flex hover:bg-black/10 transition-all duration-200 px-4 py-2.5 gap-2 items-center relative cursor-pointer"
-                            }
-                            key={nav_link.title}
-                          >
-                            <span className="text-sm text-[#080707] select-none">
-                              {nav_link.title}
-                            </span>
-                          </div>
-                        </>
-                      ))}
+                    {filterItems
+                      ?.filter((nav) => nav.title === activeLink)[0]
+                      .items?.map(
+                        ({
+                          field,
+                          count,
+                        }: {
+                          count: string;
+                          field: string;
+                        }) => (
+                          <>
+                            <div
+                              onClick={() => {
+                                setIsExpanded(false);
+                                push(`/search?s=${field}`);
+                              }}
+                              className={
+                                "flex hover:bg-black/10 transition-all duration-200 px-4 py-2.5 gap-2 items-center relative cursor-pointer"
+                              }
+                              key={field}
+                            >
+                              <span className="text-sm text-[#080707] select-none">
+                                {field}
+                              </span>
+
+                              <span className="text-white ml-auto text-xs font-semibold flex items-center justify-center w-5 h-5 bg-black rounded-md">
+                                {count}
+                              </span>
+                            </div>
+                          </>
+                        )
+                      )}
                   </>
                 )}
               </div>
