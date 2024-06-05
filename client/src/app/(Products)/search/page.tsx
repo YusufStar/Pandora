@@ -38,12 +38,23 @@ const SearchPage = () => {
   }, [params]);
 
   useEffect(() => {
-    const delay = setTimeout(() => {
-      router.push(`/search?s=${search}`);
-    }, 1000);
+    if (search && search !== "") {
+      const delay = setTimeout(() => {
+        router.push(`/search?s=${search}`);
+      }, 1000);
 
-    return () => clearTimeout(delay);
+      return () => clearTimeout(delay);
+    }
   }, [search]);
+
+  useEffect(() => {
+    if (products) {
+      setActiveFilters({
+        brand: {},
+        sizes: {},
+      });
+    }
+  }, [products]);
 
   useEffect(() => {
     if (products) {
@@ -54,48 +65,45 @@ const SearchPage = () => {
           items: getUniqueBrandsWithCounts(),
         },
         {
-          title: "Seriler",
+          title: "Koleksiyonlar",
           field: "category",
           items: getUniqueCategoryWithCounts(),
         },
         {
-          title: "Kullanım Alanları",
+          title: "Kullanım Alanlı",
           field: "usage",
           items: getUniqueUsageWithCounts(),
         },
         {
-          title: "Ozellikler",
+          title: "Ozellik",
           field: "features",
           items: getUniqueFeaturesWithCounts(),
         },
         {
-          title: "Ölçüler",
+          title: "Ölçü",
           field: "sizes",
           items: getUniqueSizesWithCounts(),
         },
       ]);
-
-      setActiveFilters({
-        brand: {},
-        sizes: {},
-      });
     }
-  }, [products]);
+  }, [products, activeFilters]);
 
   function onlyUnique(value: any, index: number, array: any[]) {
     return array.indexOf(value) === index;
   }
 
   const getUniqueBrandsWithCounts = () => {
-    if (products && products.length > 0) {
-      const uniqueBrands = products
+    const fltrd_prdtcs = applyFiltersWithProducts();
+    if (fltrd_prdtcs && fltrd_prdtcs.length > 0) {
+      const uniqueBrands = fltrd_prdtcs
         .map((product) => product.brand)
         .filter(onlyUnique);
 
       const brandCounts = uniqueBrands.map((brand) => {
         return {
           field: brand,
-          count: products.filter((product) => product.brand === brand).length,
+          count: fltrd_prdtcs.filter((product) => product.brand === brand)
+            .length,
         };
       });
 
@@ -106,15 +114,16 @@ const SearchPage = () => {
   };
 
   const getUniqueSizesWithCounts = () => {
-    if (products && products.length > 0) {
-      const uniqueSizes = products
+    const fltrd_prdtcs = applyFiltersWithProducts();
+    if (fltrd_prdtcs && fltrd_prdtcs.length > 0) {
+      const uniqueSizes = fltrd_prdtcs
         .flatMap((product) => product.sizes.map((size: any) => size.dimensions))
         .filter(onlyUnique);
 
       const sizesCounts = uniqueSizes.map((size: any) => {
         return {
           field: size,
-          count: products.filter((product) => {
+          count: fltrd_prdtcs.filter((product) => {
             const sizes = product.sizes.map((size: any) => size.dimensions);
 
             return sizes.includes(size);
@@ -129,8 +138,9 @@ const SearchPage = () => {
   };
 
   const getUniqueFeaturesWithCounts = () => {
-    if (products && products.length > 0) {
-      const uniqueFeatures = products
+    const fltrd_prdtcs = applyFiltersWithProducts();
+    if (fltrd_prdtcs && fltrd_prdtcs.length > 0) {
+      const uniqueFeatures = fltrd_prdtcs
         .flatMap((product) =>
           product.features.map((feature: any) => feature.title)
         )
@@ -139,7 +149,7 @@ const SearchPage = () => {
       const featuresCounts = uniqueFeatures.map((features: any) => {
         return {
           field: features,
-          count: products.filter((product) => {
+          count: fltrd_prdtcs.filter((product) => {
             const allFeatures = product.features.map(
               (feature: any) => feature.title
             );
@@ -156,15 +166,16 @@ const SearchPage = () => {
   };
 
   const getUniqueUsageWithCounts = () => {
-    if (products && products.length > 0) {
-      const uniqueUsage = products
+    const fltrd_prdtcs = applyFiltersWithProducts();
+    if (fltrd_prdtcs && fltrd_prdtcs.length > 0) {
+      const uniqueUsage = fltrd_prdtcs
         .flatMap((product) => product.usage.map((usage: any) => usage.title))
         .filter(onlyUnique);
 
       const usageCounts = uniqueUsage.map((usage: any) => {
         return {
           field: usage,
-          count: products.filter((product) => {
+          count: fltrd_prdtcs.filter((product) => {
             const sizes = product.usage.map((usage: any) => usage.title);
 
             return sizes.includes(usage);
@@ -179,15 +190,16 @@ const SearchPage = () => {
   };
 
   const getUniqueCategoryWithCounts = () => {
-    if (products && products.length > 0) {
-      const uniqueCategory = products
+    const fltrd_prdtcs = applyFiltersWithProducts();
+    if (fltrd_prdtcs && fltrd_prdtcs.length > 0) {
+      const uniqueCategory = fltrd_prdtcs
         .flatMap((product) => product.category.map((ct: any) => ct.title))
         .filter(onlyUnique);
 
       const categoryCounts = uniqueCategory.map((ct: any) => {
         return {
           field: ct,
-          count: products.filter((product) => {
+          count: fltrd_prdtcs.filter((product) => {
             const category = product.category.map((ct: any) => ct.title);
 
             return category.includes(ct);
@@ -265,7 +277,24 @@ const SearchPage = () => {
           });
         }
       }
-      return filteredProducts;
+      return filteredProducts?.filter((dt) => {
+        const searchTerm = (params.get("s") as string).toLowerCase();
+        // Tüm dt özelliklerinde arama yap
+        return Object.values(dt).some((value: any) => {
+          console.log(value);
+          if (typeof value === "string") {
+            return value.toLowerCase().includes(searchTerm);
+          } else if (Array.isArray(value)) {
+            // Eğer değer bir array ise, array'in içeriğinde arama yap
+            return value.some(({ title }: any) =>
+              typeof title === "string"
+                ? title.toLowerCase().includes(searchTerm)
+                : false
+            );
+          }
+          return false;
+        });
+      });
     }
   };
 
@@ -369,7 +398,7 @@ const SearchPage = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="search-input outline-none"
-                placeholder="Ne aramıştınız?"
+                placeholder={params?.get("s") ?? "Ne aramıştınız?"}
               />
 
               <span onClick={() => setSearch("")} className="search-icon">
@@ -563,26 +592,15 @@ const SearchPage = () => {
             <div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
                 {products &&
-                  applyFiltersWithSortedProducts()
-                    ?.filter((dt) => {
-                      return (
-                        dt.brand
-                          .toLowerCase()
-                          .includes(
-                            (params.get("s") as string).toLowerCase()
-                          ) ||
-                        dt.description
-                          .toLowerCase()
-                          .includes((params.get("s") as string).toLowerCase())
-                      );
-                    })
-                    ?.map((product: any, index: number) => (
+                  applyFiltersWithSortedProducts()?.map(
+                    (product: any, index: number) => (
                       <BasicCard
                         list={true}
                         product_data={product}
                         key={index}
                       />
-                    ))}
+                    )
+                  )}
               </div>
             </div>
 
