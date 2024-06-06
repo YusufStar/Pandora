@@ -62,6 +62,7 @@ const Footer = () => {
       subs: [
         {
           title: "Gizlilik Politikası",
+path: "/gizlilik"
         },
         {
           title: "Çerez Politikası",
