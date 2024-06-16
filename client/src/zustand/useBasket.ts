@@ -30,10 +30,10 @@ export const getProduct = (products: any[]) => {
     return new_data;
 }
 
-export function cmToSquareMeter(dimensions: string): number {
+export function cmToSquareMeter(dimensions: string): number | undefined {
     const [width, height] = dimensions.split('x').map(dimension => parseFloat(dimension.trim()));
 
-    return (width / 100) * (height / 100);
+    return Number.isNaN((width / 100) * (height / 100)) ? undefined : (width / 100) * (height / 100);
 }
 
 export const calculateTotalPrice = (products: any[]) => {

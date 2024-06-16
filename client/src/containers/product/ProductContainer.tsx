@@ -9,8 +9,17 @@ import useBasket, {
   formatCurrency,
   useDiscount,
 } from "@/zustand/useBasket";
-import { Loader2 } from "lucide-react";
+import { ArrowDown, Equal, Loader2, X } from "lucide-react";
 import Magnifier from "@/components/Magnifier";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 
 type Props = {
   product_id: any;
@@ -23,7 +32,11 @@ const ProductContainer = ({ product_id }: Props) => {
   const [data, setData] = useState<{
     product: any;
     quantity: number;
+    en: number | undefined;
+    boy: number | undefined;
   }>({
+    en: undefined,
+    boy: undefined,
     product: {
       product_id: product_id,
       size_id: null,
@@ -157,6 +170,7 @@ const ProductContainer = ({ product_id }: Props) => {
                         <div className="flex discount-price flex-col">
                           <span>
                             {formatCurrency(
+                              //@ts-ignore
                               cmToSquareMeter(
                                 productData.sizes.filter(
                                   (size: any) =>
@@ -174,7 +188,7 @@ const ProductContainer = ({ product_id }: Props) => {
                                       (size: any) =>
                                         size.id === data.product.size_id
                                     )[0].dimensions
-                                  ).toFixed(2)
+                                  )?.toFixed(2)
                                 ) * productData.price,
                                 productData.discount
                               ) as number
@@ -205,7 +219,7 @@ const ProductContainer = ({ product_id }: Props) => {
                                     (size: any) =>
                                       size.id === data.product.size_id
                                   )[0].dimensions
-                                ).toFixed(2)
+                                )?.toFixed(2)
                               ) * productData.price
                             )}
                           </span>
@@ -216,6 +230,113 @@ const ProductContainer = ({ product_id }: Props) => {
                 </div>
               </div>
               <div className="mt-6 mb-6">
+                <div className="mb-4">
+                  <div className="mb-2 variant-type">ebat</div>
+                  <div className="items-center product-detail-page-variants flex flex-wrap">
+                    <div className="flex w-full gap-4">
+                      {/* Custom Sizes */}
+                      <DropdownMenu>
+                        <DropdownMenuTrigger className="border outline-none hover:bg-[#dedede] transition-all duration-150 flex items-center gap-2 rounded text-sm px-4 py-2">
+                          <span>
+                            {data.en ? data.en + " cm" : "Secim yapiniz"}
+                          </span>
+                          <ArrowDown className="opacity-75" size={16} />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>En</DropdownMenuLabel>
+                          <DropdownMenuGroup>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                setData((prev) => ({
+                                  ...prev,
+                                  en: 80,
+                                }))
+                              }
+                            >
+                              80 cm
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                setData((prev) => ({
+                                  ...prev,
+                                  en: 100,
+                                }))
+                              }
+                            >
+                              100 cm
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                setData((prev) => ({
+                                  ...prev,
+                                  en: 120,
+                                }))
+                              }
+                            >
+                              120 cm
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                setData((prev) => ({
+                                  ...prev,
+                                  en: 160,
+                                }))
+                              }
+                            >
+                              160 cm
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                setData((prev) => ({
+                                  ...prev,
+                                  en: 200,
+                                }))
+                              }
+                            >
+                              200 cm
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                setData((prev) => ({
+                                  ...prev,
+                                  en: 300,
+                                }))
+                              }
+                            >
+                              300 cm
+                            </DropdownMenuItem>
+                          </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+
+                      <X className="my-auto" size={16} />
+
+                      <Input
+                        value={data.boy}
+                        onChange={(e) =>
+                          setData((prev) => ({
+                            ...prev,
+                            boy: Number(e.target.value),
+                          }))
+                        }
+                        placeholder="300 cm"
+                        type="number"
+                        className="flex flex-1 text-sm max-w-[100px] outline-none"
+                      />
+
+                      <Equal className="my-auto" size={16} />
+
+                      <span className="text-sm my-auto font-medium select-none">
+                        {cmToSquareMeter(data.en + "x" + data.boy)?.toFixed(
+                          2
+                        ) ?? "Geçersiz Boyut"}
+                        <span className="text-xs ml-0.5">m2</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Default Sizes */}
                 <div className="mb-4">
                   <div className="mb-2 variant-type">ebat</div>
                   <div className="items-center product-detail-page-variants flex flex-wrap">
