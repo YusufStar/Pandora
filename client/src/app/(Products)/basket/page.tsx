@@ -114,7 +114,7 @@ const BasketPage = () => {
                         <div>
                           <Link
                             className="hover:underline text-xs sm:text-sm font-normal"
-                            href={`/product/${product.id}`}
+                            href={`/product/${product?.id}`}
                           >
                             {product.description}
                           </Link>
