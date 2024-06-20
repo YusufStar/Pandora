@@ -1,24 +1,30 @@
-"use client"
-import dynamic from 'next/dynamic'
-const Footer = dynamic(() => import('@/containers/_components/Footer'), { ssr: true })
-const Navbar = dynamic(() => import('@/containers/_components/Navbar'), { ssr: true })
-import React, {ReactNode, useEffect} from "react";
+"use client";
+import dynamic from "next/dynamic";
+const Footer = dynamic(() => import("@/containers/_components/Footer"), {
+  ssr: true,
+});
+const Navbar = dynamic(() => import("@/containers/_components/Navbar"), {
+  ssr: true,
+});
+import React, { ReactNode, useEffect } from "react";
 import useBasket from "@/zustand/useBasket";
 
 const Layout = ({ children }: { children: ReactNode }) => {
-    const {setBasket} = useBasket()
+  const { setBasket } = useBasket();
 
-    const getData = async () => {
-        await fetch(`/api/basket`, {
-            mode: "no-cors",
-        }).then((x) => x.json()).then(({data}) => {
-            setBasket(data)
-        })
-    }
+  const getData = async () => {
+    await fetch(`/api/basket`, {
+      mode: "no-cors",
+    })
+      .then((x) => x.json())
+      .then(({ data }) => {
+        setBasket(data);
+      });
+  };
 
-    useEffect(() => {
-        getData()
-    }, [])
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="w-full h-full min-h-screen flex flex-col">
@@ -28,7 +34,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         target="_blank"
       >
         <svg
-          fill="#fff"
+          fill="#ffffff"
           height="26px"
           width="26px"
           version="1.1"
