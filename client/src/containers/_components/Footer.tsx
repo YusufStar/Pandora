@@ -54,6 +54,7 @@ const Footer = () => {
         },
         {
           title: "Mesafeli Satış Sözleşmesi",
+          path: "/mesafeli-satis-sozlesmesi",
         },
       ],
     },
@@ -62,7 +63,7 @@ const Footer = () => {
       subs: [
         {
           title: "Gizlilik Politikası",
-path: "/gizlilik"
+          path: "/gizlilik",
         },
         {
           title: "Çerez Politikası",
