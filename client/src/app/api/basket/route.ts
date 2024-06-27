@@ -27,6 +27,8 @@ export async function GET(request: Request) {
                 include: {
                     sizes: true,
                     banner: true,
+                    features: true,
+                     category: true
                 }
             },
             user: true,

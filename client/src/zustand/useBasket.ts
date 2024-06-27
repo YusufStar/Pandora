@@ -1,6 +1,7 @@
 "use client"
 import {create} from 'zustand';
 import {products as mock_products, sizes} from "@/zustand/mock-products";
+import { escape } from 'querystring';
 
 type BasketStore = {
     products: any[];
@@ -36,7 +37,7 @@ export function cmToSquareMeter(dimensions: string): number | undefined {
     return Number.isNaN((width / 100) * (height / 100)) ? undefined : (width / 100) * (height / 100);
 }
 
-export const calculateTotalPrice = (products: any[]) => {
+export const calculateTotalPrice = (products: any[], format = true) => {
     const data = getProduct(products)
     let totalPrice = 0;
 
@@ -53,7 +54,11 @@ export const calculateTotalPrice = (products: any[]) => {
         totalPrice += useDiscount(product.product.price * m2, product.product.discount) * quantity;
     });
 
-    return formatCurrency(totalPrice);
+    if (format) {
+        return formatCurrency(totalPrice);
+    } else {
+        return totalPrice;
+    }
 }
 
 export const formatCurrency = (number: number) => {

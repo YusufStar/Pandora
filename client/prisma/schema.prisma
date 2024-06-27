@@ -49,9 +49,7 @@ model Product {
   category Category[]
   features Features[]
 
-  Orders   Orders? @relation(fields: [ordersId], references: [id])
-  ordersId Int?
-
+  Orders Orders[]
   Basket Basket[]
   usage  Usage[]
 }
@@ -103,9 +101,19 @@ model Basket {
 }
 
 model Orders {
-  id         Int       @id @default(autoincrement())
+  id         Int    @id @default(autoincrement())
   totalPrice Int
-  products   Product[]
-  user       User?     @relation(fields: [userId], references: [id])
-  userId     Int?
+  status     Status @default(WAIT)
+
+  products Product[]
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
+}
+
+enum Status {
+  WAIT
+  GETTING_READY
+  COMPLATED
+  RETURN
 }

@@ -96,7 +96,7 @@ const LabelInput = ({
                     setValue((prev: any) => ({...prev, [label]: normalizeInput(e.target.value, value)}))
                 }}
                 id={label}
-                className={'border w-full peer px-4 py-3 outline-0 text-sm font-medium rounded-md'}
+                className={'bg-white border w-full peer px-4 py-3 outline-0 text-sm font-medium rounded-md'}
                 placeholder={' '}/>
 
             <label
