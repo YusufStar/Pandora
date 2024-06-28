@@ -6,7 +6,7 @@ import useBasket, {
   formatCurrency,
   useDiscount,
 } from "@/zustand/useBasket";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
@@ -58,6 +58,7 @@ const CheckoutPage = () => {
   });
 
   const { setBasket, products } = useBasket();
+  const [basketId, setBasketId] = useState(0);
   const totalPrice = calculateTotalPrice(products);
   const [response, setResponse] = useState(null);
 
@@ -87,11 +88,11 @@ const CheckoutPage = () => {
   const handlePayment = async (event: FormEvent) => {
     event.preventDefault();
 
-    const expire = inputs.date?.replaceAll(" ", "").split("/");
+    const expire = inputs.date?.replace(" ", "").split("/");
 
     const paymentCard = {
       cardHolderName: inputs.cardName,
-      cardNumber: inputs.cardNumber.replaceAll(" ", ""),
+      cardNumber: inputs.cardNumber.replace(" ", ""),
       expireMonth: expire[0],
       expireYear: expire[1],
       cvc: inputs.cvc,
@@ -104,8 +105,7 @@ const CheckoutPage = () => {
       name: inputs.name,
       surname: inputs.surname,
       gsmNumber:
-        "+90" +
-        inputs.tel.replaceAll(" ", "").replaceAll("(", "").replaceAll(")", ""),
+        "+90" + inputs.tel.replace(" ", "").replace("(", "").replace(")", ""),
       email: inputs.email,
       identityNumber: "11111111111",
       lastLoginDate: "2015-10-05 12:43:35",
@@ -162,6 +162,19 @@ const CheckoutPage = () => {
       basketItems,
       paymentCard,
     };
+
+    try {
+      const response_orders = await axios.post("/api/order", {
+        products: products.map(({ product: { id } }) => {
+          return { id: id };
+        }),
+        totalPrice: tt_prc,
+      });
+
+      console.log(response_orders.data);
+    } catch (error) {
+      console.log(error);
+    }
 
     try {
       const response = await axios.post(
@@ -338,6 +351,7 @@ const CheckoutPage = () => {
 
                 <div className="flex w-full gap-2 items-center">
                   <Select
+                    key={crypto.randomUUID()}
                     value={inputs.city}
                     onValueChange={(value) => {
                       setInputs((prev) => ({ ...prev, city: value }));
@@ -358,7 +372,7 @@ const CheckoutPage = () => {
                         <SelectLabel>İller</SelectLabel>
                         {turkey.map((item, index) => (
                           <SelectItem
-                            key={item.il_adi}
+                            key={crypto.randomUUID()}
                             className={"capitalize"}
                             value={item.il_adi}
                           >
@@ -368,6 +382,7 @@ const CheckoutPage = () => {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+
                   <Select
                     value={inputs.state}
                     onValueChange={(value) =>
@@ -391,24 +406,17 @@ const CheckoutPage = () => {
                             (item) =>
                               inputs.city === "" || item.il_adi === inputs.city
                           )
-                          ?.map((item, index) => {
-                            if (item?.ilceler) {
-                              return (
-                                <>
-                                  {item.ilceler.map((state, index) => (
-                                    <SelectItem
-                                      key={state.ilce_adi}
-                                      className={"capitalize"}
-                                      value={state.ilce_adi}
-                                    >
-                                      {state.ilce_adi.toLowerCase()}
-                                    </SelectItem>
-                                  ))}
-                                </>
-                              );
-                            }
-                            return <></>;
-                          })}
+                          ?.map((item, parentIndex) =>
+                            item?.ilceler?.map((state, childIndex) => (
+                              <SelectItem
+                                key={`${parentIndex}-${childIndex}`}
+                                className={"capitalize"}
+                                value={state.ilce_adi}
+                              >
+                                {state.ilce_adi.toLowerCase()}
+                              </SelectItem>
+                            ))
+                          )}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
