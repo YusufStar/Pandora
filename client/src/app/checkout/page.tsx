@@ -171,7 +171,7 @@ const CheckoutPage = () => {
         totalPrice: tt_prc,
       });
 
-      console.log(response_orders.data);
+      console.log("order message", response_orders.data);
     } catch (error) {
       console.log(error);
     }
@@ -188,7 +188,7 @@ const CheckoutPage = () => {
       );
 
       setResponse(response.data);
-      console.log(response.data);
+      console.log("payment message", response.data);
     } catch (err) {
       console.log("Error: ", err);
     }
