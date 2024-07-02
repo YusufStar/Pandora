@@ -11,13 +11,9 @@ export async function GET(request: Request) {
     }
 
     const AllOrders = await prisma.orders.findMany({
-        where: {
-            //@ts-ignore
-            userId: session.user.id
-        },
         include: {
+            user: true,
             products: true,
-            user: true
         }
     })
 

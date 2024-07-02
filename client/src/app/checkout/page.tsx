@@ -6,7 +6,7 @@ import useBasket, {
   formatCurrency,
   useDiscount,
 } from "@/zustand/useBasket";
-import React, { FormEvent, Fragment, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
@@ -24,10 +24,10 @@ import {
 import { turkey } from "@/lib/turkey";
 import LabelInput from "@/components/LabelInput";
 import axios from "axios";
+import { redirect } from "next/navigation";
 
 const CheckoutPage = () => {
   const { data } = useSession();
-
   const [step, setStep] = useState(1);
   const [inputs, setInputs] = useState<{
     email: string;
@@ -58,7 +58,6 @@ const CheckoutPage = () => {
   });
 
   const { setBasket, products } = useBasket();
-  const [basketId, setBasketId] = useState(0);
   const totalPrice = calculateTotalPrice(products);
   const [response, setResponse] = useState(null);
 
@@ -163,21 +162,10 @@ const CheckoutPage = () => {
       paymentCard,
     };
 
-    try {
-      const response_orders = await axios.post("/api/order", {
-        products: products.map(({ product: { id } }) => {
-          return { id: id };
-        }),
-        totalPrice: tt_prc,
-      });
-
-      console.log("order message", response_orders.data);
-    } catch (error) {
-      console.log(error);
-    }
+    let payment_iyzico;
 
     try {
-      const response = await axios.post(
+      payment_iyzico = await axios.post(
         "http://localhost:3001/api/payment",
         paymentData,
         {
@@ -187,10 +175,29 @@ const CheckoutPage = () => {
         }
       );
 
-      setResponse(response.data);
-      console.log("payment message", response.data);
+      setResponse(payment_iyzico.data);
+      console.log(payment_iyzico.data);
     } catch (err) {
       console.log("Error: ", err);
+    }
+
+    if (payment_iyzico?.data === "success") {
+      try {
+        const response_orders = await axios.post("/api/order", {
+          products: products.map(({ product: { id } }) => {
+            return { id: id };
+          }),
+          totalPrice: tt_prc,
+        });
+
+        console.log("order message", response_orders.data);
+
+        if (response_orders.data) {
+          redirect("/orders/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -433,7 +440,7 @@ const CheckoutPage = () => {
                 <button
                   type={"submit"}
                   className={
-                    "w-full mt-8 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"
+                    "w-full mt-2 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"
                   }
                 >
                   Kargo ile Devam Et
@@ -572,10 +579,22 @@ const CheckoutPage = () => {
                   </div>
                 </div>
 
+                {
+                  //@ts-ignore
+                  response?.status === "failure" && (
+                    <span className="my-2 w-full text-left text-sm font-semibold underline text-red-500">
+                      {
+                        //@ts-ignore
+                        response?.errorMessage
+                      }
+                    </span>
+                  )
+                }
+
                 <button
                   type={"submit"}
                   className={
-                    "w-full mt-8 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"
+                    "w-full mt-2 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"
                   }
                 >
                   Siparişi Tamamla

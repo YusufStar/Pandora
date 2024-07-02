@@ -29,6 +29,10 @@ const DashboardLayout = ({children}: { children: ReactNode }) => {
             title: "Usage",
             path: "/dashboard/usage",
         },
+        {
+            title: "Orders",
+            path: "/dashboard/orders",
+        },
     ];
 
     return (
