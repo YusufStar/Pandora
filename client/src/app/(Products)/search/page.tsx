@@ -218,14 +218,18 @@ const SearchPage = () => {
       case "fiyat-artan":
         return products.sort((a, b) => {
           return (
+            //@ts-ignore
             cmToSquareMeter(a.defaultSizeId.dimensions) * a.price -
+            //@ts-ignore
             cmToSquareMeter(b.defaultSizeId.dimensions) * b.price
           );
         });
       case "fiyat-azalan":
         return products.sort((a, b) => {
           return (
+            //@ts-ignore
             cmToSquareMeter(b.defaultSizeId.dimensions) * b.price -
+            //@ts-ignore
             cmToSquareMeter(a.defaultSizeId.dimensions) * a.price
           );
         });
