@@ -25,6 +25,7 @@ import { turkey } from "@/lib/turkey";
 import LabelInput from "@/components/LabelInput";
 import axios from "axios";
 import { redirect } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const CheckoutPage = () => {
   const { data } = useSession();
@@ -59,7 +60,13 @@ const CheckoutPage = () => {
 
   const { setBasket, products } = useBasket();
   const totalPrice = calculateTotalPrice(products);
-  const [response, setResponse] = useState(null);
+  const [response, setResponse] = useState({
+    data: {
+      payment: null,
+      orders: null
+    },
+    loading: false
+  });
 
   const getData = async () => {
     await fetch(`/api/basket`, {
@@ -86,6 +93,13 @@ const CheckoutPage = () => {
 
   const handlePayment = async (event: FormEvent) => {
     event.preventDefault();
+    setResponse({
+      data: {
+        payment: null,
+        orders: null
+      },
+      loading: true
+    });
 
     const expire = inputs.date?.replace(" ", "").split("/");
 
@@ -162,7 +176,7 @@ const CheckoutPage = () => {
       paymentCard,
     };
 
-    let payment_iyzico;
+    let payment_iyzico : any;
 
     try {
       payment_iyzico = await axios.post(
@@ -174,11 +188,14 @@ const CheckoutPage = () => {
           },
         }
       );
-
-      setResponse(payment_iyzico.data);
-      console.log(payment_iyzico.data);
     } catch (err) {
-      console.log("Error: ", err);
+      setResponse({
+        data: {
+          payment: null,
+          orders: null
+        },
+        loading: false
+      });
     }
 
     if (payment_iyzico?.data === "success") {
@@ -190,13 +207,24 @@ const CheckoutPage = () => {
           totalPrice: tt_prc,
         });
 
-        console.log("order message", response_orders.data);
-
         if (response_orders.data) {
           redirect("/orders/");
+          setResponse({
+            data: {
+              payment: payment_iyzico.data,
+              orders: response_orders.data
+            },
+            loading: true
+          });
         }
       } catch (error) {
-        console.log(error);
+        setResponse({
+          data: {
+            payment: null,
+            orders: null
+          },
+          loading: false
+        });
       }
     }
   };
@@ -591,14 +619,13 @@ const CheckoutPage = () => {
                   )
                 }
 
-                <button
-                  type={"submit"}
-                  className={
-                    "w-full mt-2 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"
-                  }
-                >
-                  Siparişi Tamamla
-                </button>
+<button disabled={loading} type="submit">
+          {!loading ? (
+            "Siparişi Tamamla"
+          ) : (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
+        </button>
               </form>
             )}
           </div>
