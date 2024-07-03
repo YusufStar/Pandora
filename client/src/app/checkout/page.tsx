@@ -60,7 +60,10 @@ const CheckoutPage = () => {
 
   const { setBasket, products } = useBasket();
   const totalPrice = calculateTotalPrice(products);
-  const [response, setResponse] = useState({
+  const [response, setResponse] = useState<{
+    data: any;
+    loading: boolean;
+  }>({
     data: {
       payment: null,
       orders: null
@@ -620,8 +623,8 @@ const CheckoutPage = () => {
                   )
                 }
 
-<button disabled={loading} type="submit">
-          {!loading ? (
+<button disabled={response?.loading} type="submit">
+          {!response?.loading ? (
             "Siparişi Tamamla"
           ) : (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
