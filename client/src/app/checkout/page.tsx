@@ -234,6 +234,7 @@ const CheckoutPage = () => {
       <div className="w-full mx-auto h-full flex">
         <div className="w-full h-full flex flex-col p-4 px-8">
           <div className="max-w-[600px] w-full mx-auto">
+            <Link href={"/carpet"}>
             <Image
               src="/images/logo.png"
               width={150}
@@ -243,7 +244,7 @@ const CheckoutPage = () => {
               decoding="async"
               draggable="false"
               className={"mb-10 sm:mb-20"}
-            />
+            /></Link>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="flex gap-4 w-fit">
