@@ -109,6 +109,14 @@ model Orders {
 
   user   User? @relation(fields: [userId], references: [id])
   userId Int?
+
+  sizes String[]
+
+  buyer Json?
+  basketItems Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Status {

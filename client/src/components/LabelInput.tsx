@@ -23,20 +23,20 @@ const LabelInput = ({
         if (formater === "tel") {
             // only allows 0-9 inputs
             const currentValue = value.replace(/[^\d]/g, '');
-            const cvLength = currentValue.length;
+            const telLength = currentValue.length;
 
-            if (cvLength > 10) return previousValue;
+            if (telLength > 10) return previousValue;
 
             if (!previousValue || value.length > previousValue.length) {
 
                 // returns: "x", "xx", "xxx"
-                if (cvLength < 4) return currentValue;
+                if (telLength < 4) return currentValue;
 
                 // returns: "(xxx)", "(xxx) x", "(xxx) xx", "(xxx) xxx",
-                if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+                if (telLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
 
                 // returns: "(xxx) xxx-", (xxx) xxx-x", "(xxx) xxx-xx", "(xxx) xxx-xxx", "(xxx) xxx-xxxx"
-                if (cvLength < 11) {
+                if (telLength < 11) {
                     return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)} ${currentValue.slice(6, 8)} ${currentValue.slice(8)}`;
                 } else {
                     return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)} ${currentValue.slice(6, 9)} ${currentValue.slice(9, 11)} ${currentValue.slice(11)}`;

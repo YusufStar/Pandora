@@ -66,9 +66,9 @@ const CheckoutPage = () => {
   }>({
     data: {
       payment: null,
-      orders: null
+      orders: null,
     },
-    loading: false
+    loading: false,
   });
 
   const getData = async () => {
@@ -99,9 +99,9 @@ const CheckoutPage = () => {
     setResponse({
       data: {
         payment: null,
-        orders: null
+        orders: null,
       },
-      loading: true
+      loading: true,
     });
 
     const expire = inputs.date?.replace(" ", "").split("/");
@@ -131,6 +131,9 @@ const CheckoutPage = () => {
       city: inputs.city,
       country: "Turkey",
       zipCode: "00000",
+      adress: inputs.adress,
+      detail: inputs.detail,
+      state: inputs.state,
     };
 
     const billingAddress = {
@@ -156,9 +159,12 @@ const CheckoutPage = () => {
               product.discount
             ) as number
           }`,
+          size: size,
+          quantity: quantity,
           name: product.description,
           category1: product.brand,
           category2: product.category[0].title,
+          product: product,
           itemType: "PHYSICAL",
         };
       }
@@ -179,7 +185,7 @@ const CheckoutPage = () => {
       paymentCard,
     };
 
-    let payment_iyzico : any;
+    let payment_iyzico: any;
 
     try {
       payment_iyzico = await axios.post(
@@ -195,40 +201,41 @@ const CheckoutPage = () => {
       setResponse({
         data: {
           payment: null,
-          orders: null
+          orders: null,
         },
-        loading: false
+        loading: false,
       });
     }
 
-    if (payment_iyzico?.data === "success") {
-      try {
-        const response_orders = await axios.post("/api/order", {
-          products: products.map(({ product: { id } }) => {
-            return { id: id };
-          }),
-          totalPrice: tt_prc,
-        });
+    try {
+      const response_orders = await axios.post("/api/order", {
+        products: products.map(({ product: { id } }) => {
+          return { id: id };
+        }),
+        buyer,
+        basketItems,
+        totalPrice: tt_prc,
+        sizes: products.map(({ size }) => size.dimensions),
+      });
 
-        if (response_orders.data) {
-          redirect("/orders/");
-          setResponse({
-            data: {
-              payment: payment_iyzico.data,
-              orders: response_orders.data
-            },
-            loading: true
-          });
-        }
-      } catch (error) {
+      if (response_orders.data) {
+        redirect("/orders/");
         setResponse({
           data: {
-            payment: null,
-            orders: null
+            payment: payment_iyzico.data,
+            orders: response_orders.data,
           },
-          loading: false
+          loading: true,
         });
       }
+    } catch (error) {
+      setResponse({
+        data: {
+          payment: null,
+          orders: null,
+        },
+        loading: false,
+      });
     }
   };
 
@@ -238,16 +245,17 @@ const CheckoutPage = () => {
         <div className="w-full h-full flex flex-col p-4 px-8">
           <div className="max-w-[600px] w-full mx-auto">
             <Link href={"/carpet"}>
-            <Image
-              src="/images/logo.png"
-              width={150}
-              height={30.47}
-              quality={100}
-              alt="logo"
-              decoding="async"
-              draggable="false"
-              className={"mb-10 sm:mb-20"}
-            /></Link>
+              <Image
+                src="/images/logo.png"
+                width={150}
+                height={30.47}
+                quality={100}
+                alt="logo"
+                decoding="async"
+                draggable="false"
+                className={"mb-10 sm:mb-20"}
+              />
+            </Link>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="flex gap-4 w-fit">
@@ -623,13 +631,14 @@ const CheckoutPage = () => {
                   )
                 }
 
-<button disabled={response?.loading} type="submit">
-          {!response?.loading ? (
-            "Siparişi Tamamla"
-          ) : (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          )}
-        </button>
+                <button
+                  type={"submit"}
+                  className={
+                    "w-full mt-2 !h-[56px] rounded hover:bg-black transition-all duration-200 ease-in-out text-white font-medium bg-[#272727]"
+                  }
+                >
+                  Siparişi Tamamla
+                </button>
               </form>
             )}
           </div>
