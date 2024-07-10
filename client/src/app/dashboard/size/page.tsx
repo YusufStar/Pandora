@@ -167,10 +167,13 @@ const SizeDashboardPage = () => {
                   <TableCell className="font-medium">{size.id}</TableCell>
                   <TableCell>{size.dimensions}</TableCell>
                   <TableCell>
-                    {cmToSquareMeter(
+                    {
                       //@ts-ignore
-                      size.dimensions
-                    ).toFixed(2)}{" "}
+                      cmToSquareMeter(
+                        //@ts-ignore
+                        size.dimensions
+                      ).toFixed(2)
+                    }{" "}
                     m&#178;
                   </TableCell>
                   <TableCell>
