@@ -89,14 +89,19 @@ const BasicCard = ({ product_data, list = false }: Props) => {
                   <div className="flex discount-price flex-col">
                     <span>
                       {formatCurrency(
-                        cmToSquareMeter(product_data.defaultSizeId.dimensions) *
-                          product_data.price
+                        //@ts-ignore
+                        cmToSquareMeter(
+                          //@ts-ignore
+                          product_data.defaultSizeId.dimensions
+                        ) * product_data.price
                       )}
                     </span>
                     <span style={{ color: "rgb(8, 8, 8)" }}>
                       {formatCurrency(
                         useDiscount(
+                          //@ts-ignore
                           cmToSquareMeter(
+                            //@ts-ignore
                             product_data.defaultSizeId.dimensions
                           ) * product_data.price,
                           product_data.discount
