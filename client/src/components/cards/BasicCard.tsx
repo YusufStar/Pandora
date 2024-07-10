@@ -127,8 +127,11 @@ const BasicCard = ({ product_data, list = false }: Props) => {
                       style={{ color: "rgb(8, 8, 8)" }}
                     >
                       {formatCurrency(
-                        cmToSquareMeter(product_data.defaultSizeId.dimensions) *
-                          product_data.price
+                        //@ts-ignore
+                        cmToSquareMeter(
+                          //@ts-ignore
+                          product_data.defaultSizeId.dimensions
+                        ) * product_data.price
                       )}
                     </span>
                   </div>
