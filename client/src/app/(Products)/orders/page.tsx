@@ -1,12 +1,9 @@
 "use client";
 import OrderStatus from "@/components/OrderStatus";
 import {
-  cmToSquareMeter,
   formatCurrency,
-  useDiscount,
 } from "@/zustand/useBasket";
 import axios from "axios";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const OrdersPage = () => {

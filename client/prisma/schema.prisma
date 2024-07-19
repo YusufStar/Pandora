@@ -110,9 +110,11 @@ model Orders {
   user   User? @relation(fields: [userId], references: [id])
   userId Int?
 
+  takipNo String?
+
   sizes String[]
 
-  buyer Json?
+  buyer       Json?
   basketItems Json?
 
   createdAt DateTime @default(now())
