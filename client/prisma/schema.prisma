@@ -111,6 +111,7 @@ model Orders {
   userId Int?
 
   takipNo String?
+  kargo   String?
 
   sizes String[]
 
